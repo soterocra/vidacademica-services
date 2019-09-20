@@ -20,16 +20,19 @@ public class User implements Serializable {
     private String password;
     private String creationDate;
 
+    private Phone phone;
+    
     public User() {
     }
 
-    public User(String name, Instant dateOfBirth, String socialId, String registration, String password, String creationDate) {
+    public User(String name, Instant dateOfBirth, String socialId, String registration, String password, String creationDate, Phone phone) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.socialId = socialId;
         this.registration = registration;
         this.password = password;
         this.creationDate = creationDate;
+        this.phone = phone;
     }
 
     public Long getId() {
@@ -87,6 +90,14 @@ public class User implements Serializable {
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
+    
+    public Phone getPhone() {
+		return phone;
+	}
+
+	public void setPhone(Phone phone) {
+		this.phone = phone;
+	}
 
     @Override
     public boolean equals(Object o) {
@@ -100,4 +111,6 @@ public class User implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+	
 }
