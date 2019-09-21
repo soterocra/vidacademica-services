@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import online.vidacademica.services.entities.enums.PostType;
+
 @Entity
 @Table(name = "tb_post")
 public class Post implements Serializable{
@@ -19,12 +21,12 @@ public class Post implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	private String body;
-	private Post PostFather;
+	private PostType PostFather;
 	private Instant date;
 	
 	public Post() {}
 
-	public Post(Long id, String body, Post postFather, Instant date) {
+	public Post(Long id, String body, PostType postFather, Instant date) {
 		super();
 		this.id = id;
 		this.body = body;
@@ -48,11 +50,11 @@ public class Post implements Serializable{
 		this.body = body;
 	}
 
-	public Post getPostFather() {
+	public PostType getPostFather() {
 		return PostFather;
 	}
 
-	public void setPostFather(Post postFather) {
+	public void setPostFather(PostType postFather) {
 		PostFather = postFather;
 	}
 
