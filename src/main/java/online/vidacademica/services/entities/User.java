@@ -1,9 +1,16 @@
 package online.vidacademica.services.entities;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_user")
@@ -18,21 +25,20 @@ public class User implements Serializable {
     private String socialId;
     private String registration;
     private String password;
-    private String creationDate;
+    private Instant creationDate;
 
-    private Phone phone;
+    private Set<Phone> phones = new HashSet<>();
     
     public User() {
     }
 
-    public User(String name, Instant dateOfBirth, String socialId, String registration, String password, String creationDate, Phone phone) {
+    public User(String name, Instant dateOfBirth, String socialId, String registration, String password, Instant creationDate) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.socialId = socialId;
         this.registration = registration;
         this.password = password;
         this.creationDate = creationDate;
-        this.phone = phone;
     }
 
     public Long getId() {
@@ -83,20 +89,20 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getCreationDate() {
+    public Instant getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(Instant creationDate) {
         this.creationDate = creationDate;
     }
     
-    public Phone getPhone() {
-		return phone;
+    public Set<Phone> getPhones() {
+		return phones;
 	}
 
-	public void setPhone(Phone phone) {
-		this.phone = phone;
+	public void setPhones(Set<Phone> phones) {
+		this.phones = phones;
 	}
 
     @Override
@@ -111,6 +117,4 @@ public class User implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
-
-	
 }
