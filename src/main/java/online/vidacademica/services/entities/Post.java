@@ -7,9 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import online.vidacademica.services.entities.enums.PostType;
 
 @Entity
 @Table(name = "tb_post")
@@ -21,17 +21,22 @@ public class Post implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	private String body;
-	private PostType PostFather;
+//	private PostType PostFather;
 	private Instant date;
+	
+	@ManyToOne
+	@JoinColumn(name = "author_id")
+	private User author;
 	
 	public Post() {}
 
-	public Post(Long id, String body, PostType postFather, Instant date) {
+	public Post(Long id, String body, Instant date, User author) {
 		super();
 		this.id = id;
 		this.body = body;
-		PostFather = postFather;
+		//	PostFather = postFather;
 		this.date = date;
+		this.author = author;
 	}
 
 	public Long getId() {
@@ -50,14 +55,14 @@ public class Post implements Serializable{
 		this.body = body;
 	}
 
-	public PostType getPostFather() {
+/*	public PostType getPostFather() {
 		return PostFather;
 	}
 
 	public void setPostFather(PostType postFather) {
 		PostFather = postFather;
 	}
-
+*/
 	public Instant getDate() {
 		return date;
 	}
@@ -66,6 +71,13 @@ public class Post implements Serializable{
 		this.date = date;
 	}
 
+	public User getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(User author) {
+		this.author = author;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
