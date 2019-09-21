@@ -27,7 +27,7 @@ public class User implements Serializable {
     private String password;
     private Instant creationDate;
 
-    private Set<Phone> phones = new HashSet<>();
+  //  private Set<Phone> phones = new HashSet<>();
     
     public User() {
     }
@@ -97,13 +97,13 @@ public class User implements Serializable {
         this.creationDate = creationDate;
     }
     
-    public Set<Phone> getPhones() {
-		return phones;
-	}
+//    public Set<Phone> getPhones() {
+    //		return phones;
+    //	}
 
-	public void setPhones(Set<Phone> phones) {
-		this.phones = phones;
-	}
+    //	public void setPhones(Set<Phone> phones) {
+    //this.phones = phones;
+    //}
 
     @Override
     public boolean equals(Object o) {
