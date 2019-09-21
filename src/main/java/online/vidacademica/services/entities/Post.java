@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import online.vidacademica.services.entities.enums.PostType;
+
 @Entity
 @Table(name = "tb_post")
 public class Post implements Serializable{
@@ -21,7 +23,8 @@ public class Post implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	private String body;
-//	private PostType PostFather;
+	
+	private Integer postFather;
 	private Instant date;
 	
 	@ManyToOne
@@ -30,11 +33,11 @@ public class Post implements Serializable{
 	
 	public Post() {}
 
-	public Post(Long id, String body, Instant date, User author) {
+	public Post(Long id, String body,PostType postFather, Instant date, User author) {
 		super();
 		this.id = id;
 		this.body = body;
-		//	PostFather = postFather;
+		setPostFather(postFather);
 		this.date = date;
 		this.author = author;
 	}
@@ -55,14 +58,16 @@ public class Post implements Serializable{
 		this.body = body;
 	}
 
-/*	public PostType getPostFather() {
-		return PostFather;
+	public PostType getPostFather() {
+		return PostType.valueOf(postFather);
 	}
 
 	public void setPostFather(PostType postFather) {
-		PostFather = postFather;
+		if (postFather != null) {
+		this.postFather = postFather.getCode();
+		}
 	}
-*/
+
 	public Instant getDate() {
 		return date;
 	}

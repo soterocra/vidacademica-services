@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import online.vidacademica.services.entities.Post;
 import online.vidacademica.services.entities.User;
+import online.vidacademica.services.entities.enums.PostType;
 import online.vidacademica.services.repositories.PostRepository;
 import online.vidacademica.services.repositories.UserRepository;
 
@@ -34,12 +35,12 @@ public class TesteConfig implements CommandLineRunner {
 		User u3 = new User("Rafael Sotero", null, "B5", "CSD", "123", Instant.now());
 		User u4 = new User("Tiago Marques", null, "C3", "JSD", "123", Instant.now());
 	
-		Post p1 = new Post(null, "Essa é uma mensagem de teste", Instant.now(), u1);
-		Post p2 = new Post(null, "Essa é uma mensagem de teste", Instant.now(), u1);
-		Post p3 = new Post(null, "Essa é uma mensagem de teste", Instant.now(), u2);
-		Post p4 = new Post(null, "Essa é uma mensagem de teste", Instant.now(), u3);
-		Post p5 = new Post(null, "Essa é uma mensagem de teste", Instant.now(), u3);
-		Post p6 = new Post(null, "Essa é uma mensagem de teste", Instant.now(), u4);
+		Post p1 = new Post(null, "Essa é uma mensagem de teste", PostType.COMMENT, Instant.now(), u1);
+		Post p2 = new Post(null, "Essa é uma mensagem de teste", PostType.COMMENT,Instant.now(), u1);
+		Post p3 = new Post(null, "Essa é uma mensagem de teste", PostType.COMMENT,Instant.now(), u2);
+		Post p4 = new Post(null, "Essa é uma mensagem de teste", PostType.COMMENT,Instant.now(), u3);
+		Post p5 = new Post(null, "Essa é uma mensagem de teste", PostType.POST,Instant.now(), u3);
+		Post p6 = new Post(null, "Essa é uma mensagem de teste", PostType.POST,Instant.now(), u4);
 		
 		userRepository.saveAll(Arrays.asList(u1,u2,u3,u4));
 		postRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5,p6));
