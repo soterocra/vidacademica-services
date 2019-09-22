@@ -134,8 +134,12 @@ public class User implements Serializable {
     public List<Post> getPosts() {
  		return posts;
  	}
+    
+    public Set<Address> getAddresses() {
+		return addresses;
+	}
 
-    @Override
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

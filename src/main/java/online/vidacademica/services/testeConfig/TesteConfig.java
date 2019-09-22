@@ -79,10 +79,14 @@ public class TesteConfig implements CommandLineRunner {
 		userRepository.saveAll(Arrays.asList(u1,u2,u3,u4));
 		postRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5,p6));
 		phoneRepository.saveAll(Arrays.asList(ph1, ph2, ph3));
-	//	addressRepository.saveAll(Arrays.asList(a1));
-	//	cityRepository.saveAll(Arrays.asList(c1));
-	//	stateRepository.saveAll(Arrays.asList(s1));
-	//	countryRepository.saveAll(Arrays.asList(ct1));
+	
+		countryRepository.saveAll(Arrays.asList(ct1));
+		stateRepository.saveAll(Arrays.asList(s1));
+		cityRepository.saveAll(Arrays.asList(c1));
+		addressRepository.saveAll(Arrays.asList(a1));
+	
+	
+	
 	
 	}
 	
