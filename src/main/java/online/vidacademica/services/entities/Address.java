@@ -1,8 +1,17 @@
 package online.vidacademica.services.entities;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_address")
@@ -15,18 +24,30 @@ public class Address implements Serializable {
     private String postalCode;
     private String addressLine1;
     private String addressLine2;
+    
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
+    
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Address() {
     }
 
-    public Address(Long id, String postalCode, String addressLine1, String addressLine2) {
+    public Address(Long id, String postalCode, String addressLine1, String addressLine2, City city, User user) {
         this.id = id;
         this.postalCode = postalCode;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
+        this.city = city;
+        this.user = user;
     }
 
-    public Long getId() {
+	public Long getId() {
         return id;
     }
 
@@ -57,6 +78,22 @@ public class Address implements Serializable {
     public void setAddressLine2(String addressLine2) {
         this.addressLine2 = addressLine2;
     }
+    
+    public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
     @Override
     public boolean equals(Object o) {

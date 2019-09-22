@@ -1,8 +1,16 @@
 package online.vidacademica.services.entities;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_country")
@@ -14,6 +22,9 @@ public class Country implements Serializable {
     private Long id;
     private String name;
 
+    @OneToMany(mappedBy = "country")
+    private Set<State> states = new HashSet<>();
+    
     public Country() {
     }
 
@@ -38,7 +49,11 @@ public class Country implements Serializable {
         this.name = name;
     }
 
-    @Override
+    public Set<State> getStates() {
+		return states;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

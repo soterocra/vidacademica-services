@@ -27,6 +27,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String email;
     private Instant dateOfBirth;
     private String socialId;
     private String registration;
@@ -39,23 +40,30 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "author")
     private List<Post> posts = new ArrayList<>();
 
-    
     @OneToMany(mappedBy = "user")
     private Set<Phone> phones = new HashSet<>();
+    
+    @OneToMany(mappedBy = "user")
+    private Set<Address> addresses = new HashSet<>();
     
     public User() {
     }
 
-    public User(String name, Instant dateOfBirth, String socialId, String registration, String password, Instant creationDate) {
-        this.name = name;
-        this.dateOfBirth = dateOfBirth;
-        this.socialId = socialId;
-        this.registration = registration;
-        this.password = password;
-        this.creationDate = creationDate;
-    }
+    public User(Long id, String name, String email, Instant dateOfBirth, String socialId, String registration, String password,
+			Instant creationDate) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.dateOfBirth = dateOfBirth;
+		this.socialId = socialId;
+		this.registration = registration;
+		this.password = password;
+		this.creationDate = creationDate;
+	}
 
-    public Long getId() {
+
+	public Long getId() {
         return id;
     }
 
@@ -70,6 +78,14 @@ public class User implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
     public Instant getDateOfBirth() {
         return dateOfBirth;
