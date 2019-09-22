@@ -3,8 +3,10 @@ package online.vidacademica.services.entities;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,7 +39,9 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "author")
     private List<Post> posts = new ArrayList<>();
 
-  //  private Set<Phone> phones = new HashSet<>();
+    
+    @OneToMany(mappedBy = "user")
+    private Set<Phone> phones = new HashSet<>();
     
     public User() {
     }
@@ -107,13 +111,9 @@ public class User implements Serializable {
         this.creationDate = creationDate;
     }
     
-//    public Set<Phone> getPhones() {
-    //		return phones;
-    //	}
-
-    //	public void setPhones(Set<Phone> phones) {
-    //this.phones = phones;
-    //}
+    public Set<Phone> getPhones() {
+    		return phones;
+    	}
     
     public List<Post> getPosts() {
  		return posts;

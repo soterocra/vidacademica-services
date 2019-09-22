@@ -2,24 +2,44 @@ package online.vidacademica.services.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+@Table(name = "tb_phone")
 public class Phone implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String ddi;
 	private String ddd;
 	private String number;
 	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+	
 	public Phone() {
 	}
 
-	public Phone(Long id, String ddi, String ddd, String number) {
+	public Phone(Long id, String ddi, String ddd, String number, User user) {
 		super();
 		this.id = id;
 		this.ddi = ddi;
 		this.ddd = ddd;
 		this.number = number;
+		this.user = user;
 	}
 
 	public Long getId() {
@@ -54,6 +74,14 @@ public class Phone implements Serializable{
 		this.number = number;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
