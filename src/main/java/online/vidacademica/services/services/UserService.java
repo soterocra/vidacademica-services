@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import online.vidacademica.services.dto.UserDTO;
 import online.vidacademica.services.entities.User;
@@ -48,21 +49,23 @@ public class UserService {
 		}
 	}
 	
-	public User update(Long id, User obj) {
+	@Transactional
+	public UserDTO update(Long id, UserDTO dto) {
 		try {
 		User entity = repository.getOne(id);
-		updateData(entity, obj);
-		return repository.save(entity);
+		updateData(entity, dto);
+		entity =  repository.save(entity);
+		return new UserDTO(entity);
 		} catch(EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
 		}
 	}
 
-	private void updateData(User entity, User obj) {
-		entity.setName(obj.getName());
+	private void updateData(User entity, UserDTO dto) {
+		entity.setName(dto.getName());
 			
-		entity.setDateOfBirth(obj.getDateOfBirth());
-		entity.setSocialId(obj.getSocialId());
-		entity.setRegistration(obj.getRegistration());
+		entity.setDateOfBirth(dto.getDateOfBirth());
+		entity.setSocialId(dto.getSocialId());
+		entity.setRegistration(dto.getRegistration());
 	}
 }
