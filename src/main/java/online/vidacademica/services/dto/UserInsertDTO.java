@@ -10,7 +10,7 @@ import online.vidacademica.services.entities.Phone;
 import online.vidacademica.services.entities.Post;
 import online.vidacademica.services.entities.User;
 
-public class UserDTO {
+public class UserInsertDTO {
 
 	private Long id;
     private String name;
@@ -18,10 +18,11 @@ public class UserDTO {
     private Instant dateOfBirth;
     private String socialId;
     private String registration;
+    private String password;
     
-    public UserDTO () {}
+    public UserInsertDTO () {}
 
-	public UserDTO(Long id, String name, String email, Instant dateOfBirth, String socialId, String registration) {
+	public UserInsertDTO(Long id, String name, String email, Instant dateOfBirth, String socialId, String registration, String password) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -29,15 +30,17 @@ public class UserDTO {
 		this.dateOfBirth = dateOfBirth;
 		this.socialId = socialId;
 		this.registration = registration;
+		this.password = password;
 	}
     
-    public UserDTO(User entity) {
+    public UserInsertDTO(User entity) {
     	this.id = entity.getId();
 		this.name = entity.getName();
 		this.email = entity.getEmail();
 		this.dateOfBirth = entity.getDateOfBirth();
 		this.socialId = entity.getSocialId();
 		this.registration = entity.getRegistration();
+		this.password = entity.getPassword();
     }
 
 	public Long getId() {
@@ -88,8 +91,15 @@ public class UserDTO {
 		this.registration = registration;
 	}
     
-	public User toEntity(){
-		return new User(null, name, email, dateOfBirth, socialId, registration, null, null);
+	public String getPassword() {
+		return password;
 	}
-    
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public User toEntity(){
+		return new User(id, name, email, dateOfBirth, socialId, registration, password, null);
+	}
 }

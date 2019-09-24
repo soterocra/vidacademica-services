@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import online.vidacademica.services.dto.UserDTO;
+import online.vidacademica.services.dto.UserInsertDTO;
 import online.vidacademica.services.entities.User;
 import online.vidacademica.services.repositories.UserRepository;
 import online.vidacademica.services.resources.exceptions.DatabaseException;
@@ -35,8 +36,10 @@ public class UserService {
 		return new UserDTO(entity);
 	}
 	
-	public User insert(User obj) {
-		return repository.save(obj);
+	public UserDTO insert(UserInsertDTO dto) {
+		User entity = dto.toEntity();
+		entity = repository.save(entity);
+		return new UserDTO(entity);
 	}
 	
 	public void delete(Long id) {
