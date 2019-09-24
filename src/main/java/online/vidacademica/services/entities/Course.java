@@ -2,11 +2,17 @@ package online.vidacademica.services.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +30,16 @@ public class Course implements Serializable{
 	private boolean active;
 	private Instant creationDate;
 	
+
+	@ManyToMany
+	@JoinTable(name = "tb_course_subject", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
+	private Set<Subject> subjects = new HashSet<>();
+	
+	@ManyToOne
+	@JoinColumn(name = "teacher_id")
+	private Teacher commander;
+	
+	
 	public Course() {}
 	
 	public Course(Long id, String name, String description, Double workload, boolean active, Instant creationDate) {
@@ -35,6 +51,7 @@ public class Course implements Serializable{
 		this.active = active;
 		this.creationDate = creationDate;
 	}
+	
 
 	public Long getId() {
 		return id;
@@ -84,6 +101,16 @@ public class Course implements Serializable{
 		this.creationDate = creationDate;
 	}
 
+	public Set<Subject> getSubjects() {
+		return subjects;
+	}
+	
+	public Teacher getTeacher() {
+		return commander;
+	}
+	public void setTeacher(Teacher commander) {
+		this.commander = commander;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

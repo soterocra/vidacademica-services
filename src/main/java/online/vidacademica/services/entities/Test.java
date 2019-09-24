@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,6 +24,10 @@ public class Test implements Serializable{
 	private Double fullScore;
 	private Instant date;
 	private Instant creationDate;
+	
+	@ManyToOne
+	@JoinColumn(name = "test_id")
+	private Class classe;
 	
 	public Test() {}
 
@@ -72,6 +78,14 @@ public class Test implements Serializable{
 
 	public void setCreationDate(Instant creationDate) {
 		this.creationDate = creationDate;
+	}
+	
+	public Class getClasse() {
+		return classe;
+	}
+	
+	public void setClass(Class classe) {
+		this.classe = classe;
 	}
 
 	@Override
