@@ -2,7 +2,9 @@ package online.vidacademica.services.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -10,7 +12,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_user")
@@ -21,27 +27,43 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String email;
     private Instant dateOfBirth;
     private String socialId;
     private String registration;
     private String password;
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant creationDate;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "author")
+    private List<Post> posts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
     private Set<Phone> phones = new HashSet<>();
+    
+    @OneToMany(mappedBy = "user")
+    private Set<Address> addresses = new HashSet<>();
     
     public User() {
     }
 
-    public User(String name, Instant dateOfBirth, String socialId, String registration, String password, Instant creationDate) {
-        this.name = name;
-        this.dateOfBirth = dateOfBirth;
-        this.socialId = socialId;
-        this.registration = registration;
-        this.password = password;
-        this.creationDate = creationDate;
-    }
+    public User(Long id, String name, String email, Instant dateOfBirth, String socialId, String registration, String password,
+			Instant creationDate) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.dateOfBirth = dateOfBirth;
+		this.socialId = socialId;
+		this.registration = registration;
+		this.password = password;
+		this.creationDate = creationDate;
+	}
 
-    public Long getId() {
+
+	public Long getId() {
         return id;
     }
 
@@ -56,6 +78,14 @@ public class User implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
     public Instant getDateOfBirth() {
         return dateOfBirth;
@@ -98,14 +128,18 @@ public class User implements Serializable {
     }
     
     public Set<Phone> getPhones() {
-		return phones;
+    		return phones;
+    	}
+    
+    public List<Post> getPosts() {
+ 		return posts;
+ 	}
+    
+    public Set<Address> getAddresses() {
+		return addresses;
 	}
 
-	public void setPhones(Set<Phone> phones) {
-		this.phones = phones;
-	}
-
-    @Override
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -113,7 +147,7 @@ public class User implements Serializable {
         return id.equals(user.id);
     }
 
-    @Override
+	@Override
     public int hashCode() {
         return Objects.hash(id);
     }

@@ -7,7 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import online.vidacademica.services.entities.enums.PostType;
 
 @Entity
 @Table(name = "tb_post")
@@ -19,17 +23,23 @@ public class Post implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	private String body;
-	private Post PostFather;
+	
+	private Integer postFather;
 	private Instant date;
+	
+	@ManyToOne
+	@JoinColumn(name = "author_id")
+	private User author;
 	
 	public Post() {}
 
-	public Post(Long id, String body, Post postFather, Instant date) {
+	public Post(Long id, String body,PostType postFather, Instant date, User author) {
 		super();
 		this.id = id;
 		this.body = body;
-		PostFather = postFather;
+		setPostFather(postFather);
 		this.date = date;
+		this.author = author;
 	}
 
 	public Long getId() {
@@ -48,12 +58,14 @@ public class Post implements Serializable{
 		this.body = body;
 	}
 
-	public Post getPostFather() {
-		return PostFather;
+	public PostType getPostFather() {
+		return PostType.valueOf(postFather);
 	}
 
-	public void setPostFather(Post postFather) {
-		PostFather = postFather;
+	public void setPostFather(PostType postFather) {
+		if (postFather != null) {
+		this.postFather = postFather.getCode();
+		}
 	}
 
 	public Instant getDate() {
@@ -64,6 +76,13 @@ public class Post implements Serializable{
 		this.date = date;
 	}
 
+	public User getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(User author) {
+		this.author = author;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
