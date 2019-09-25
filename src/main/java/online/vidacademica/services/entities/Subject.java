@@ -2,12 +2,18 @@ package online.vidacademica.services.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_subject")
@@ -24,6 +30,11 @@ public class Subject implements Serializable{
 	private boolean active;
 	private Instant creationDate;
 	private Double minimumScore;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "subject")
+	private Set<Classe> classes = new HashSet<>();
+	
 	
 	public Subject() {}
 
@@ -97,6 +108,13 @@ public class Subject implements Serializable{
 	public void setMinimumScore(Double minimumScore) {
 		this.minimumScore = minimumScore;
 	}
+
+		
+	
+	public Set<Classe> getClasses() {
+		return classes;
+	}
+
 
 	@Override
 	public int hashCode() {

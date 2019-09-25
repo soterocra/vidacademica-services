@@ -2,12 +2,17 @@ package online.vidacademica.services.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_registration")
@@ -20,6 +25,9 @@ public class Registration implements Serializable{
 	private Long id;
 	private Instant date;
 	private boolean approved;
+	
+
+
 	
 	public Registration() {}
 
@@ -53,6 +61,8 @@ public class Registration implements Serializable{
 	public void setApproved(boolean approved) {
 		this.approved = approved;
 	}
+	
+
 
 	@Override
 	public int hashCode() {

@@ -7,11 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_class")
-public class Class implements Serializable{
+@Table(name = "tb_classe")
+public class Classe implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -23,10 +25,14 @@ public class Class implements Serializable{
 	private Instant endDate;
 	private boolean active;
 	private Instant creationDate;
+	
+	@ManyToOne
+	@JoinColumn(name = "subject_id")
+	private Subject subject;
+	
+	public Classe() {}
 
-	public Class() {}
-
-	public Class(Long id, String name, Instant startDate, Instant endDate, boolean active, Instant creationDate) {
+	public Classe(Long id, String name, Instant startDate, Instant endDate, boolean active, Instant creationDate,Subject subject) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -34,6 +40,8 @@ public class Class implements Serializable{
 		this.endDate = endDate;
 		this.active = active;
 		this.creationDate = creationDate;
+		this.subject= subject;
+		
 	}
 
 	public Long getId() {
@@ -83,6 +91,14 @@ public class Class implements Serializable{
 	public void setCreationDate(Instant creationDate) {
 		this.creationDate = creationDate;
 	}
+		
+	public Subject getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
 
 	@Override
 	public int hashCode() {
@@ -100,7 +116,7 @@ public class Class implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Class other = (Class) obj;
+		Classe other = (Classe) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

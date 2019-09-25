@@ -2,11 +2,17 @@ package online.vidacademica.services.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +30,9 @@ public class Course implements Serializable{
 	private boolean active;
 	private Instant creationDate;
 	
+
+	
+	
 	public Course() {}
 	
 	public Course(Long id, String name, String description, Double workload, boolean active, Instant creationDate) {
@@ -35,6 +44,7 @@ public class Course implements Serializable{
 		this.active = active;
 		this.creationDate = creationDate;
 	}
+	
 
 	public Long getId() {
 		return id;
