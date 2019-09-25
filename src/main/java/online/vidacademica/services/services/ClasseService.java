@@ -27,9 +27,8 @@ public class ClasseService {
 	@Autowired
 	private ClassRepository repository;
 
-	public List<ClasseDTO> findAll() {
-		List<Classe> list = repository.findAll();
-		return list.stream().map(e -> new ClasseDTO(e)).collect(Collectors.toList());
+	public List<Classe> findAll() {
+		return repository.findAll();
 	}
 	
 	

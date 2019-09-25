@@ -17,7 +17,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import online.vidacademica.services.dto.ClasseDTO;
 import online.vidacademica.services.entities.Classe;
-import online.vidacademica.services.entities.User;
 import online.vidacademica.services.services.ClasseService;
 
 @RestController
@@ -28,8 +27,8 @@ public class ClassResource {
 	private ClasseService service;
 	
 	@GetMapping
-	public ResponseEntity<List<ClasseDTO>> findAll(){
-		List<ClasseDTO> list = service.findAll();
+	public ResponseEntity<List<Classe>> findAll(){
+		List<Classe>list = service.findAll(); 
 		return ResponseEntity.ok().body(list);
 	}
 	
