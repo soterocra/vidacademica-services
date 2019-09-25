@@ -66,7 +66,6 @@ public class UserService {
 
 	private void updateData(User entity, UserDTO dto) {
 		entity.setName(dto.getName());
-			
 		entity.setDateOfBirth(dto.getDateOfBirth());
 		entity.setSocialId(dto.getSocialId());
 		entity.setRegistration(dto.getRegistration());
