@@ -64,18 +64,10 @@ public class UserService {
 		}
 	}
 
-<<<<<<< HEAD
 	private void updateData(User entity, UserDTO dto) {
 		entity.setName(dto.getName());
 		entity.setDateOfBirth(dto.getDateOfBirth());
 		entity.setSocialId(dto.getSocialId());
 		entity.setRegistration(dto.getRegistration());
-=======
-	private void updateData(User entity, User obj) {
-		entity.setName(obj.getName());
-		entity.setDateOfBirth(obj.getDateOfBirth());
-		entity.setSocialId(obj.getSocialId());
-		entity.setRegistration(obj.getRegistration());
->>>>>>> 9d9bfe2172d1df7bc6b764fd0340dc342ecff4a7
 	}
 }
