@@ -31,13 +31,6 @@ public class Course implements Serializable{
 	private Instant creationDate;
 	
 
-	@ManyToMany
-	@JoinTable(name = "tb_course_subject", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
-	private Set<Subject> subjects = new HashSet<>();
-	
-	@ManyToOne
-	@JoinColumn(name = "teacher_id")
-	private Teacher commander;
 	
 	
 	public Course() {}
@@ -101,16 +94,6 @@ public class Course implements Serializable{
 		this.creationDate = creationDate;
 	}
 
-	public Set<Subject> getSubjects() {
-		return subjects;
-	}
-	
-	public Teacher getTeacher() {
-		return commander;
-	}
-	public void setTeacher(Teacher commander) {
-		this.commander = commander;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

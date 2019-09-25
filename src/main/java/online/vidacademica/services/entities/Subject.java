@@ -3,17 +3,15 @@ package online.vidacademica.services.entities;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -35,16 +33,7 @@ public class Subject implements Serializable{
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "subject")
-	private Set<Class> classes = new HashSet<>();
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "subjects")
-	private Set<Course> courses = new HashSet<>();
-	
-	@ManyToOne
-	@JoinColumn(name = "subject_id")
-	private Teacher teacher;
-	
+	private Set<Classe> classes = new HashSet<>();
 	
 	
 	public Subject() {}
@@ -120,24 +109,13 @@ public class Subject implements Serializable{
 		this.minimumScore = minimumScore;
 	}
 
-	public Set<Class> getClasses() {
+		
+	
+	public Set<Classe> getClasses() {
 		return classes;
 	}
-	
-	public Set<Course> getCourses() {
-		return courses;
-	}
-	
-	public Teacher getTeacher() {
-		return teacher;
-	}
-	
-	public void setTeacher(Teacher teacher) {
-		this.teacher = teacher;
-	}
-	
-	
-	
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

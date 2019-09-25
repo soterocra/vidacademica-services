@@ -25,9 +25,7 @@ public class Test implements Serializable{
 	private Instant date;
 	private Instant creationDate;
 	
-	@ManyToOne
-	@JoinColumn(name = "test_id")
-	private Class classe;
+
 	
 	public Test() {}
 
@@ -80,13 +78,7 @@ public class Test implements Serializable{
 		this.creationDate = creationDate;
 	}
 	
-	public Class getClasse() {
-		return classe;
-	}
-	
-	public void setClass(Class classe) {
-		this.classe = classe;
-	}
+
 
 	@Override
 	public int hashCode() {

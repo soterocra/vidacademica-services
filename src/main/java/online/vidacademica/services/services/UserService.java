@@ -60,7 +60,6 @@ public class UserService {
 
 	private void updateData(User entity, User obj) {
 		entity.setName(obj.getName());
-			
 		entity.setDateOfBirth(obj.getDateOfBirth());
 		entity.setSocialId(obj.getSocialId());
 		entity.setRegistration(obj.getRegistration());

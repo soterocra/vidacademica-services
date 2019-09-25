@@ -26,12 +26,7 @@ public class Registration implements Serializable{
 	private Instant date;
 	private boolean approved;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "registration")
-	private Set<Class> classes = new HashSet<>();
-	
-	@OneToMany
-	private Set<Attendance> attendances = new HashSet<>();
+
 
 	
 	public Registration() {}
@@ -67,9 +62,7 @@ public class Registration implements Serializable{
 		this.approved = approved;
 	}
 	
-	public Set<Class> getClasses() {
-		return classes;
-	}
+
 
 	@Override
 	public int hashCode() {
