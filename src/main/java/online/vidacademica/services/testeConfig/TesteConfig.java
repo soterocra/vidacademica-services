@@ -76,14 +76,11 @@ public class TesteConfig implements CommandLineRunner {
 		State s1 = new State(null, "Minas Gerais", ct1);
 		City c1 = new City(null, "Uberlandia", s1);
 		Address a1 = new Address(null, "38408-265", "Rua João Balbino", "1153", c1, u1);
-<<<<<<< HEAD
 		
 		Post p5 = new Post("Essa é uma mensagem de teste",Instant.now(), u3);
 		Post p6 = new Post("Essa é uma mensagem de teste",Instant.now(), u4);
 		
 		postRepository.saveAll(Arrays.asList(p5,p6));
-=======
->>>>>>> fd05516b8470b968de1c0030b676b66daab7f518
 		
 		Post p1 = new Post("Essa é uma mensagem de teste", p5.getId(), Instant.now(), u1);
 		Post p2 = new Post("Essa é uma mensagem de teste", p5.getId(),Instant.now(), u1);
@@ -103,23 +100,12 @@ public class TesteConfig implements CommandLineRunner {
 		
 		Classe class1 = new Classe(null, "Sistemas Para Internet", Instant.now(),  Instant.parse("2019-07-22T15:21:22Z"), true,  Instant.parse("2019-07-22T15:21:22Z"),sub1);
 		
-		
 		postRepository.saveAll(Arrays.asList(p1,p2,p3,p4));
 		phoneRepository.saveAll(Arrays.asList(ph1, ph2, ph3));
 		classRepository.saveAll(Arrays.asList(class1));
 		countryRepository.saveAll(Arrays.asList(ct1));
 		stateRepository.saveAll(Arrays.asList(s1));
-<<<<<<< HEAD
 		cityRepository.saveAll(Arrays.asList(c1));
 		addressRepository.saveAll(Arrays.asList(a1));
-=======
-		 cityRepository.saveAll(Arrays.asList(c1));
-		 addressRepository.saveAll(Arrays.asList(a1));
->>>>>>> fd05516b8470b968de1c0030b676b66daab7f518
-	
-	
-	
-	
 	}
-	
 }
