@@ -1,4 +1,4 @@
-package online.vidacademica.services.testeConfig;
+package online.vidacademica.services.config;
 
 import java.time.Instant;
 import java.util.Arrays;
@@ -17,7 +17,6 @@ import online.vidacademica.services.entities.Post;
 import online.vidacademica.services.entities.State;
 import online.vidacademica.services.entities.Subject;
 import online.vidacademica.services.entities.User;
-import online.vidacademica.services.entities.enums.PostType;
 import online.vidacademica.services.repositories.AddressRepository;
 import online.vidacademica.services.repositories.CityRepository;
 import online.vidacademica.services.repositories.ClassRepository;
@@ -30,7 +29,7 @@ import online.vidacademica.services.repositories.UserRepository;
 
 @Configuration
 @Profile("test")
-public class TesteConfig implements CommandLineRunner {
+public class TestConfig implements CommandLineRunner {
 
 	// ADICIONAR REPOSITORIOS
 	@Autowired
