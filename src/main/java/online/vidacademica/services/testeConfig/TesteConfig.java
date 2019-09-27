@@ -76,11 +76,14 @@ public class TesteConfig implements CommandLineRunner {
 		State s1 = new State(null, "Minas Gerais", ct1);
 		City c1 = new City(null, "Uberlandia", s1);
 		Address a1 = new Address(null, "38408-265", "Rua João Balbino", "1153", c1, u1);
+<<<<<<< HEAD
 		
 		Post p5 = new Post("Essa é uma mensagem de teste",Instant.now(), u3);
 		Post p6 = new Post("Essa é uma mensagem de teste",Instant.now(), u4);
 		
 		postRepository.saveAll(Arrays.asList(p5,p6));
+=======
+>>>>>>> fd05516b8470b968de1c0030b676b66daab7f518
 		
 		Post p1 = new Post("Essa é uma mensagem de teste", p5.getId(), Instant.now(), u1);
 		Post p2 = new Post("Essa é uma mensagem de teste", p5.getId(),Instant.now(), u1);
@@ -91,11 +94,14 @@ public class TesteConfig implements CommandLineRunner {
 		Phone ph2 = new Phone(null, "55", "34", "999472644", u1);
 		Phone ph3 = new Phone(null, "55", "34", "999472644", u2);
 		
-		Subject sub1 = new Subject(null, "teste", "teste", 10.0, true, Instant.now(), 10.0);
+		Subject sub1 = new Subject(null, "Projeto e Desenvolvimento de Software", ""
+				+ "Conhecer fundamentos e boas práticas dos aspectos essenciais de projeto e\n" + 
+				"desenvolvimento de um sistema para Internet com orientação a objetos e acesso a banco de\n" + 
+				"dados. Utilizar técnicas e ferramentas para implementação dos tópicos estudados.", 105.0, true, Instant.now(), 60.0);
 		
 		subjectRepository.saveAll(Arrays.asList(sub1));
 		
-		Classe class1 = new Classe(null, "SI", Instant.now(),  Instant.parse("2019-07-22T15:21:22Z"), true,  Instant.parse("2019-07-22T15:21:22Z"),sub1);
+		Classe class1 = new Classe(null, "Sistemas Para Internet", Instant.now(),  Instant.parse("2019-07-22T15:21:22Z"), true,  Instant.parse("2019-07-22T15:21:22Z"),sub1);
 		
 		
 		postRepository.saveAll(Arrays.asList(p1,p2,p3,p4));
@@ -103,8 +109,13 @@ public class TesteConfig implements CommandLineRunner {
 		classRepository.saveAll(Arrays.asList(class1));
 		countryRepository.saveAll(Arrays.asList(ct1));
 		stateRepository.saveAll(Arrays.asList(s1));
+<<<<<<< HEAD
 		cityRepository.saveAll(Arrays.asList(c1));
 		addressRepository.saveAll(Arrays.asList(a1));
+=======
+		 cityRepository.saveAll(Arrays.asList(c1));
+		 addressRepository.saveAll(Arrays.asList(a1));
+>>>>>>> fd05516b8470b968de1c0030b676b66daab7f518
 	
 	
 	
