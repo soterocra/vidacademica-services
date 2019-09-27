@@ -22,5 +22,4 @@ public enum PostType {
 		}
 		throw new IllegalArgumentException("Invalid PostType code");
 	}
-	
 }

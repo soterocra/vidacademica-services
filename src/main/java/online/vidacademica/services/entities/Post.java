@@ -23,9 +23,9 @@ public class Post implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	private String body;
-	
-	private Integer postFather;
+	private Long postFather;
 	private Instant date;
+	private Integer postType;
 	
 	@ManyToOne
 	@JoinColumn(name = "author_id")
@@ -33,13 +33,32 @@ public class Post implements Serializable{
 	
 	public Post() {}
 
-	public Post(Long id, String body,PostType postFather, Instant date, User author) {
+	private Post(Long id, String body, Long postFather, Instant date, PostType postType, User author) {
 		super();
 		this.id = id;
 		this.body = body;
-		setPostFather(postFather);
+		this.postFather = postFather;
 		this.date = date;
+		setPostType(postType);
 		this.author = author;
+	}
+	
+	public Post(String body, Instant date, User author) {
+		this.id = null;
+		this.body = body;
+		this.postFather = null;
+		this.date = date;
+		setPostType(PostType.POST);
+		this.author = author;	
+	}
+	
+	public Post(String body, Long postFather, Instant date, User author) {
+		this.id = null;
+		this.body = body;
+		this.postFather = postFather;
+		this.date = date;
+		setPostType(PostType.COMMENT);
+		this.author = author;	
 	}
 
 	public Long getId() {
@@ -58,14 +77,20 @@ public class Post implements Serializable{
 		this.body = body;
 	}
 
-	public PostType getPostFather() {
-		return PostType.valueOf(postFather);
+	public Long getPostFather() {
+		return postFather;
 	}
 
-	public void setPostFather(PostType postFather) {
-		if (postFather != null) {
-		this.postFather = postFather.getCode();
-		}
+	public void setPostFather(Long postFather) {
+		this.postFather = postFather;
+	}
+
+	public PostType getPostType() {
+		return PostType.valueOf(postType);
+	}
+
+	public void setPostType(PostType postType) {
+		this.postType = postType.getCode();
 	}
 
 	public Instant getDate() {
