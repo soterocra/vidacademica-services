@@ -1,4 +1,4 @@
-package online.vidacademica.services.entities.resources;
+package online.vidacademica.services.resources;
 
 import java.util.List;
 

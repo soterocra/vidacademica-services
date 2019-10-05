@@ -1,4 +1,4 @@
-package online.vidacademica.services.entities.resources;
+package online.vidacademica.services.resources;
 
 import java.util.List;
 
@@ -9,25 +9,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import online.vidacademica.services.entities.Post;
-import online.vidacademica.services.services.PostService;
+import online.vidacademica.services.entities.Phone;
+import online.vidacademica.services.services.PhoneService;
 
 @RestController
-@RequestMapping(value = "/posts")
-public class PostResource {
+@RequestMapping(value = "/phones")
+public class PhoneResource {
 
 	@Autowired
-	private PostService service;
+	private PhoneService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Post>> findAll(){
-		List<Post> list = service.findAll();
+	public ResponseEntity<List<Phone>> findAll(){
+		List<Phone> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Post> findById(@PathVariable Long id){
-		Post obj = service.findById(id);
+	public ResponseEntity<Phone> findById(@PathVariable Long id){
+		Phone obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	

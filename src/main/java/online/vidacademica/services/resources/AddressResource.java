@@ -1,4 +1,4 @@
-package online.vidacademica.services.entities.resources;
+package online.vidacademica.services.resources;
 
 import java.util.List;
 
@@ -9,25 +9,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import online.vidacademica.services.entities.Country;
-import online.vidacademica.services.services.CountryService;
+import online.vidacademica.services.entities.Address;
+import online.vidacademica.services.services.AddressService;
 
 @RestController
-@RequestMapping(value = "/countries")
-public class CountryResource {
+@RequestMapping(value = "/addresses")
+public class AddressResource {
 
 	@Autowired
-	private CountryService service;
+	private AddressService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Country>> findAll(){
-		List<Country> list = service.findAll();
+	public ResponseEntity<List<Address>> findAll(){
+		List<Address> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Country> findById(@PathVariable Long id){
-		Country obj = service.findById(id);
+	public ResponseEntity<Address> findById(@PathVariable Long id){
+		Address obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	

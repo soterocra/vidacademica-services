@@ -1,4 +1,4 @@
-package online.vidacademica.services.entities.resources;
+package online.vidacademica.services.resources;
 
 import java.util.List;
 
@@ -9,25 +9,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import online.vidacademica.services.entities.Phone;
-import online.vidacademica.services.services.PhoneService;
+import online.vidacademica.services.entities.Country;
+import online.vidacademica.services.services.CountryService;
 
 @RestController
-@RequestMapping(value = "/phones")
-public class PhoneResource {
+@RequestMapping(value = "/countries")
+public class CountryResource {
 
 	@Autowired
-	private PhoneService service;
+	private CountryService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Phone>> findAll(){
-		List<Phone> list = service.findAll();
+	public ResponseEntity<List<Country>> findAll(){
+		List<Country> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Phone> findById(@PathVariable Long id){
-		Phone obj = service.findById(id);
+	public ResponseEntity<Country> findById(@PathVariable Long id){
+		Country obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
