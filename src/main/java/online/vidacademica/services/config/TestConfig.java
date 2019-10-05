@@ -1,31 +1,14 @@
 package online.vidacademica.services.config;
 
-import java.time.Instant;
+import java.time.*;
 import java.util.Arrays;
 
+import online.vidacademica.services.entities.*;
+import online.vidacademica.services.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-
-import online.vidacademica.services.entities.Address;
-import online.vidacademica.services.entities.City;
-import online.vidacademica.services.entities.Classe;
-import online.vidacademica.services.entities.Country;
-import online.vidacademica.services.entities.Phone;
-import online.vidacademica.services.entities.Post;
-import online.vidacademica.services.entities.State;
-import online.vidacademica.services.entities.Subject;
-import online.vidacademica.services.entities.User;
-import online.vidacademica.services.repositories.AddressRepository;
-import online.vidacademica.services.repositories.CityRepository;
-import online.vidacademica.services.repositories.ClassRepository;
-import online.vidacademica.services.repositories.CountryRepository;
-import online.vidacademica.services.repositories.PhoneRepository;
-import online.vidacademica.services.repositories.PostRepository;
-import online.vidacademica.services.repositories.StateRepository;
-import online.vidacademica.services.repositories.SubjectRepository;
-import online.vidacademica.services.repositories.UserRepository;
 
 @Configuration
 @Profile("test")
@@ -58,6 +41,12 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private SubjectRepository subjectRepository;
+
+    @Autowired
+    private TimeTableEntryRepository timeTableEntryRepository;
+
+    @Autowired
+    private TimeTableRepository timeTableRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -124,5 +113,32 @@ public class TestConfig implements CommandLineRunner {
         postRepository.saveAll(Arrays.asList(p1, p2, p3, p4));
         phoneRepository.saveAll(Arrays.asList(ph1, ph2, ph3));
         classRepository.saveAll(Arrays.asList(class1));
+
+
+        TimeTable t1 = new TimeTable(null, "Horários 2019-2");
+
+        TimeTableEntry e1 = new TimeTableEntry(null, DayOfWeek.MONDAY, 18L, 45L, 19L, 30L, t1);
+        TimeTableEntry e2 = new TimeTableEntry(null, DayOfWeek.MONDAY, 19L, 30L, 20L, 15L, t1);
+        TimeTableEntry e3 = new TimeTableEntry(null, DayOfWeek.TUESDAY, 18L, 45L, 19L, 30L, t1);
+        TimeTableEntry e4 = new TimeTableEntry(null, DayOfWeek.TUESDAY, 19L, 30L, 20L, 15L, t1);
+        TimeTableEntry e5 = new TimeTableEntry(null, DayOfWeek.TUESDAY, 20L, 15L, 21L, 00L, t1);
+
+        timeTableRepository.save(t1);
+        timeTableEntryRepository.saveAll(Arrays.asList(e1, e2, e3, e4, e5));
+
+        //TimeBox tb1 = new TimeBox(null, DayOfWeek.MONDAY, 18L, 45L, 19L, 30L, t1);
+        //timeBoxRepository.save(tb1);
+
+        LocalDateTime dt1 = LocalDateTime.now(ZoneId.systemDefault());
+
+        System.out.println("DADOS=====================");
+        System.out.println(dt1);
+
+        Instant i1 = dt1.atZone(ZoneId.systemDefault()).toInstant();
+        System.out.println(i1);
+        System.out.println(dt1.getDayOfWeek());
+
+        LocalDate d1 = dt1.toLocalDate();
+        System.out.println(d1.getDayOfWeek());
     }
 }
