@@ -1,4 +1,5 @@
-package com.educandoweb.timetablepoc.entities.interfaces;
+package online.vidacademica.services.entities.interfaces;
+
 
 import java.io.Serializable;
 import java.time.DayOfWeek;

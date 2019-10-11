@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -34,6 +35,9 @@ public class Subject implements Serializable{
 	@OneToMany(mappedBy = "subject")
 	private Set<Classe> classes = new HashSet<>();
 	
+	
+	@ManyToMany(mappedBy = "subject")
+	private Set<Course> course = new HashSet<>();
 	
 	public Subject() {}
 
@@ -114,6 +118,11 @@ public class Subject implements Serializable{
 		return classes;
 	}
 
+	
+
+	public Set<Course> getCourses() {
+		return course;
+	}
 
 	@Override
 	public int hashCode() {

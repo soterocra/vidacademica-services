@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -45,6 +46,9 @@ public class User implements Serializable {
     
     @OneToMany(mappedBy = "user")
     private Set<Address> addresses = new HashSet<>();
+    
+    @ManyToMany(mappedBy = "user")
+	private Set<Test> test = new HashSet<>();
     
     public User() {
     }
@@ -137,6 +141,12 @@ public class User implements Serializable {
     
     public Set<Address> getAddresses() {
 		return addresses;
+	}
+    
+    
+
+	public Set<Test> getTest() {
+		return test;
 	}
 
 	@Override

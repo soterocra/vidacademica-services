@@ -2,11 +2,16 @@ package online.vidacademica.services.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,7 +28,9 @@ public class Test implements Serializable{
 	private Instant date;
 	private Instant creationDate;
 	
-
+	@ManyToMany
+	@JoinTable(name = "tb_test_user", joinColumns = @JoinColumn(name = "test_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private Set<User> user = new HashSet<>();
 	
 	public Test() {}
 
@@ -77,6 +84,10 @@ public class Test implements Serializable{
 	}
 	
 
+
+	public Set<User> getUser() {
+		return user;
+	}
 
 	@Override
 	public int hashCode() {

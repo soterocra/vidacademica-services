@@ -10,11 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.educandoweb.timetablepoc.entities.interfaces.TimeEntry;
 
 @Entity
 @Table(name = "tb_time_table_entry")
-public class TimeTableEntry implements TimeEntry  {
+public class TimeTableEntry implements online.vidacademica.services.entities.interfaces.TimeEntry  {
 	private static final long serialVersionUID = 1L;
 
 	@Id

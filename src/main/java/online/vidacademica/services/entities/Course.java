@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -30,6 +29,9 @@ public class Course implements Serializable{
 	private boolean active;
 	private Instant creationDate;
 	
+	@ManyToMany
+	@JoinTable(name = "tb_subject_course", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
+	private Set<Subject> subject = new HashSet<>();
 
 	
 	
@@ -94,6 +96,9 @@ public class Course implements Serializable{
 		this.creationDate = creationDate;
 	}
 
+	public Set<Subject> getSubjects() {
+		return subject;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
