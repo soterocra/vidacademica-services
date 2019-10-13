@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -31,6 +32,11 @@ public class Test implements Serializable{
 	@ManyToMany
 	@JoinTable(name = "tb_test_user", joinColumns = @JoinColumn(name = "test_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> user = new HashSet<>();
+	
+	@ManyToOne
+	@JoinColumn(name = "classe_id")
+	private Classe classe;
+	
 	
 	public Test() {}
 
@@ -84,6 +90,15 @@ public class Test implements Serializable{
 	}
 	
 
+
+	public Classe getClasse() {
+		return classe;
+	}
+	
+
+	public void setClasse(Classe classe) {
+		this.classe = classe;
+	}
 
 	public Set<User> getUser() {
 		return user;

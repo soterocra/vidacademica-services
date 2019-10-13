@@ -2,6 +2,8 @@ package online.vidacademica.services.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,14 +11,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_classe")
-public class Classe implements Serializable{
+public class Classe implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -25,14 +30,20 @@ public class Classe implements Serializable{
 	private Instant endDate;
 	private boolean active;
 	private Instant creationDate;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "subject_id")
 	private Subject subject;
-	
-	public Classe() {}
 
-	public Classe(Long id, String name, Instant startDate, Instant endDate, boolean active, Instant creationDate,Subject subject) {
+	@JsonIgnore
+	@OneToMany(mappedBy = "classe")
+	private List<Test> tests = new ArrayList<>();
+
+	public Classe() {
+	}
+
+	public Classe(Long id, String name, Instant startDate, Instant endDate, boolean active, Instant creationDate,
+			Subject subject) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -40,8 +51,8 @@ public class Classe implements Serializable{
 		this.endDate = endDate;
 		this.active = active;
 		this.creationDate = creationDate;
-		this.subject= subject;
-		
+		this.subject = subject;
+
 	}
 
 	public Long getId() {
@@ -91,13 +102,25 @@ public class Classe implements Serializable{
 	public void setCreationDate(Instant creationDate) {
 		this.creationDate = creationDate;
 	}
-		
+
 	public Subject getSubject() {
 		return subject;
 	}
 
 	public void setSubject(Subject subject) {
 		this.subject = subject;
+	}
+	
+	
+
+	public List<Test> getTests() {
+		return tests;
+	}
+	
+	
+
+	public void setTests(List<Test> tests) {
+		this.tests = tests;
 	}
 
 	@Override
@@ -124,9 +147,5 @@ public class Classe implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
+
 }
