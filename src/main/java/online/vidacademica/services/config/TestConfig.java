@@ -42,7 +42,7 @@ import online.vidacademica.services.repositories.TimeTableRepository;
 import online.vidacademica.services.repositories.UserRepository;
 
 @Configuration
-@Profile({"test", "testmariadb"})
+@Profile({"test", "testmariadb", "production"})
 public class TestConfig implements CommandLineRunner {
 
     // ADICIONAR REPOSITORIOS
