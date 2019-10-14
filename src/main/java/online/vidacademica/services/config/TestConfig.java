@@ -240,6 +240,11 @@ public class TestConfig implements CommandLineRunner {
         TestResult testResult11 = new TestResult(u3, test3, 12.00, Instant.parse("2019-10-11T00:21:22Z"));
         TestResult testResult12 = new TestResult(u4, test3, 14.00, Instant.parse("2019-10-11T00:21:22Z"));
 
+        TestResult testResult13 = new TestResult(u1, test5, 18.00, Instant.parse("2019-10-11T00:21:22Z"));
+        TestResult testResult14 = new TestResult(u2, test5, 17.00, Instant.parse("2019-10-11T00:21:22Z"));
+        TestResult testResult15 = new TestResult(u3, test5, 17.00, Instant.parse("2019-10-11T00:21:22Z"));
+        TestResult testResult16 = new TestResult(u4, test5, 20.00, Instant.parse("2019-10-11T00:21:22Z"));
+        
         testResultRepository.saveAll(Arrays.asList(testResult1));
         testResultRepository.saveAll(Arrays.asList(testResult2));
         testResultRepository.saveAll(Arrays.asList(testResult3));
@@ -255,6 +260,10 @@ public class TestConfig implements CommandLineRunner {
         testResultRepository.saveAll(Arrays.asList(testResult11));
         testResultRepository.saveAll(Arrays.asList(testResult12));
 
+        testResultRepository.saveAll(Arrays.asList(testResult13));
+        testResultRepository.saveAll(Arrays.asList(testResult14));
+        testResultRepository.saveAll(Arrays.asList(testResult15));
+        testResultRepository.saveAll(Arrays.asList(testResult16));
 
         test1.setClasse(class1);
         test2.setClasse(class1);

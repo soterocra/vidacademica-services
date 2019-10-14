@@ -13,7 +13,7 @@ import online.vidacademica.services.entities.pk.TestResultPK;
 @Table(name = "tb_testResult")
 public class TestResult implements Serializable {
 	
-    private static final long serialVersionUID = 2117548390130629662L;
+    private static final long serialVersionUID = 1L;
     
     @EmbeddedId
 	private TestResultPK id = new TestResultPK();
