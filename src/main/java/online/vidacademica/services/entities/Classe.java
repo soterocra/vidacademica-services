@@ -31,6 +31,7 @@ public class Classe implements Serializable {
 	private boolean active;
 	private Instant creationDate;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "subject_id")
 	private Subject subject;

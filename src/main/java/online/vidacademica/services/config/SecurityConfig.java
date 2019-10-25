@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private Environment env;
 	
-	private static final String[] PUBLIC_MATCHERS_GET = {"/class/**"};
+	private static final String[] PUBLIC_MATCHERS_GET = {};
 	
 	private static final String[] PUBLIC_MATCHERS_POST = {"/users/**"};
 	

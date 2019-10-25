@@ -39,6 +39,8 @@ public class Subject implements Serializable{
 	@ManyToMany(mappedBy = "subject")
 	private Set<Course> course = new HashSet<>();
 	
+	
+	
 	public Subject() {}
 
 	public Subject(Long id, String name, String description, Double workload, boolean active, Instant creationDate,

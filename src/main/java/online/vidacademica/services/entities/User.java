@@ -1,27 +1,33 @@
 package online.vidacademica.services.entities;
 
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_user")
-public class User implements Serializable {
+public class User implements UserDetails {
     private static final long serialVersionUID = -7721831167050285337L;
 
     @Id
@@ -50,6 +56,10 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "user")
 	private Set<Test> test = new HashSet<>();
     
+	@ManyToMany
+	@JoinTable(name = "tb_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
+    
     public User() {
     }
 
@@ -58,7 +68,9 @@ public class User implements Serializable {
 		super();
 		this.id = id;
 		this.name = name;
+		
 		this.email = email;
+		
 		this.dateOfBirth = dateOfBirth;
 		this.socialId = socialId;
 		this.registration = registration;
@@ -149,6 +161,10 @@ public class User implements Serializable {
 		return test;
 	}
 
+	public Set<Role> getRoles(){
+		return roles;
+	}
+	
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -161,4 +177,36 @@ public class User implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return roles; 
+	}
+
+	@Override
+	public String getUsername() {
+		return email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+
+	}
 }

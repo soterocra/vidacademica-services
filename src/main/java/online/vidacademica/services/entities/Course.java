@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_course")
 public class Course implements Serializable{
@@ -29,6 +31,7 @@ public class Course implements Serializable{
 	private boolean active;
 	private Instant creationDate;
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "tb_subject_course", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
 	private Set<Subject> subject = new HashSet<>();

@@ -19,6 +19,7 @@ import online.vidacademica.services.entities.Country;
 import online.vidacademica.services.entities.Course;
 import online.vidacademica.services.entities.Phone;
 import online.vidacademica.services.entities.Post;
+import online.vidacademica.services.entities.Role;
 import online.vidacademica.services.entities.State;
 import online.vidacademica.services.entities.Subject;
 import online.vidacademica.services.entities.Test;
@@ -33,6 +34,7 @@ import online.vidacademica.services.repositories.CountryRepository;
 import online.vidacademica.services.repositories.CourseRepository;
 import online.vidacademica.services.repositories.PhoneRepository;
 import online.vidacademica.services.repositories.PostRepository;
+import online.vidacademica.services.repositories.RoleRepository;
 import online.vidacademica.services.repositories.StateRepository;
 import online.vidacademica.services.repositories.SubjectRepository;
 import online.vidacademica.services.repositories.TestRepository;
@@ -87,6 +89,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private TestRepository testRepository;
+    
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -97,8 +102,25 @@ public class TestConfig implements CommandLineRunner {
         User u2 = new User(null, "Eduardo Augusto", "dudu@gmail.com", null, "A3", "ABD", "123", Instant.now());
         User u3 = new User(null, "Rafael Sotero", "soso@gmail.com", null, "B5", "CSD", "123", Instant.now());
         User u4 = new User(null, "Tiago Marques", "titi@gmail.com", null, "C3", "JSD", "123", Instant.now());
+        User u5 = new User(null, "Nelio Alves", "nelio@gmail.com", null, "d4", "JSD", "123", Instant.now());
 
-        userRepository.saveAll(Arrays.asList(u1, u2, u3, u4));
+        
+        userRepository.saveAll(Arrays.asList(u1, u2, u3, u4,u5));
+        
+        Role role_Teacher = new Role(null, "ROLE_TEACHER");
+        Role role_Student = new Role(null, "ROLE_STUDENT");
+        
+        roleRepository.saveAll(Arrays.asList(role_Teacher,role_Student));
+        
+        u1.getRoles().add(role_Student);
+        u1.getRoles().add(role_Teacher );
+        u2.getRoles().add(role_Student);
+        u3.getRoles().add(role_Student);
+        u4.getRoles().add(role_Student);
+        u5.getRoles().add(role_Teacher);
+        
+        userRepository.saveAll(Arrays.asList(u1, u2, u3, u4,u5));
+ 
 
         Country ct1 = new Country(null, "Brasil");
         countryRepository.saveAll(Arrays.asList(ct1));
