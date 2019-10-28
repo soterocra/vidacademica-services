@@ -8,6 +8,7 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,11 +32,12 @@ public class SubjectService {
 		return obj.get();
 	}
 
+	@PreAuthorize("hasAnyRole('TEACHER')")
 	public Subject insert(Subject obj) {
 		return repository.save(obj);
 
 	}
-
+	@PreAuthorize("hasAnyRole('TEACHER')")
 	public void delete(Long id) {
 		try {
 			repository.deleteById(id);
@@ -45,7 +47,8 @@ public class SubjectService {
 			throw new DatabaseException("Matéria não pode ser excluida!");
 		}
 	}
-
+	
+	@PreAuthorize("hasAnyRole('TEACHER')")
 	@Transactional
 	public Subject update(Long id, Subject obj) {
 		try {
