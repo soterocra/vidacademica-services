@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import online.vidacademica.services.entities.Address;
 import online.vidacademica.services.entities.City;
@@ -93,16 +94,19 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncode;
+    
     @Override
     public void run(String... args) throws Exception {
 
         // ADICIONA OS ELEMENTOS DO BANCO TESTE
 
-        User u1 = new User(null, "Carlos Gustavo", "cgletras@gmail.com", null, "A2", "ASD", "123", Instant.now());
-        User u2 = new User(null, "Eduardo Augusto", "dudu@gmail.com", null, "A3", "ABD", "123", Instant.now());
-        User u3 = new User(null, "Rafael Sotero", "soso@gmail.com", null, "B5", "CSD", "123", Instant.now());
-        User u4 = new User(null, "Tiago Marques", "titi@gmail.com", null, "C3", "JSD", "123", Instant.now());
-        User u5 = new User(null, "Nelio Alves", "nelio@gmail.com", null, "d4", "JSD", "123", Instant.now());
+        User u1 = new User(null, "Carlos Gustavo", "cgletras@gmail.com", null, "A2", "ASD",passwordEncode.encode("123"), Instant.now());
+        User u2 = new User(null, "Eduardo Augusto", "dudu@gmail.com", null, "A3", "ABD", passwordEncode.encode("123"), Instant.now());
+        User u3 = new User(null, "Rafael Sotero", "soso@gmail.com", null, "B5", "CSD", passwordEncode.encode("123"), Instant.now());
+        User u4 = new User(null, "Tiago Marques", "titi@gmail.com", null, "C3", "JSD", passwordEncode.encode("123"), Instant.now());
+        User u5 = new User(null, "Nelio Alves", "nelio@gmail.com", null, "d4", "JSD", passwordEncode.encode("123"), Instant.now());
 
         
         userRepository.saveAll(Arrays.asList(u1, u2, u3, u4,u5));
