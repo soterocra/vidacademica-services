@@ -6,9 +6,13 @@ import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +25,9 @@ import online.vidacademica.services.resources.exceptions.DatabaseException;
 import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
+	
+
 	
 	@Autowired
 	private UserRepository repository;
@@ -74,5 +80,14 @@ public class UserService {
 		entity.setDateOfBirth(dto.getDateOfBirth());
 		entity.setSocialId(dto.getSocialId());
 		entity.setRegistration(dto.getRegistration());
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user =  repository.findByEmail(username);
+		if(user == null) {
+			throw new UsernameNotFoundException(username);
+		}
+		return user;
 	}
 }
