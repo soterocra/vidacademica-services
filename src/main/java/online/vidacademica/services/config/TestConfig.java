@@ -45,7 +45,7 @@ import online.vidacademica.services.repositories.TimeTableRepository;
 import online.vidacademica.services.repositories.UserRepository;
 
 @Configuration
-@Profile({"test", "testmariadb", "production"})
+@Profile({"test", "testmariadb"})
 public class TestConfig implements CommandLineRunner {
 
     // ADICIONAR REPOSITORIOS
@@ -201,7 +201,7 @@ public class TestConfig implements CommandLineRunner {
         classRepository.saveAll(Arrays.asList(class1));
         classRepository.saveAll(Arrays.asList(class2));
 
-        TimeTable t1 = new TimeTable(null, "Horários 2019-2");
+        TimeTable t1 = new TimeTable(null, "Horários 2019-2", LocalDate.now(), LocalDate.now().plusDays(180));
 
         TimeTableEntry e1 = new TimeTableEntry(null, DayOfWeek.MONDAY, 18L, 45L, 19L, 30L, t1);
         TimeTableEntry e2 = new TimeTableEntry(null, DayOfWeek.MONDAY, 19L, 30L, 20L, 15L, t1);

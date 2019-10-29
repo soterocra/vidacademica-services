@@ -26,6 +26,8 @@ public class TimeTableService {
 	public TimesDTO times(Long timeTableId, LocalDate localDate) {
 	
 		TimeTable timeTable = repository.getOne(timeTableId);
+
+		if (localDate.isBefore(timeTable.getStartDate()) || localDate.isAfter(timeTable.getEndDate())) return null;
 		
 		Stream<TimeTableEntry> entries = timeTable.getEntries().stream()
 				.filter(e -> e.getDay().equals(localDate.getDayOfWeek())).sorted();
@@ -40,7 +42,10 @@ public class TimeTableService {
 		List<TimesDTO> list = new ArrayList<>();
 		
 		for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1L)) {
-			list.add(times(timeTableId, date));
+			TimesDTO timeDTO = times(timeTableId, date);
+			if (timeDTO != null) {
+				list.add(timeDTO);
+			}
 		}
 		
 		return list;

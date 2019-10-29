@@ -1,5 +1,6 @@
 package online.vidacademica.services.entities;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,8 @@ public class TimeTable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String description;
+	private LocalDate startDate;
+	private LocalDate endDate;
 	
 	@OneToMany(mappedBy = "timeTable")
 	private List<TimeTableEntry> entries = new ArrayList<>();
@@ -25,10 +28,12 @@ public class TimeTable {
 	public TimeTable() {
 	}
 
-	public TimeTable(Long id, String description) {
+	public TimeTable(Long id, String description, LocalDate startDate, LocalDate endDate) {
 		super();
 		this.id = id;
 		this.description = description;
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
 
 	public Long getId() {
@@ -45,6 +50,22 @@ public class TimeTable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDate getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
 	}
 
 	public List<TimeTableEntry> getEntries() {
