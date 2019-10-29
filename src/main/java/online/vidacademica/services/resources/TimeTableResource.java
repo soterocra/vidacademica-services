@@ -15,19 +15,15 @@ public class TimeTableResource {
 
 	@Autowired
 	private TimeTableService service;
-	
-	@GetMapping(value = "/{timeTableId}/timeboxes")
-	public ResponseEntity<TimesDTO> timeboxes(@RequestParam(value="date") String date, @PathVariable Long timeTableId) {
-		LocalDate d = LocalDate.parse(date);
-		TimesDTO times = service.times(timeTableId, d);
-		return ResponseEntity.ok().body(times);
-	}
 
-	@GetMapping(value = "/{timeTableId}/timeboxesrange")
-	public ResponseEntity<List<TimesDTO>> timeboxesrange(
-			@RequestParam(value="startDate") String startDate, 
-			@RequestParam(value="endDate") String endDate, 
+	@GetMapping(value = "/{timeTableId}/timeboxes")
+	public ResponseEntity<List<TimesDTO>> timeboxes(
+			@RequestParam(value="startDate") String startDate,
+			@RequestParam(value="endDate", required = false) String endDate,
 			@PathVariable Long timeTableId) {
+		if (endDate == null) {
+			endDate = startDate;
+		}
 		LocalDate d1 = LocalDate.parse(startDate);
 		LocalDate d2 = LocalDate.parse(endDate);
 		List<TimesDTO> list = service.times(timeTableId, d1, d2);
