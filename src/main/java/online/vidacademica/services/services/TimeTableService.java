@@ -23,7 +23,7 @@ public class TimeTableService {
 	@Autowired
 	private TimeTableRepository repository;
 	
-	public TimesDTO times(Long timeTableId, LocalDate localDate) {
+	private TimesDTO times(Long timeTableId, LocalDate localDate) {
 	
 		TimeTable timeTable = repository.getOne(timeTableId);
 
