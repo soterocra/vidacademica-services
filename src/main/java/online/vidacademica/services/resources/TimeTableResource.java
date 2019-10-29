@@ -13,20 +13,20 @@ import java.util.List;
 @RequestMapping(value = "/timetable")
 public class TimeTableResource {
 
-	@Autowired
-	private TimeTableService service;
+    @Autowired
+    private TimeTableService service;
 
-	@GetMapping(value = "/{timeTableId}/timeboxes")
-	public ResponseEntity<List<TimesDTO>> timeboxes(
-			@RequestParam(value="startDate") String startDate,
-			@RequestParam(value="endDate", required = false) String endDate,
-			@PathVariable Long timeTableId) {
-		if (endDate == null) {
-			endDate = startDate;
-		}
-		LocalDate d1 = LocalDate.parse(startDate);
-		LocalDate d2 = LocalDate.parse(endDate);
-		List<TimesDTO> list = service.times(timeTableId, d1, d2);
-		return ResponseEntity.ok().body(list);
-	}
+    @GetMapping(value = "/{timeTableId}/timeboxes")
+    public ResponseEntity<List<TimesDTO>> timeboxes(
+            @RequestParam(value = "startDate") String startDate,
+            @RequestParam(value = "endDate", required = false) String endDate,
+            @PathVariable Long timeTableId) {
+        if (endDate == null) {
+            endDate = startDate;
+        }
+        LocalDate d1 = LocalDate.parse(startDate);
+        LocalDate d2 = LocalDate.parse(endDate);
+        List<TimesDTO> list = service.times(timeTableId, d1, d2);
+        return ResponseEntity.ok().body(list);
+    }
 }
