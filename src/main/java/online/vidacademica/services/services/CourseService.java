@@ -1,20 +1,20 @@
 package online.vidacademica.services.services;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.persistence.EntityNotFoundException;
-
+import online.vidacademica.services.dto.CourseDTO;
+import online.vidacademica.services.entities.Course;
+import online.vidacademica.services.repositories.CourseRepository;
+import online.vidacademica.services.resources.exceptions.DatabaseException;
+import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import online.vidacademica.services.entities.Course;
-import online.vidacademica.services.repositories.CourseRepository;
-import online.vidacademica.services.resources.exceptions.DatabaseException;
-import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
@@ -22,18 +22,21 @@ public class CourseService {
 	@Autowired
 	private CourseRepository repository;
 
-	public List<Course> findAll() {
-		return repository.findAll();
+	public List<CourseDTO> findAll() {
+		List<Course> list = repository.findAll();
+		return list.stream().map(e -> new CourseDTO(e)).collect(Collectors.toList());
 	}
 
-	public Course findById(Long id) {
+	public CourseDTO findById(Long id) {
 		Optional<Course> obj = repository.findById(id);
-		return obj.get();
+		Course entity = obj.orElseThrow(() -> new ResourceNotFoundException(id));
+		return new CourseDTO(entity);
 	}
 
-	public Course insert(Course obj) {
-		return repository.save(obj);
-
+	public CourseDTO insert(CourseDTO dto) {
+		Course entity = dto.toEntity();
+		entity = repository.save(entity);
+		return new CourseDTO(entity);
 	}
 
 	public void delete(Long id) {
@@ -47,22 +50,22 @@ public class CourseService {
 	}
 
 	@Transactional
-	public Course update(Long id, Course obj) {
+	public CourseDTO update(Long id, CourseDTO dto) {
 		try {
 			Course entity = repository.getOne(id);
-			updateData(entity, obj);
-			return repository.save(entity);
+			updateData(entity, dto);
+			entity = repository.save(entity);
+			return new CourseDTO(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
 		}
-
 	}
 
-	private void updateData(Course entity, Course obj) {
-		entity.setName(obj.getName());
-		entity.setDescription(obj.getDescription());
-		entity.setWorkload(obj.getWorkload());
-		entity.setActive(obj.isActive());
-		entity.setCreationDate(obj.getCreationDate());
+	private void updateData(Course entity, CourseDTO dto) {
+		entity.setName(dto.getName());
+		entity.setDescription(dto.getDescription());
+		entity.setWorkload(dto.getWorkload());
+		entity.setActive(dto.isActive());
+		entity.setCreationDate(dto.getCreationDate());
 	}
 }

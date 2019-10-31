@@ -58,7 +58,9 @@ public class SubjectResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
+
+	@PreAuthorize("hasAnyRole('TEACHER')")
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<SubjectDTO> update(@PathVariable Long id, @RequestBody SubjectDTO dto){
 		dto = service.update(id, dto);

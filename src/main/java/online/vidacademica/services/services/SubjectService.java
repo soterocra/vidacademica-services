@@ -37,13 +37,11 @@ public class SubjectService {
 		return new SubjectDTO(entity);
 	}
 
-	@PreAuthorize("hasAnyRole('TEACHER')")
 	public SubjectDTO insert(SubjectDTO dto) {
 		Subject entity = dto.toEntity();
 		entity = repository.save(entity);
 		return new SubjectDTO(entity);
 	}
-	@PreAuthorize("hasAnyRole('TEACHER')")
 	public void delete(Long id) {
 		try {
 			repository.deleteById(id);
@@ -54,7 +52,6 @@ public class SubjectService {
 		}
 	}
 	
-	@PreAuthorize("hasAnyRole('TEACHER')")
 	@Transactional
 	public SubjectDTO update(Long id, SubjectDTO dto) {
 		try {

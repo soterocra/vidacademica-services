@@ -3,6 +3,7 @@ package online.vidacademica.services.resources;
 import java.net.URI;
 import java.util.List;
 
+import online.vidacademica.services.dto.CourseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,23 +31,23 @@ public class CourseResource {
 	private CourseService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Course>> findAll(){
-		List<Course> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+	public ResponseEntity<List<CourseDTO>> findAll(){
+		List<CourseDTO> dto = service.findAll();
+		return ResponseEntity.ok().body(dto);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Course> findById(@PathVariable Long id){
-		Course obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<CourseDTO> findById(@PathVariable Long id){
+		CourseDTO dto = service.findById(id);
+		return ResponseEntity.ok().body(dto);
 	}
 	
 	@PreAuthorize("hasAnyRole('TEACHER')")
 	@PostMapping
-	public ResponseEntity<Course> insert(@RequestBody Course obj){
-		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+	public ResponseEntity<CourseDTO> insert(@RequestBody CourseDTO dto){
+		CourseDTO newDto = service.insert(dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
+		return ResponseEntity.created(uri).body(newDto);
 	}
 	
 	@PreAuthorize("hasAnyRole('TEACHER')")
@@ -55,10 +56,11 @@ public class CourseResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
+	@PreAuthorize("hasAnyRole('TEACHER')")
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Course> update(@PathVariable Long id, @RequestBody Course obj){
-		obj = service.update(id, obj);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<CourseDTO> update(@PathVariable Long id, @RequestBody CourseDTO dto){
+		dto = service.update(id, dto);
+		return ResponseEntity.ok().body(dto);
 	}
 }
