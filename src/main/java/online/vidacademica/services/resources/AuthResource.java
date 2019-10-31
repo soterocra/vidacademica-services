@@ -2,6 +2,7 @@ package online.vidacademica.services.resources;
 
 import java.net.URI;
 
+import online.vidacademica.services.dto.EmailDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,12 @@ public class AuthResource {
 		TokenDTO tokenDTO = service.tokenRefresh();
 		return ResponseEntity.ok().body(tokenDTO);
 	}
+
+    @PostMapping("/forgot")
+    public ResponseEntity<Void> forgot(@RequestBody EmailDTO dto){
+        service.sendNewPassword(dto.getEmail());
+        return ResponseEntity.noContent().build();
+    }
 
 	
 }
