@@ -2,12 +2,15 @@ package online.vidacademica.services.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
 import jdk.jfr.Category;
 import online.vidacademica.services.dto.SubjectDTO;
+import online.vidacademica.services.entities.Course;
+import online.vidacademica.services.repositories.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -25,6 +28,10 @@ public class SubjectService {
 
 	@Autowired
 	private SubjectRepository repository;
+
+	@Autowired
+	private CourseRepository courseRepository;
+
 
 	public List<SubjectDTO> findAll() {
 		List<Subject> list =  repository.findAll();
@@ -74,4 +81,12 @@ public class SubjectService {
 		entity.setMinimumScore(dto.getMinimumScore());
 
 	}
+
+	@Transactional(readOnly = true)
+	public List<SubjectDTO> findByCourse(Long productId) {
+		Course course = courseRepository.getOne(productId);
+		Set<Subject> set =  course.getSubjects();
+		return set.stream().map(e -> new SubjectDTO(e)).collect(Collectors.toList());
+	}
 }
+

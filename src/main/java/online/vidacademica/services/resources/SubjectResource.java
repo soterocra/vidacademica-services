@@ -31,16 +31,25 @@ public class SubjectResource {
 
 	@Autowired
 	private SubjectService service;
-	
+
+	@PreAuthorize("hasAnyRole('STUDENT','TEACHER')")
 	@GetMapping
 	public ResponseEntity<List<SubjectDTO>> findAll(){
 		List<SubjectDTO> dto = service.findAll();
 		return ResponseEntity.ok().body(dto);
 	}
-	
+
+	@PreAuthorize("hasAnyRole('STUDENT','TEACHER')")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<SubjectDTO> findById(@PathVariable Long id){
 		SubjectDTO dto =  service.findById(id);
+		return ResponseEntity.ok().body(dto);
+	}
+
+	@PreAuthorize("hasAnyRole('STUDENT','TEACHER')")
+	@GetMapping(value = "/course/{courseId}")
+	public ResponseEntity<List<SubjectDTO>> findByProduct(@PathVariable Long courseId) {
+		List<SubjectDTO> dto = service.findByCourse(courseId);
 		return ResponseEntity.ok().body(dto);
 	}
 

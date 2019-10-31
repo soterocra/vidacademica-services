@@ -1,13 +1,18 @@
 package online.vidacademica.services.services;
 
 import online.vidacademica.services.dto.CourseDTO;
+import online.vidacademica.services.dto.SubjectDTO;
 import online.vidacademica.services.entities.Course;
+import online.vidacademica.services.entities.Subject;
 import online.vidacademica.services.repositories.CourseRepository;
+import online.vidacademica.services.repositories.SubjectRepository;
 import online.vidacademica.services.resources.exceptions.DatabaseException;
 import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +26,9 @@ public class CourseService {
 
 	@Autowired
 	private CourseRepository repository;
+
+	@Autowired
+	private SubjectRepository subjectRepository;
 
 	public List<CourseDTO> findAll() {
 		List<Course> list = repository.findAll();
@@ -67,5 +75,42 @@ public class CourseService {
 		entity.setWorkload(dto.getWorkload());
 		entity.setActive(dto.isActive());
 		entity.setCreationDate(dto.getCreationDate());
+	}
+
+	public Page<CourseDTO> findBySubjectPaged(Long subjectId, Pageable pageable) {
+		Subject subject = subjectRepository.getOne(subjectId);
+		Page<Course> courses = repository.findBySubject(subject, pageable);
+		return courses.map(e -> new CourseDTO(e));
+	}
+
+	private void setCourseSubject(Course entity, List<SubjectDTO> subjects) {
+		entity.getSubjects().clear();
+		for (SubjectDTO dto : subjects) {
+			Subject subject = subjectRepository.getOne(dto.getId());
+			entity.getSubjects().add(subject);
+		}
+	}
+
+	@Transactional
+	public void addSubject(Long id, SubjectDTO dto) {
+		Course course = repository.getOne(id);
+		Subject subject = subjectRepository.getOne(dto.getId());
+		course.getSubjects().add(subject);
+		repository.save(course);
+	}
+
+	@Transactional
+	public void removeSubject(Long id, SubjectDTO dto) {
+		Course course = repository.getOne(id);
+		Subject subject = subjectRepository.getOne(dto.getId());
+		course.getSubjects().remove(subject);
+		repository.save(course);
+	}
+
+	@Transactional
+	public void setSubject(Long id, List<SubjectDTO> dto) {
+		Course course = repository.getOne(id);
+		setCourseSubject(course, dto);
+		repository.save(course);
 	}
 }
