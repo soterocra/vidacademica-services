@@ -2,9 +2,12 @@ package online.vidacademica.services.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
+import jdk.jfr.Category;
+import online.vidacademica.services.dto.SubjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -23,19 +26,22 @@ public class SubjectService {
 	@Autowired
 	private SubjectRepository repository;
 
-	public List<Subject> findAll() {
-		return repository.findAll();
+	public List<SubjectDTO> findAll() {
+		List<Subject> list =  repository.findAll();
+		return list.stream().map(e -> new SubjectDTO(e)).collect(Collectors.toList());
 	}
 
-	public Subject findById(Long id) {
+	public SubjectDTO findById(Long id) {
 		Optional<Subject> obj = repository.findById(id);
-		return obj.get();
+		Subject entity = obj.orElseThrow(() -> new ResourceNotFoundException(id));
+		return new SubjectDTO(entity);
 	}
 
 	@PreAuthorize("hasAnyRole('TEACHER')")
-	public Subject insert(Subject obj) {
-		return repository.save(obj);
-
+	public SubjectDTO insert(SubjectDTO dto) {
+		Subject entity = dto.toEntity();
+		entity = repository.save(entity);
+		return new SubjectDTO(entity);
 	}
 	@PreAuthorize("hasAnyRole('TEACHER')")
 	public void delete(Long id) {
@@ -50,24 +56,25 @@ public class SubjectService {
 	
 	@PreAuthorize("hasAnyRole('TEACHER')")
 	@Transactional
-	public Subject update(Long id, Subject obj) {
+	public SubjectDTO update(Long id, SubjectDTO dto) {
 		try {
 			Subject entity = repository.getOne(id);
-			updateData(entity, obj);
-			return repository.save(entity);
+			updateData(entity, dto);
+			entity =  repository.save(entity);
+			return new SubjectDTO(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
 		}
 
 	}
 
-	private void updateData(Subject entity, Subject obj) {
-		entity.setName(obj.getName());
-		entity.setDescription(obj.getDescription());
-		entity.setWorkload(obj.getWorkload());
-		entity.setActive(obj.isActive());
-		entity.setCreationDate(obj.getCreationDate());
-		entity.setMinimumScore(obj.getMinimumScore());
+	private void updateData(Subject entity, SubjectDTO dto) {
+		entity.setName(dto.getName());
+		entity.setDescription(dto.getDescription());
+		entity.setWorkload(dto.getWorkload());
+		entity.setActive(dto.isActive());
+		entity.setCreationDate(dto.getCreationDate());
+		entity.setMinimumScore(dto.getMinimumScore());
 
 	}
 }

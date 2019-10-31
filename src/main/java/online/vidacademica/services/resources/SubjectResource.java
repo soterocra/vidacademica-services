@@ -3,8 +3,10 @@ package online.vidacademica.services.resources;
 import java.net.URI;
 import java.util.List;
 
+import online.vidacademica.services.dto.SubjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,24 +33,26 @@ public class SubjectResource {
 	private SubjectService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Subject>> findAll(){
-		List<Subject> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+	public ResponseEntity<List<SubjectDTO>> findAll(){
+		List<SubjectDTO> dto = service.findAll();
+		return ResponseEntity.ok().body(dto);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Subject> findById(@PathVariable Long id){
-		Subject obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<SubjectDTO> findById(@PathVariable Long id){
+		SubjectDTO dto =  service.findById(id);
+		return ResponseEntity.ok().body(dto);
 	}
-	
+
+	@PreAuthorize("hasAnyRole('TEACHER')")
 	@PostMapping
-	public ResponseEntity<Subject> insert(@RequestBody Subject obj){
-		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+	public ResponseEntity<SubjectDTO> insert(@RequestBody SubjectDTO dto){
+		SubjectDTO newDto = service.insert(dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
+		return ResponseEntity.created(uri).body(newDto);
 	}
-	
+
+	@PreAuthorize("hasAnyRole('TEACHER')")
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id){
 		service.delete(id);
@@ -56,8 +60,8 @@ public class SubjectResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Subject> update(@PathVariable Long id, @RequestBody Subject obj){
-		obj = service.update(id, obj);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<SubjectDTO> update(@PathVariable Long id, @RequestBody SubjectDTO dto){
+		dto = service.update(id, dto);
+		return ResponseEntity.ok().body(dto);
 	}
 }
