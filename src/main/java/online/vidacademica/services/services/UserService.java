@@ -2,11 +2,14 @@ package online.vidacademica.services.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
 
+import online.vidacademica.services.entities.Subject;
+import online.vidacademica.services.repositories.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -31,6 +34,9 @@ public class UserService implements UserDetailsService {
 	
 	@Autowired
 	private UserRepository repository;
+
+	@Autowired
+	private SubjectRepository subjectRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncode;
@@ -80,6 +86,13 @@ public class UserService implements UserDetailsService {
 		entity.setDateOfBirth(dto.getDateOfBirth());
 		entity.setSocialId(dto.getSocialId());
 		entity.setRegistration(dto.getRegistration());
+	}
+
+	@Transactional(readOnly = true)
+	public List<UserDTO> findBySubject(Long productId) {
+		Subject subject = subjectRepository.getOne(productId);
+		Set<User> set = subject.getUser();
+		return set.stream().map(e -> new UserDTO(e)).collect(Collectors.toList());
 	}
 
 	@Override

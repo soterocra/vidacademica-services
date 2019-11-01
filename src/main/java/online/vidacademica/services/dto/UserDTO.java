@@ -18,7 +18,7 @@ public class UserDTO {
     private Instant dateOfBirth;
     private String socialId;
     private String registration;
-    
+
     public UserDTO () {}
 
 	public UserDTO(Long id, String name, String email, Instant dateOfBirth, String socialId, String registration) {

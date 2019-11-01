@@ -3,8 +3,10 @@ package online.vidacademica.services.resources;
 import java.net.URI;
 import java.util.List;
 
+import online.vidacademica.services.dto.SubjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,6 +58,14 @@ public class UserResource {
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody UserDTO dto){
 		dto = service.update(id, dto);
+		return ResponseEntity.ok().body(dto);
+	}
+
+
+	@PreAuthorize("hasAnyRole('TEACHER')")
+	@GetMapping(value = "/subject/{subjectId}")
+	public ResponseEntity<List<UserDTO>> findBySubject(@PathVariable Long subjectId) {
+		List<UserDTO> dto = service.findBySubject(subjectId);
 		return ResponseEntity.ok().body(dto);
 	}
 	

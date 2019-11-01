@@ -117,7 +117,6 @@ public class TestConfig implements CommandLineRunner {
         roleRepository.saveAll(Arrays.asList(role_Teacher,role_Student));
         
         u1.getRoles().add(role_Student);
-        u1.getRoles().add(role_Teacher );
         u2.getRoles().add(role_Student);
         u3.getRoles().add(role_Student);
         u4.getRoles().add(role_Student);
@@ -173,6 +172,7 @@ public class TestConfig implements CommandLineRunner {
 
         Subject sub2 = new Subject(null, "Banco de Dados",
                 "Conhecer fundamentos e boas práticas usando a linguagem Mysql", 75.0, true, Instant.now(), 60.0);
+        sub2.getUser().add(u1);
 
         subjectRepository.saveAll(Arrays.asList(sub1));
         subjectRepository.saveAll(Arrays.asList(sub2));

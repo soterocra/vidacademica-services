@@ -8,17 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,47 +30,50 @@ public class User implements UserDetails {
     private String socialId;
     private String registration;
     private String password;
-    
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant creationDate;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "author")
     private List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private Set<Phone> phones = new HashSet<>();
-    
+
     @OneToMany(mappedBy = "user")
     private Set<Address> addresses = new HashSet<>();
-    
+
     @ManyToMany(mappedBy = "user")
-	private Set<Test> test = new HashSet<>();
-    
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "tb_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
-    
+    private Set<Test> test = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "tb_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
+    @ManyToMany(mappedBy = "user")
+    private Set<Subject> subject = new HashSet<>();
+
     public User() {
     }
 
     public User(Long id, String name, String email, Instant dateOfBirth, String socialId, String registration, String password,
-			Instant creationDate) {
-		super();
-		this.id = id;
-		this.name = name;
-		
-		this.email = email;
-		
-		this.dateOfBirth = dateOfBirth;
-		this.socialId = socialId;
-		this.registration = registration;
-		this.password = password;
-		this.creationDate = creationDate;
-	}
+                Instant creationDate) {
+        super();
+        this.id = id;
+        this.name = name;
+
+        this.email = email;
+
+        this.dateOfBirth = dateOfBirth;
+        this.socialId = socialId;
+        this.registration = registration;
+        this.password = password;
+        this.creationDate = creationDate;
+    }
 
 
-	public Long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -95,14 +88,14 @@ public class User implements UserDetails {
     public void setName(String name) {
         this.name = name;
     }
-    
-    public String getEmail() {
-		return email;
-	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public Instant getDateOfBirth() {
         return dateOfBirth;
@@ -143,30 +136,33 @@ public class User implements UserDetails {
     public void setCreationDate(Instant creationDate) {
         this.creationDate = creationDate;
     }
-    
+
     public Set<Phone> getPhones() {
-    		return phones;
-    	}
-    
+        return phones;
+    }
+
     public List<Post> getPosts() {
- 		return posts;
- 	}
-    
+        return posts;
+    }
+
     public Set<Address> getAddresses() {
-		return addresses;
-	}
-    
-    
+        return addresses;
+    }
 
-	public Set<Test> getTest() {
-		return test;
-	}
+    public Set<Subject> getSubject() {
+        return subject;
+    }
 
-	public Set<Role> getRoles(){
-		return roles;
-	}
-	
-	@Override
+
+    public Set<Test> getTest() {
+        return test;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -174,40 +170,40 @@ public class User implements UserDetails {
         return id.equals(user.id);
     }
 
-	@Override
+    @Override
     public int hashCode() {
         return Objects.hash(id);
     }
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return roles; 
-	}
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
 
-	@Override
-	public String getUsername() {
-		return email;
-	}
+    @Override
+    public String getUsername() {
+        return email;
+    }
 
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
 
-	}
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return true;
+    @Override
+    public boolean isEnabled() {
+        return true;
 
-	}
+    }
 }
