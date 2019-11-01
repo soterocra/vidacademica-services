@@ -4,6 +4,7 @@ import java.time.Instant;
 
 import javax.servlet.http.HttpServletRequest;
 
+import online.vidacademica.services.services.exceptions.UpdateDateTestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -38,4 +39,12 @@ public class ResourceExceptionHandler {
 		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
+	@ExceptionHandler(UpdateDateTestException.class)
+	public ResponseEntity<StandardError> updateDateText(UpdateDateTestException e, HttpServletRequest request){
+		String error = "Update error";
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+
 }

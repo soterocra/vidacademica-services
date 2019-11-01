@@ -5,68 +5,68 @@ import java.time.Instant;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class StandardError implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+public class StandardError implements Serializable {
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-	private Instant timestamp;
-	private Integer status;
-	private String error;
-	private String message;
-	private String path;
-	
-	public StandardError() {
-	}
+    private static final long serialVersionUID = 1L;
 
-	public StandardError(Instant timestamp, Integer status, String error, String message, String path) {
-		super();
-		this.timestamp = timestamp;
-		this.status = status;
-		this.error = error;
-		this.message = message;
-		this.path = path;
-	}
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+    private Instant timestamp;
+    private Integer status;
+    private String error;
+    private String message;
+    private String path;
 
-	public Instant getTimestamp() {
-		return timestamp;
-	}
+    public StandardError() {
+    }
 
-	public void setTimestamp(Instant timestamp) {
-		this.timestamp = timestamp;
-	}
+    public StandardError(Instant timestamp, Integer status, String error, String message, String path) {
+        super();
+        this.timestamp = timestamp;
+        this.status = status;
+        this.error = error;
+        this.message = message;
+        this.path = path;
+    }
 
-	public Integer getStatus() {
-		return status;
-	}
+    public Instant getTimestamp() {
+        return timestamp;
+    }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+    public void setTimestamp(Instant timestamp) {
+        this.timestamp = timestamp;
+    }
 
-	public String getError() {
-		return error;
-	}
+    public Integer getStatus() {
+        return status;
+    }
 
-	public void setError(String error) {
-		this.error = error;
-	}
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public String getError() {
+        return error;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setError(String error) {
+        this.error = error;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
-	
-	
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+
 }

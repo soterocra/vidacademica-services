@@ -19,42 +19,42 @@ import java.util.List;
 @RequestMapping(value = "/tests")
 public class TestResource {
 
-	@Autowired
-	private TestService service;
+    @Autowired
+    private TestService service;
 
-	@PreAuthorize("hasAnyRole('STUDENT','TEACHER')")
-	@GetMapping
-	public ResponseEntity<List<TestDTO>> findAll(){
-		List<TestDTO> dto = service.findAll();
-		return ResponseEntity.ok().body(dto);
-	}
+    @PreAuthorize("hasAnyRole('STUDENT','TEACHER')")
+    @GetMapping
+    public ResponseEntity<List<TestDTO>> findAll() {
+        List<TestDTO> dto = service.findAll();
+        return ResponseEntity.ok().body(dto);
+    }
 
-	@PreAuthorize("hasAnyRole('STUDENT','TEACHER')")
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<TestDTO> findById(@PathVariable Long id){
-		TestDTO dto = service.findById(id);
-		return ResponseEntity.ok().body(dto);
-	}
+    @PreAuthorize("hasAnyRole('STUDENT','TEACHER')")
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<TestDTO> findById(@PathVariable Long id) {
+        TestDTO dto = service.findById(id);
+        return ResponseEntity.ok().body(dto);
+    }
 
-	@PreAuthorize("hasAnyRole('TEACHER')")
-	@PostMapping
-	public ResponseEntity<TestDTO> insert(@RequestBody TestDTO dto){
-		TestDTO newDto = service.insert(dto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
-		return ResponseEntity.created(uri).body(newDto);
-	}
+    @PreAuthorize("hasAnyRole('TEACHER')")
+    @PostMapping
+    public ResponseEntity<TestDTO> insert(@RequestBody TestDTO dto) {
+        TestDTO newDto = service.insert(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
+        return ResponseEntity.created(uri).body(newDto);
+    }
 
-	@PreAuthorize("hasAnyRole('TEACHER')")
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id){
-		service.delete(id);
-		return ResponseEntity.noContent().build();
-	}
+    @PreAuthorize("hasAnyRole('TEACHER')")
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 
-	@PreAuthorize("hasAnyRole('TEACHER')")
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<TestDTO> update(@PathVariable Long id, @RequestBody TestDTO dto){
-		dto = service.update(id, dto);
-		return ResponseEntity.ok().body(dto);
-	}
+    @PreAuthorize("hasAnyRole('TEACHER')")
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<TestDTO> update(@PathVariable Long id, @RequestBody TestDTO dto) {
+        dto = service.update(id, dto);
+        return ResponseEntity.ok().body(dto);
+    }
 }

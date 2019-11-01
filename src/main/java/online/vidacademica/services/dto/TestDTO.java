@@ -16,7 +16,8 @@ public class TestDTO implements Serializable {
     private Instant date;
     private Instant creationDate;
 
-    public TestDTO(){}
+    public TestDTO() {
+    }
 
     public TestDTO(Long id, String name, Double fullScore, Instant date, Instant creationDate) {
         this.id = id;
@@ -26,7 +27,7 @@ public class TestDTO implements Serializable {
         this.creationDate = creationDate;
     }
 
-    public TestDTO(Test entity){
+    public TestDTO(Test entity) {
         this.id = entity.getId();
         this.name = entity.getName();
         this.fullScore = entity.getFullScore();
@@ -74,7 +75,7 @@ public class TestDTO implements Serializable {
         this.creationDate = creationDate;
     }
 
-    public Test toEntity(){
+    public Test toEntity() {
         return new Test(id, name, fullScore, date, creationDate);
     }
 }
