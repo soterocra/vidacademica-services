@@ -7,10 +7,13 @@ import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
+import online.vidacademica.services.dto.ClasseDTO;
 import online.vidacademica.services.dto.SubjectDTO;
 import online.vidacademica.services.dto.UserDTO;
+import online.vidacademica.services.entities.Classe;
 import online.vidacademica.services.entities.Course;
 import online.vidacademica.services.entities.User;
+import online.vidacademica.services.repositories.ClassRepository;
 import online.vidacademica.services.repositories.CourseRepository;
 import online.vidacademica.services.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,9 @@ public class SubjectService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ClassRepository classRepository;
 
 
     public List<SubjectDTO> findAll() {
@@ -110,6 +116,7 @@ public class SubjectService {
         subject.getUser().remove(user);
         repository.save(subject);
     }
+
 
 }
 

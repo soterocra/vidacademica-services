@@ -3,6 +3,7 @@ package online.vidacademica.services.resources;
 import java.net.URI;
 import java.util.List;
 
+import online.vidacademica.services.dto.ClasseDTO;
 import online.vidacademica.services.dto.SubjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -88,4 +89,5 @@ public class SubjectResource {
 		service.removeUser(id, dto);
 		return ResponseEntity.noContent().build();
 	}
+
 }

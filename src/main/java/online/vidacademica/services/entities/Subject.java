@@ -30,8 +30,11 @@ public class Subject implements Serializable {
     private Set<Classe> classes = new HashSet<>();
 
 
+
     @ManyToMany(mappedBy = "subject")
     private Set<Course> course = new HashSet<>();
+
+
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_user_subject", joinColumns = @JoinColumn(name = "subject_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))

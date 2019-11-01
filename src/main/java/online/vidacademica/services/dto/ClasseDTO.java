@@ -14,14 +14,12 @@ public class ClasseDTO {
 	private boolean active;
 	private Instant creationDate;
     
-	private Long subjectId;
-    
+
     public ClasseDTO () {}
 
 
     
-    public ClasseDTO(Long id, String name, Instant startDate, Instant endDate, boolean active, Instant creationDate,
-			Long subjectId) {
+    public ClasseDTO(Long id, String name, Instant startDate, Instant endDate, boolean active, Instant creationDate) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -29,7 +27,6 @@ public class ClasseDTO {
 		this.endDate = endDate;
 		this.active = active;
 		this.creationDate = creationDate;
-		this.subjectId = subjectId;
 	}
 
 
@@ -41,7 +38,6 @@ public class ClasseDTO {
 		this.endDate = entity.getEndDate();
 		this.active = entity.isActive();
 		this.creationDate = entity.getCreationDate();
-		this.subjectId = entity.getSubject().getId();
     }
 
 	
@@ -116,26 +112,8 @@ public class ClasseDTO {
 	}
 
 
-
-
-
-
-	public Long getSubjectId() {
-		return subjectId;
-	}
-
-
-
-	public void setSubjectId(Long subjectId) {
-		this.subjectId = subjectId;
-	}
-
-
-
 	public Classe toEntity(){
-		Subject subject = new Subject();
-		subject.setId(subjectId);
-		return new Classe(null, name, startDate, endDate, active, creationDate, subject);
+		return new Classe(null, name, startDate, endDate, active, creationDate);
 	}
     
 }

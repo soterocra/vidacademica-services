@@ -31,7 +31,6 @@ public class Classe implements Serializable {
 	private boolean active;
 	private Instant creationDate;
 
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "subject_id")
 	private Subject subject;
@@ -40,11 +39,12 @@ public class Classe implements Serializable {
 	@OneToMany(mappedBy = "classe")
 	private List<Test> tests = new ArrayList<>();
 
+
+
 	public Classe() {
 	}
 
-	public Classe(Long id, String name, Instant startDate, Instant endDate, boolean active, Instant creationDate,
-			Subject subject) {
+	public Classe(Long id, String name, Instant startDate, Instant endDate, boolean active, Instant creationDate) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -52,8 +52,6 @@ public class Classe implements Serializable {
 		this.endDate = endDate;
 		this.active = active;
 		this.creationDate = creationDate;
-		this.subject = subject;
-
 	}
 
 	public Long getId() {
@@ -111,13 +109,8 @@ public class Classe implements Serializable {
 	public void setSubject(Subject subject) {
 		this.subject = subject;
 	}
-	
-	
 
-	public List<Test> getTests() {
-		return tests;
-	}
-	
+
 	
 
 	public void setTests(List<Test> tests) {

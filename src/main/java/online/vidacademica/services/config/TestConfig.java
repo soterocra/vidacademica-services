@@ -188,13 +188,11 @@ public class TestConfig implements CommandLineRunner {
         courseRepository.saveAll(Arrays.asList(course1));
 
         Classe class1 = new Classe(null, "SI -2018/01", Instant.parse("2018-01-01T00:21:22Z"),
-                Instant.parse("2018-01-01T00:21:22Z"), true, Instant.parse("2019-07-22T15:21:22Z"), sub1);
+                Instant.parse("2018-01-01T00:21:22Z"), true, Instant.parse("2019-07-22T15:21:22Z"));
 
         Classe class2 = new Classe(null, "LCI - 2018/01", Instant.parse("2018-01-01T00:21:22Z"),
-                Instant.parse("2018-01-01T00:21:22Z"), true, Instant.parse("2019-07-22T15:21:22Z"), sub1);
+                Instant.parse("2018-01-01T00:21:22Z"), true, Instant.parse("2019-07-22T15:21:22Z"));
 
-        sub2.getClasses().add(class1);
-        sub2.getClasses().add(class2);
 
         postRepository.saveAll(Arrays.asList(p1, p2, p3, p4));
         phoneRepository.saveAll(Arrays.asList(ph1, ph2, ph3));
