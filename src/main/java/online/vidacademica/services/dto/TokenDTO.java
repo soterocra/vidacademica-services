@@ -10,13 +10,20 @@ public class TokenDTO implements Serializable {
 	
 	private String email;
 	private String token;
-	
+	private String role;
 	public TokenDTO() {}
 
 	public TokenDTO(String email, String token) {
 		super();
 		this.email = email;
 		this.token = token;
+	}
+
+	public TokenDTO(String email, String token,String role) {
+		super();
+		this.email = email;
+		this.token = token;
+		this.role = role;
 	}
 
 	public String getEmail() {
@@ -34,7 +41,12 @@ public class TokenDTO implements Serializable {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
-	
-	
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 }
