@@ -16,6 +16,7 @@ import online.vidacademica.services.entities.User;
 import online.vidacademica.services.repositories.ClassRepository;
 import online.vidacademica.services.repositories.CourseRepository;
 import online.vidacademica.services.repositories.UserRepository;
+import online.vidacademica.services.services.exceptions.AddUserToSubjectException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -41,6 +42,9 @@ public class SubjectService {
 
     @Autowired
     private ClassRepository classRepository;
+
+    @Autowired
+    private  AuthService authService;
 
 
     public List<SubjectDTO> findAll() {
@@ -103,10 +107,15 @@ public class SubjectService {
 
     @Transactional
     public void addUser(Long id, UserDTO dto) {
-        Subject subject = repository.getOne(id);
         User user = userRepository.getOne(dto.getId());
-        subject.getUser().add(user);
-        repository.save(subject);
+        if (user.hasRole("ROLE_STUDENT")){
+            throw  new AddUserToSubjectException("User is Student");
+        }else{
+            Subject subject = repository.getOne(id);
+            subject.getUser().add(user);
+            repository.save(subject);
+        }
+
     }
 
     @Transactional

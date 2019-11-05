@@ -2,6 +2,7 @@ package online.vidacademica.services.services;
 
 import javax.transaction.Transactional;
 
+import online.vidacademica.services.entities.Subject;
 import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.slf4j.Logger;
 import online.vidacademica.services.dto.CredentialsDTO;
 import online.vidacademica.services.dto.TokenDTO;
 import online.vidacademica.services.entities.User;
+import online.vidacademica.services.entities.Subject;
 import online.vidacademica.services.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import online.vidacademica.services.security.JWTUtil;
@@ -98,5 +100,22 @@ public class AuthService {
 		}
 
 	}
+
+	public void validateSelfOrAdmin(Long userId) {
+		User user = authenticated();
+		if (user == null || user.getId() != userId || user.hasRole("ROLE_TEACHER")) {
+			if (user == null || user.getId() != userId && user.hasRole("ROLE_STUDENT")) {
+				throw new JWTAuthenticationException("Access denied");
+			}
+		}
+	}
+
+//		public void validateOwnSubjectOrAdmin(Subject subject) {
+//			User user = authenticated();
+//			if(user == null || user.getId() != subject.getUser(). && user.hasRole("ROLE_CLIENT")) {
+//				throw new JWTAuthenticationException("Access denied");
+//			}
+//		}
+
 
 	}
