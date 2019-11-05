@@ -88,12 +88,6 @@ public class UserService implements UserDetailsService {
 		entity.setRegistration(dto.getRegistration());
 	}
 
-	@Transactional(readOnly = true)
-	public List<UserDTO> findBySubject(Long productId) {
-		Subject subject = subjectRepository.getOne(productId);
-		Set<User> set = subject.getUser();
-		return set.stream().map(e -> new UserDTO(e)).collect(Collectors.toList());
-	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

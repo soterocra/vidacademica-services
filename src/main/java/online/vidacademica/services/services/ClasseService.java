@@ -2,6 +2,7 @@ package online.vidacademica.services.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -78,10 +79,17 @@ public class ClasseService {
 
 	@Transactional
 	public void setSubject(Long id, SubjectDTO dto) {
-		Classe classe = repository.getOne(id);
 		Subject subject = subjectRepository.getOne(dto.getId());
+		Classe classe = repository.getOne(id);
 		classe.setSubject(subject);
 		repository.save(classe);
 	}
 
+	@Transactional(readOnly = true)
+	public List<ClasseDTO> findBySubjectId(Long subjectId) {
+		Subject subject =  subjectRepository.getOne(subjectId);
+		List<Classe> list = repository.findBySubject(subject);
+
+		return list.stream().map(e -> new ClasseDTO(e)).collect(Collectors.toList());
+	}
 }

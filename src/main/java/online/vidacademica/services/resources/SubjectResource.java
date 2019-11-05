@@ -77,18 +77,20 @@ public class SubjectResource {
 		return ResponseEntity.ok().body(dto);
 	}
 	@PreAuthorize("hasAnyRole('TEACHER')")
-	@PutMapping(value = "/{id}/adduser")
-	public ResponseEntity<Void> addUser(@PathVariable Long id,@RequestBody UserDTO dto){
-		service.addUser(id, dto);
+	@PutMapping(value = "/{id}/setteacher")
+	public ResponseEntity<Void> setTeacher(@PathVariable Long id,@RequestBody UserDTO dto){
+		service.setTeacher(id, dto);
 		return ResponseEntity.noContent().build();
 	}
 
 	@PreAuthorize("hasAnyRole('TEACHER')")
-	@PutMapping(value = "/{id}/removeuser")
-	public ResponseEntity<Void> removeUser(@PathVariable Long id,@RequestBody UserDTO dto){
-		service.removeUser(id, dto);
-		return ResponseEntity.noContent().build();
+	@GetMapping(value = "/teacher/{teacherId}")
+	public ResponseEntity<List<SubjectDTO>> findByClientId(@PathVariable Long teacherId) {
+		List<SubjectDTO> list = service.findByTeacherId(teacherId);
+		return ResponseEntity.ok().body(list);
 	}
+
+
 
 
 }

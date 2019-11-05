@@ -106,25 +106,26 @@ public class SubjectService {
 
 
     @Transactional
-    public void addUser(Long id, UserDTO dto) {
+    public void setTeacher(Long id, UserDTO dto) {
         User user = userRepository.getOne(dto.getId());
         if (user.hasRole("ROLE_STUDENT")){
             throw  new AddUserToSubjectException("User is Student");
         }else{
             Subject subject = repository.getOne(id);
-            subject.getUser().add(user);
+            subject.setTeacher(user);
             repository.save(subject);
         }
 
     }
 
-    @Transactional
-    public void removeUser(Long id, UserDTO dto) {
-        Subject subject = repository.getOne(id);
-        User user = userRepository.getOne(dto.getId());
-        subject.getUser().remove(user);
-        repository.save(subject);
+    @Transactional(readOnly = true)
+    public List<SubjectDTO> findByTeacherId(Long teacherId) {
+        User teacher =  userRepository.getOne(teacherId);
+        List<Subject> list = repository.findByTeacher(teacher);
+
+        return list.stream().map(e -> new SubjectDTO(e)).collect(Collectors.toList());
     }
+
 
 
 }

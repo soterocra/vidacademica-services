@@ -66,6 +66,14 @@ public class ClassResource {
 		return ResponseEntity.noContent().build();
 	}
 
+	@PreAuthorize("hasAnyRole('TEACHER')")
+	@GetMapping(value = "/subject/{subjectId}")
+	public ResponseEntity<List<ClasseDTO>> findBySubjectId(@PathVariable Long subjectId) {
+		List<ClasseDTO> list = service.findBySubjectId(subjectId);
+		return ResponseEntity.ok().body(list);
+	}
+
+
 
 
 

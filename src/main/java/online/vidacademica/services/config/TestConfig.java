@@ -173,7 +173,6 @@ public class TestConfig implements CommandLineRunner {
         Subject sub2 = new Subject(null, "Banco de Dados",
                 "Conhecer fundamentos e boas práticas usando a linguagem Mysql", 75.0, true, Instant.now(), 60.0,
                 LocalDate.of(2019,02,01),LocalDate.of(2019,07,12));
-        sub2.getUser().add(u1);
 
         subjectRepository.saveAll(Arrays.asList(sub1));
         subjectRepository.saveAll(Arrays.asList(sub2));

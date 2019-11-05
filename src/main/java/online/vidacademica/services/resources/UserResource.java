@@ -62,11 +62,5 @@ public class UserResource {
 	}
 
 
-	@PreAuthorize("hasAnyRole('TEACHER')")
-	@GetMapping(value = "/subject/{subjectId}")
-	public ResponseEntity<List<UserDTO>> findBySubject(@PathVariable Long subjectId) {
-		List<UserDTO> dto = service.findBySubject(subjectId);
-		return ResponseEntity.ok().body(dto);
-	}
-	
+
 }

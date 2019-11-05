@@ -40,9 +40,8 @@ public class Subject implements Serializable {
 
 
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "tb_user_subject", joinColumns = @JoinColumn(name = "subject_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private Set<User> user = new HashSet<>();
+	@ManyToOne
+	private User teacher;
 
 
     public Subject() {
@@ -143,17 +142,15 @@ public class Subject implements Serializable {
         return course;
     }
 
-	public Set<User> getUser() {
-		return user;
-	}
+    public User getTeacher() {
+        return teacher;
+    }
 
-	public void setUser(Set<User> user) {
-		this.user = user;
-	}
+    public void setTeacher(User teacher) {
+        this.teacher = teacher;
+    }
 
-
-
-	@Override
+    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
