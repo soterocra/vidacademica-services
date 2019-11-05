@@ -1,11 +1,9 @@
 package online.vidacademica.services.resources;
 
-import java.net.URI;
-import java.util.List;
-
 import online.vidacademica.services.dto.CourseDTO;
 import online.vidacademica.services.dto.SubjectDTO;
 import online.vidacademica.services.dto.UserDTO;
+import online.vidacademica.services.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,11 +13,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import online.vidacademica.services.entities.City;
-import online.vidacademica.services.entities.Course;
-import online.vidacademica.services.entities.Subject;
-import online.vidacademica.services.services.CityService;
-import online.vidacademica.services.services.CourseService;
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/courses")
@@ -58,7 +54,7 @@ public class CourseResource {
 	
 	@PreAuthorize("hasAnyRole('TEACHER')")
 	@PostMapping
-	public ResponseEntity<CourseDTO> insert(@RequestBody CourseDTO dto){
+	public ResponseEntity<CourseDTO> insert(@Valid  @RequestBody CourseDTO dto){
 		CourseDTO newDto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
 		return ResponseEntity.created(uri).body(newDto);
@@ -73,7 +69,7 @@ public class CourseResource {
 
 	@PreAuthorize("hasAnyRole('TEACHER')")
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<CourseDTO> update(@PathVariable Long id, @RequestBody CourseDTO dto){
+	public ResponseEntity<CourseDTO> update(@PathVariable Long id,@Valid @RequestBody CourseDTO dto){
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}

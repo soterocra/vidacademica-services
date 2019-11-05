@@ -8,10 +8,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = SubjectInsertAndUpdateValidator.class)
+@Constraint(validatedBy = CourseInsertAndUpdateValidator.class)
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SubjectInsertAndUpdateValid {
+public @interface CourseInsertAndUpdateValid {
     String message() default "Validation error";
 
     Class<?>[] groups() default {};

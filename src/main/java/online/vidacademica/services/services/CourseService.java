@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,6 +51,7 @@ public class CourseService {
 
 	public CourseDTO insert(CourseDTO dto) {
 		Course entity = dto.toEntity();
+		entity.setCreationDate(Instant.now());
 		entity = repository.save(entity);
 		return new CourseDTO(entity);
 	}
@@ -81,7 +83,6 @@ public class CourseService {
 		entity.setDescription(dto.getDescription());
 		entity.setWorkload(dto.getWorkload());
 		entity.setActive(dto.isActive());
-		entity.setCreationDate(dto.getCreationDate());
 	}
 
 	public Page<CourseDTO> findBySubjectPaged(Long subjectId, Pageable pageable) {

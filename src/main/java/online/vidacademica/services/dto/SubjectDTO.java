@@ -11,7 +11,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 
 @SubjectInsertAndUpdateValid
-public class SubjectDTO  implements Serializable {
+public class SubjectDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,10 +41,11 @@ public class SubjectDTO  implements Serializable {
     @NotNull(message = "Parameter endDate cannot be null")
     private LocalDate endDate;
 
-    public SubjectDTO(){}
+    public SubjectDTO() {
+    }
 
     public SubjectDTO(Long id, String name, String description, Double workload, boolean active, Instant creationDate, Double minimumScore
-    ,LocalDate startDate, LocalDate endDate) {
+            , LocalDate startDate, LocalDate endDate) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -56,7 +57,7 @@ public class SubjectDTO  implements Serializable {
         this.endDate = endDate;
     }
 
-    public SubjectDTO(Subject entity){
+    public SubjectDTO(Subject entity) {
         this.id = entity.getId();
         this.name = entity.getName();
         this.description = entity.getDescription();
@@ -140,7 +141,7 @@ public class SubjectDTO  implements Serializable {
         this.minimumScore = minimumScore;
     }
 
-    public Subject toEntity(){
-        return new Subject(id, name, description, workload, active, creationDate, minimumScore,startDate,endDate);
+    public Subject toEntity() {
+        return new Subject(id, name, description, workload, active, creationDate, minimumScore, startDate, endDate);
     }
 }
