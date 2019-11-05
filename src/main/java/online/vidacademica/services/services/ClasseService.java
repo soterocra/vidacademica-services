@@ -85,6 +85,7 @@ public class ClasseService {
 		repository.save(classe);
 	}
 
+
 	@Transactional(readOnly = true)
 	public List<ClasseDTO> findBySubjectId(Long subjectId) {
 		Subject subject =  subjectRepository.getOne(subjectId);

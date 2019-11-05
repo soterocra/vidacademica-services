@@ -5,6 +5,7 @@ import java.util.List;
 
 import online.vidacademica.services.dto.CourseDTO;
 import online.vidacademica.services.dto.SubjectDTO;
+import online.vidacademica.services.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -97,4 +98,20 @@ public class CourseResource {
 		service.setSubject(id, dto);
 		return ResponseEntity.noContent().build();
 	}
+
+
+	@PreAuthorize("hasAnyRole('TEACHER')")
+	@PutMapping(value = "/{id}/setowner")
+	public ResponseEntity<Void> setTeacher(@PathVariable Long id,@RequestBody UserDTO dto){
+		service.setOwner(id, dto);
+		return ResponseEntity.noContent().build();
+	}
+
+	@PreAuthorize("hasAnyRole('TEACHER')")
+	@GetMapping(value = "/owner/{ownerId}")
+	public ResponseEntity<List<CourseDTO>> findByOwnerId(@PathVariable Long ownerId) {
+		List<CourseDTO> list = service.findByOwnerId(ownerId);
+		return ResponseEntity.ok().body(list);
+	}
 }
+

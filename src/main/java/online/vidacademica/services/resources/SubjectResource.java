@@ -85,7 +85,7 @@ public class SubjectResource {
 
 	@PreAuthorize("hasAnyRole('TEACHER')")
 	@GetMapping(value = "/teacher/{teacherId}")
-	public ResponseEntity<List<SubjectDTO>> findByClientId(@PathVariable Long teacherId) {
+	public ResponseEntity<List<SubjectDTO>> findByTeacherId(@PathVariable Long teacherId) {
 		List<SubjectDTO> list = service.findByTeacherId(teacherId);
 		return ResponseEntity.ok().body(list);
 	}

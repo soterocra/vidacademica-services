@@ -54,6 +54,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "teacher")
     private Set<Subject> subject = new HashSet<>();
 
+    @OneToMany(mappedBy = "commander")
+    private Set<Course> course = new HashSet<>();
+
     public User() {
     }
 
@@ -153,6 +156,13 @@ public class User implements UserDetails {
         return subject;
     }
 
+    public Set<Course> getCourse() {
+        return course;
+    }
+
+    public void setCourse(Set<Course> course) {
+        this.course = course;
+    }
 
     public Set<Test> getTest() {
         return test;

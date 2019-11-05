@@ -2,11 +2,15 @@ package online.vidacademica.services.services;
 
 import online.vidacademica.services.dto.CourseDTO;
 import online.vidacademica.services.dto.SubjectDTO;
+import online.vidacademica.services.dto.UserDTO;
 import online.vidacademica.services.entities.Course;
 import online.vidacademica.services.entities.Subject;
+import online.vidacademica.services.entities.User;
 import online.vidacademica.services.repositories.CourseRepository;
 import online.vidacademica.services.repositories.SubjectRepository;
+import online.vidacademica.services.repositories.UserRepository;
 import online.vidacademica.services.resources.exceptions.DatabaseException;
+import online.vidacademica.services.services.exceptions.AddUserToSubjectException;
 import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -29,6 +33,9 @@ public class CourseService {
 
 	@Autowired
 	private SubjectRepository subjectRepository;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	public List<CourseDTO> findAll() {
 		List<Course> list = repository.findAll();
@@ -112,5 +119,25 @@ public class CourseService {
 		Course course = repository.getOne(id);
 		setCourseSubject(course, dto);
 		repository.save(course);
+	}
+
+	@Transactional
+	public void setOwner(Long id, UserDTO dto) {
+		User user = userRepository.getOne(dto.getId());
+		if (user.hasRole("ROLE_STUDENT")) {
+			throw new AddUserToSubjectException("User is Student");
+		} else {
+			Course course = repository.getOne(id);
+			course.setCommander(user);
+			repository.save(course);
+		}
+	}
+
+	@Transactional(readOnly = true)
+	public List<CourseDTO> findByOwnerId(Long ownerId) {
+		User owner =  userRepository.getOne(ownerId);
+		List<Course> list = repository.findByCommander(owner);
+
+		return list.stream().map(e -> new CourseDTO(e)).collect(Collectors.toList());
 	}
 }
