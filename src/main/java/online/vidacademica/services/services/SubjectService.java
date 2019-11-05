@@ -17,6 +17,7 @@ import online.vidacademica.services.repositories.ClassRepository;
 import online.vidacademica.services.repositories.CourseRepository;
 import online.vidacademica.services.repositories.UserRepository;
 import online.vidacademica.services.services.exceptions.AddUserToSubjectException;
+import online.vidacademica.services.services.exceptions.JWTAuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -44,8 +45,7 @@ public class SubjectService {
     private ClassRepository classRepository;
 
     @Autowired
-    private  AuthService authService;
-
+    private AuthService authservice;
 
     public List<SubjectDTO> findAll() {
         List<Subject> list = repository.findAll();
@@ -126,7 +126,17 @@ public class SubjectService {
         return list.stream().map(e -> new SubjectDTO(e)).collect(Collectors.toList());
     }
 
+    public List<SubjectDTO> findSubjectsByTeacher(){
+        User user = authservice.authenticated();
+        if (user.hasRole("ROLE_STUDENT")){
+            throw new JWTAuthenticationException("Access Denied");
+        }else{
 
+            List<Subject> list = repository.findByTeacher(user);
 
+            return list.stream().map(e -> new SubjectDTO(e)).collect(Collectors.toList());
+        }
+
+    }
 }
 

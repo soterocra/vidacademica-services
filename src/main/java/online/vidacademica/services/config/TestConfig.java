@@ -107,9 +107,9 @@ public class TestConfig implements CommandLineRunner {
         User u3 = new User(null, "Rafael Sotero", "soso@gmail.com", null, "B5", "CSD", passwordEncode.encode("123"), Instant.now());
         User u4 = new User(null, "Tiago Marques", "titi@gmail.com", null, "C3", "JSD", passwordEncode.encode("123"), Instant.now());
         User u5 = new User(null, "Nelio Alves", "nelio@gmail.com", null, "d4", "JSD", passwordEncode.encode("123"), Instant.now());
-
+        User u6 = new User(null, "Cricia", "cricia@gmail.com", null, "d4", "JSD", passwordEncode.encode("123"), Instant.now());
         
-        userRepository.saveAll(Arrays.asList(u1, u2, u3, u4,u5));
+        userRepository.saveAll(Arrays.asList(u1, u2, u3, u4,u5,u6));
         
         Role role_Teacher = new Role(null, "ROLE_TEACHER");
         Role role_Student = new Role(null, "ROLE_STUDENT");
@@ -121,8 +121,9 @@ public class TestConfig implements CommandLineRunner {
         u3.getRoles().add(role_Student);
         u4.getRoles().add(role_Student);
         u5.getRoles().add(role_Teacher);
-        
-        userRepository.saveAll(Arrays.asList(u1, u2, u3, u4,u5));
+        u6.getRoles().add(role_Teacher);
+
+        userRepository.saveAll(Arrays.asList(u1, u2, u3, u4,u5,u6));
  
 
         Country ct1 = new Country(null, "Brasil");

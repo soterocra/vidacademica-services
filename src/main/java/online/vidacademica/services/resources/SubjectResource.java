@@ -5,6 +5,7 @@ import java.util.List;
 
 import online.vidacademica.services.dto.ClasseDTO;
 import online.vidacademica.services.dto.SubjectDTO;
+import online.vidacademica.services.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,6 +33,7 @@ public class SubjectResource {
 
 	@Autowired
 	private SubjectService service;
+
 
 	@PreAuthorize("hasAnyRole('STUDENT','TEACHER')")
 	@GetMapping
@@ -91,6 +93,13 @@ public class SubjectResource {
 	}
 
 
+
+	@GetMapping(value = "/mySubjects")
+	public ResponseEntity<List<SubjectDTO>> findByClient(){
+
+		List<SubjectDTO>list = service.findSubjectsByTeacher();
+		return ResponseEntity.ok().body(list);
+	}
 
 
 }
