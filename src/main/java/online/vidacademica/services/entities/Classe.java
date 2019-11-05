@@ -36,7 +36,7 @@ public class Classe implements Serializable {
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "classe")
-	private List<Test> tests = new ArrayList<>();
+	private List<Test> test = new ArrayList<>();
 
 
 
@@ -109,11 +109,12 @@ public class Classe implements Serializable {
 		this.subject = subject;
 	}
 
-
-	
+	public List<Test> getTest() {
+		return test;
+	}
 
 	public void setTests(List<Test> tests) {
-		this.tests = tests;
+		this.test = tests;
 	}
 
 	@Override

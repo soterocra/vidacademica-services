@@ -1,5 +1,6 @@
 package online.vidacademica.services.resources;
 
+import online.vidacademica.services.dto.ClasseDTO;
 import online.vidacademica.services.dto.SubjectDTO;
 import online.vidacademica.services.dto.TestDTO;
 import online.vidacademica.services.entities.Post;
@@ -57,4 +58,19 @@ public class TestResource {
         dto = service.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }
+
+    @PreAuthorize("hasAnyRole('TEACHER')")
+    @PutMapping(value = "/{id}/setclass")
+    public ResponseEntity<Void> setclass(@PathVariable Long id,@RequestBody ClasseDTO dto){
+        service.setClass(id, dto);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize("hasAnyRole('TEACHER')")
+    @GetMapping(value = "/class/{classid}")
+    public ResponseEntity<List<TestDTO>> findByTeacherId(@PathVariable Long classid) {
+        List<TestDTO> list = service.findByClassId(classid);
+        return ResponseEntity.ok().body(list);
+    }
+
 }

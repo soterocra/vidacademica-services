@@ -34,7 +34,6 @@ public class Test implements Serializable{
 	private Set<User> user = new HashSet<>();
 	
 	@ManyToOne
-	@JoinColumn(name = "classe_id")
 	private Classe classe;
 	
 	
@@ -88,13 +87,10 @@ public class Test implements Serializable{
 	public void setCreationDate(Instant creationDate) {
 		this.creationDate = creationDate;
 	}
-	
-
 
 	public Classe getClasse() {
 		return classe;
 	}
-	
 
 	public void setClasse(Classe classe) {
 		this.classe = classe;

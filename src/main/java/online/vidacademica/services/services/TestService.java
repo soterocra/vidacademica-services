@@ -1,11 +1,14 @@
 package online.vidacademica.services.services;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import online.vidacademica.services.dto.ClasseDTO;
 import online.vidacademica.services.dto.SubjectDTO;
 import online.vidacademica.services.dto.TestDTO;
+import online.vidacademica.services.entities.Classe;
 import online.vidacademica.services.entities.Course;
 import online.vidacademica.services.entities.Subject;
 import online.vidacademica.services.entities.Test;
+import online.vidacademica.services.repositories.ClassRepository;
 import online.vidacademica.services.repositories.CourseRepository;
 import online.vidacademica.services.repositories.SubjectRepository;
 import online.vidacademica.services.repositories.TestRepository;
@@ -31,6 +34,9 @@ public class TestService {
 
     @Autowired
     private TestRepository repository;
+
+    @Autowired
+    private ClassRepository classRepository;
 
     public List<TestDTO> findAll() {
         List<Test> list = repository.findAll();
@@ -84,6 +90,23 @@ public class TestService {
             entity.setDate(dto.getDate());
             entity.setCreationDate(dto.getCreationDate());
         }
+    }
+
+    @Transactional
+    public void setClass(Long id, ClasseDTO dto) {
+        Classe classe = classRepository.getOne(dto.getId());
+            Test test = repository.getOne(id);
+            test.setClasse(classe);
+            repository.save(test);
+
+    }
+
+    @Transactional(readOnly = true)
+    public List<TestDTO> findByClassId(Long classId) {
+        Classe classe =  classRepository.getOne(classId);
+        List<Test> list = repository.findByClasse(classe);
+
+        return list.stream().map(e -> new TestDTO(e)).collect(Collectors.toList());
     }
 
 
