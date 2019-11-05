@@ -7,5 +7,4 @@ public class JWTAuthenticationException extends RuntimeException {
 	public JWTAuthenticationException(Object id) {
 		super("Access Denied");
 	}
-
 }

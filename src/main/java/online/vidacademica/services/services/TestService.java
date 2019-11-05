@@ -4,10 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import online.vidacademica.services.dto.ClasseDTO;
 import online.vidacademica.services.dto.SubjectDTO;
 import online.vidacademica.services.dto.TestDTO;
-import online.vidacademica.services.entities.Classe;
-import online.vidacademica.services.entities.Course;
-import online.vidacademica.services.entities.Subject;
-import online.vidacademica.services.entities.Test;
+import online.vidacademica.services.dto.TestResultDTO;
+import online.vidacademica.services.entities.*;
 import online.vidacademica.services.repositories.ClassRepository;
 import online.vidacademica.services.repositories.CourseRepository;
 import online.vidacademica.services.repositories.SubjectRepository;
@@ -37,6 +35,9 @@ public class TestService {
 
     @Autowired
     private ClassRepository classRepository;
+
+    @Autowired
+    private AuthService authService;
 
     public List<TestDTO> findAll() {
         List<Test> list = repository.findAll();
@@ -108,7 +109,6 @@ public class TestService {
 
         return list.stream().map(e -> new TestDTO(e)).collect(Collectors.toList());
     }
-
 
 }
 

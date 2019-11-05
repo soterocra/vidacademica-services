@@ -1,24 +1,39 @@
 package online.vidacademica.services.dto;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import online.vidacademica.services.entities.Phone;
-import online.vidacademica.services.entities.Post;
 import online.vidacademica.services.entities.User;
+import online.vidacademica.services.services.validations.UserInsertValid;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.time.Instant;
+
+@UserInsertValid
 public class UserInsertDTO {
 
 	private Long id;
-    private String name;
+
+	@NotEmpty(message = "Parameter name cannot be null")
+	@Length(min=5,max=80,message = "Name parameter length must be between 5 and 80 characters")
+	private String name;
+
+	@NotEmpty(message = "Parameter email cannot be null")
+	@Email(message = "Parameter email invalid")
     private String email;
-    private Instant dateOfBirth;
-    private String socialId;
-    private String registration;
-    private String password;
+
+	@NotNull(message = "Parameter dateOfBirth cannot be null")
+	private Instant dateOfBirth;
+
+	@NotEmpty(message = "Parameter socialId cannot be null")
+	private String socialId;
+
+	@NotEmpty(message = "Parameter registration cannot be null")
+	private String registration;
+
+	@NotEmpty(message = "Parameter dateOfBirth cannot be null")
+	@Length(min=8,message = "Password length must be at least 8 characters")
+	private String password;
     
     public UserInsertDTO () {}
 

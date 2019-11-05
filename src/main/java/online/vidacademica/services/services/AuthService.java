@@ -3,6 +3,7 @@ package online.vidacademica.services.services;
 import javax.transaction.Transactional;
 
 import online.vidacademica.services.entities.Subject;
+import online.vidacademica.services.entities.Test;
 import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
