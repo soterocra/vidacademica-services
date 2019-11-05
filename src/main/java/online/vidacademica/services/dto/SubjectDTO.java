@@ -1,23 +1,44 @@
 package online.vidacademica.services.dto;
 
 import online.vidacademica.services.entities.Subject;
+import online.vidacademica.services.services.validations.SubjectInsertAndUpdateValid;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 
+@SubjectInsertAndUpdateValid
 public class SubjectDTO  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    @NotEmpty(message = "Parameter name cannot be null")
+    @Length(min = 5, max = 80, message = "Name parameter length must be between 5 and 80 characters")
     private String name;
+
+    @NotEmpty(message = "Parameter description cannot be null")
+    @Length(min = 5, max = 80, message = "Description parameter length must be between 5 and 80 characters")
     private String description;
+
+    @NotNull(message = "Parameter workload cannot be null")
     private Double workload;
+
+    @NotNull(message = "Parameter active cannot be null")
     private boolean active;
+
     private Instant creationDate;
+
+    @NotNull(message = "Parameter workload cannot be null")
     private Double minimumScore;
+
+    @NotNull(message = "Parameter startDate cannot be null")
     private LocalDate startDate;
+
+    @NotNull(message = "Parameter endDate cannot be null")
     private LocalDate endDate;
 
     public SubjectDTO(){}

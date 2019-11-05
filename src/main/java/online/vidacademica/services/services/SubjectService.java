@@ -1,33 +1,30 @@
 package online.vidacademica.services.services;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.persistence.EntityNotFoundException;
-
-import online.vidacademica.services.dto.ClasseDTO;
 import online.vidacademica.services.dto.SubjectDTO;
 import online.vidacademica.services.dto.UserDTO;
-import online.vidacademica.services.entities.Classe;
 import online.vidacademica.services.entities.Course;
+import online.vidacademica.services.entities.Subject;
 import online.vidacademica.services.entities.User;
 import online.vidacademica.services.repositories.ClassRepository;
 import online.vidacademica.services.repositories.CourseRepository;
+import online.vidacademica.services.repositories.SubjectRepository;
 import online.vidacademica.services.repositories.UserRepository;
+import online.vidacademica.services.resources.exceptions.DatabaseException;
 import online.vidacademica.services.services.exceptions.AddUserToSubjectException;
 import online.vidacademica.services.services.exceptions.JWTAuthenticationException;
+import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import online.vidacademica.services.entities.Subject;
-import online.vidacademica.services.repositories.SubjectRepository;
-import online.vidacademica.services.resources.exceptions.DatabaseException;
-import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
+import javax.persistence.EntityNotFoundException;
+import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class SubjectService {
@@ -60,6 +57,7 @@ public class SubjectService {
 
     public SubjectDTO insert(SubjectDTO dto) {
         Subject entity = dto.toEntity();
+        entity.setCreationDate(Instant.now());
         entity = repository.save(entity);
         return new SubjectDTO(entity);
     }
@@ -92,7 +90,6 @@ public class SubjectService {
         entity.setDescription(dto.getDescription());
         entity.setWorkload(dto.getWorkload());
         entity.setActive(dto.isActive());
-        entity.setCreationDate(dto.getCreationDate());
         entity.setMinimumScore(dto.getMinimumScore());
 
     }
