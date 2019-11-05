@@ -2,6 +2,8 @@ package online.vidacademica.services.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,6 +26,8 @@ public class Subject implements Serializable {
     private boolean active;
     private Instant creationDate;
     private Double minimumScore;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     @JsonIgnore
     @OneToMany(mappedBy = "subject")
@@ -45,7 +49,7 @@ public class Subject implements Serializable {
     }
 
     public Subject(Long id, String name, String description, Double workload, boolean active, Instant creationDate,
-                   Double minimumScore) {
+                   Double minimumScore, LocalDate startDate, LocalDate endDate) {
         super();
         this.id = id;
         this.name = name;
@@ -54,6 +58,8 @@ public class Subject implements Serializable {
         this.active = active;
         this.creationDate = creationDate;
         this.minimumScore = minimumScore;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
 
@@ -113,6 +119,22 @@ public class Subject implements Serializable {
         this.minimumScore = minimumScore;
     }
 
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
     public Set<Classe> getClasses() {
         return classes;
     }
@@ -128,6 +150,8 @@ public class Subject implements Serializable {
 	public void setUser(Set<User> user) {
 		this.user = user;
 	}
+
+
 
 	@Override
     public int hashCode() {

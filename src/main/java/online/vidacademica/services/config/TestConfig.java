@@ -168,10 +168,11 @@ public class TestConfig implements CommandLineRunner {
                 "" + "Conhecer fundamentos e boas práticas dos aspectos essenciais de projeto e\n"
                         + "desenvolvimento de um sistema para Internet com orientação a objetos e acesso a banco de\n"
                         + "dados. Utilizar técnicas e ferramentas para implementação dos tópicos estudados.",
-                105.0, true, Instant.now(), 60.0);
+                105.0, true, Instant.now(), 60.0,LocalDate.of(2019,02,01),LocalDate.of(2019,07,12));
 
         Subject sub2 = new Subject(null, "Banco de Dados",
-                "Conhecer fundamentos e boas práticas usando a linguagem Mysql", 75.0, true, Instant.now(), 60.0);
+                "Conhecer fundamentos e boas práticas usando a linguagem Mysql", 75.0, true, Instant.now(), 60.0,
+                LocalDate.of(2019,02,01),LocalDate.of(2019,07,12));
         sub2.getUser().add(u1);
 
         subjectRepository.saveAll(Arrays.asList(sub1));
