@@ -1,9 +1,6 @@
 package online.vidacademica.services.services;
 
-import online.vidacademica.services.dto.TestDTO;
-import online.vidacademica.services.dto.TestResultDTO;
-import online.vidacademica.services.dto.TestResultGetResultsDTO;
-import online.vidacademica.services.dto.TestResultInsertDTO;
+import online.vidacademica.services.dto.*;
 import online.vidacademica.services.entities.Test;
 import online.vidacademica.services.entities.TestResult;
 import online.vidacademica.services.entities.User;
@@ -18,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TestResultService {
@@ -37,17 +36,23 @@ public class TestResultService {
         User student = userRepository.getOne(dto.getUserId());
         Test test = testRepository.getOne(dto.getTestId());
 
-        if (dto.getScore() > test.getFullScore()){
-            throw  new PostScoreException(dto.getTestId());
-        }else if(dto.getScore()< 0){
-            throw  new PostScoreException("Note entered is invalid.");
+        if (test == null){
+            throw new IllegalArgumentException("Test was null");
+        }else if(student == null){
+            throw new IllegalArgumentException("Student was null");
         }else{
-            TestResult result = new TestResult(student, test, dto.getScore(),Instant.now());
-            repository.saveAll(Arrays.asList(result));
+            if (dto.getScore() > test.getFullScore()){
+                throw  new PostScoreException(dto.getTestId());
+            }else if(dto.getScore()< 0){
+                throw  new PostScoreException("Note entered is invalid.");
+            }else{
+                TestResult result = new TestResult(student, test, dto.getScore(),Instant.now());
+                repository.saveAll(Arrays.asList(result));
+            }
         }
+
+
        return new TestDTO(test);
   }
 
-
-
-}
+    }

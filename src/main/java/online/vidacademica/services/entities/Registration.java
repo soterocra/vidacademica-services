@@ -1,8 +1,12 @@
 package online.vidacademica.services.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_registration")
@@ -15,6 +19,10 @@ public class Registration implements Serializable {
     private Long id;
     private Instant date;
     private boolean approved;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "registration")
+    private List<Classe> classe = new ArrayList<>();
 
     public Registration() {
     }
@@ -76,5 +84,11 @@ public class Registration implements Serializable {
         return true;
     }
 
+    public List<Classe> getClasse() {
+        return classe;
+    }
 
+    public void setClasse(List<Classe> classe) {
+        this.classe = classe;
+    }
 }

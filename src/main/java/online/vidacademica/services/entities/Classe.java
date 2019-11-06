@@ -33,6 +33,9 @@ public class Classe implements Serializable {
     @OneToMany(mappedBy = "classe")
     private List<WeekEntry> weekEntries = new ArrayList<>();
 
+    @ManyToOne
+    private Registration registration;
+
     public Classe() {
     }
 
@@ -152,4 +155,11 @@ public class Classe implements Serializable {
         return true;
     }
 
+    public Registration getRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(Registration registration) {
+        this.registration = registration;
+    }
 }
