@@ -24,6 +24,10 @@ public class Registration implements Serializable {
     @OneToMany(mappedBy = "registration")
     private List<Classe> classe = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "UserRegistration")
+    private List<User> students = new ArrayList<>();
+
     public Registration() {
     }
 
@@ -90,5 +94,13 @@ public class Registration implements Serializable {
 
     public void setClasse(List<Classe> classe) {
         this.classe = classe;
+    }
+
+    public List<User> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<User> students) {
+        this.students = students;
     }
 }
