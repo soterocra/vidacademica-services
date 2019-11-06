@@ -50,6 +50,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "commander")
     private Set<Course> course = new HashSet<>();
 
+    @ManyToOne
+    private Registration UserRegistration;
+
     public User() {
     }
 
@@ -163,6 +166,10 @@ public class User implements UserDetails {
 
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    public void setRegistration(Registration UserRegistration) {
+        this.UserRegistration = UserRegistration;
     }
 
     @Override
