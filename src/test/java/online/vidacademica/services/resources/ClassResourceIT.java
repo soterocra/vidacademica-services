@@ -72,7 +72,7 @@ public class ClassResourceIT {
     }
 
     @Test
-    public void findAll_sucess() throws Exception {
+    public void findAll_sucess() {
         HttpEntity<Classe[]> entity = new HttpEntity<>(null, headers);
         ResponseEntity<Classe[]> response = restTemplate.exchange(URI_PATH, HttpMethod.GET, entity, Classe[].class);
 
@@ -80,11 +80,11 @@ public class ClassResourceIT {
     }
 
     @Test
-    public void findAll_sucess2() throws Exception {
+    public void findById_sucess() {
         HttpEntity<Classe[]> entity = new HttpEntity<>(null, headers);
-        ResponseEntity<Classe[]> response = restTemplate.exchange(URI_PATH, HttpMethod.GET, entity, Classe[].class);
+        ResponseEntity<Classe> response = restTemplate.exchange(URI_PATH + "/" + classe1.getId(), HttpMethod.GET, entity, Classe.class);
 
-        assertThat(response.getBody()).hasSize(2);
+        assertThat(response.getBody()).isEqualTo(classe1);
     }
 
     public void createUsers() {
