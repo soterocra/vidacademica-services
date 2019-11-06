@@ -1,5 +1,23 @@
 package online.vidacademica.services.services;
 
+import online.vidacademica.services.dto.ClasseDTO;
+import online.vidacademica.services.dto.SubjectDTO;
+import online.vidacademica.services.dto.TimeBoxDTO;
+import online.vidacademica.services.dto.TimesDTO;
+import online.vidacademica.services.entities.Classe;
+import online.vidacademica.services.entities.Subject;
+import online.vidacademica.services.entities.WeekEntry;
+import online.vidacademica.services.repositories.ClassRepository;
+import online.vidacademica.services.repositories.SubjectRepository;
+import online.vidacademica.services.resources.exceptions.DatabaseException;
+import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityNotFoundException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
@@ -8,26 +26,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import javax.persistence.EntityNotFoundException;
-
-import online.vidacademica.services.dto.SubjectDTO;
-import online.vidacademica.services.dto.TimeBoxDTO;
-import online.vidacademica.services.dto.TimesDTO;
-import online.vidacademica.services.entities.WeekEntry;
-import online.vidacademica.services.repositories.SubjectRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import online.vidacademica.services.dto.ClasseDTO;
-import online.vidacademica.services.entities.Classe;
-import online.vidacademica.services.entities.Subject;
-import online.vidacademica.services.repositories.ClassRepository;
-import online.vidacademica.services.resources.exceptions.DatabaseException;
-import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class ClasseService {

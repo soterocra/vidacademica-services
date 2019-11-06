@@ -14,7 +14,6 @@ public class ClasseDTO {
     private boolean active;
     private Instant creationDate;
 
-
     public ClasseDTO() {
     }
 

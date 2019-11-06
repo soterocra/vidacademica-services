@@ -6,9 +6,10 @@ import java.time.DayOfWeek;
 
 public interface TimeEntry extends Serializable, Comparable<TimeEntry> {
 
-	DayOfWeek getDay();
-	Long getStartMillisecond();
-	Long getEndMillisecond();
+    DayOfWeek getDay();
 
+    Long getStartMillisecond();
+
+    Long getEndMillisecond();
 
 }

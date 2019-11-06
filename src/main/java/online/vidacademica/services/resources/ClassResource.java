@@ -1,20 +1,19 @@
 package online.vidacademica.services.resources;
 
-import java.net.URI;
-import java.time.LocalDate;
-import java.util.List;
-
+import online.vidacademica.services.dto.ClasseDTO;
 import online.vidacademica.services.dto.SubjectDTO;
 import online.vidacademica.services.dto.TimesDTO;
+import online.vidacademica.services.entities.Classe;
+import online.vidacademica.services.services.ClasseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import online.vidacademica.services.dto.ClasseDTO;
-import online.vidacademica.services.entities.Classe;
-import online.vidacademica.services.services.ClasseService;
+import java.net.URI;
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/class")

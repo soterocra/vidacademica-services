@@ -22,14 +22,14 @@ public class UserDTO {
     @Email(message = "Parameter email invalid")
     private String email;
 
-	@NotNull(message = "Parameter dateOfBirth cannot be null")
+    @NotNull(message = "Parameter dateOfBirth cannot be null")
     private Instant dateOfBirth;
 
-	@NotEmpty(message = "Parameter socialId cannot be null")
-	private String socialId;
+    @NotEmpty(message = "Parameter socialId cannot be null")
+    private String socialId;
 
-	@NotEmpty(message = "Parameter registration cannot be null")
-	private String registration;
+    @NotEmpty(message = "Parameter registration cannot be null")
+    private String registration;
 
     public UserDTO() {
     }

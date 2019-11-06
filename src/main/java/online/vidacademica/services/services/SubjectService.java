@@ -105,9 +105,9 @@ public class SubjectService {
     @Transactional
     public void setTeacher(Long id, UserDTO dto) {
         User user = userRepository.getOne(dto.getId());
-        if (user.hasRole("ROLE_STUDENT")){
-            throw  new AddUserToSubjectException("User is Student");
-        }else{
+        if (user.hasRole("ROLE_STUDENT")) {
+            throw new AddUserToSubjectException("User is Student");
+        } else {
             Subject subject = repository.getOne(id);
             subject.setTeacher(user);
             repository.save(subject);
@@ -117,17 +117,17 @@ public class SubjectService {
 
     @Transactional(readOnly = true)
     public List<SubjectDTO> findByTeacherId(Long teacherId) {
-        User teacher =  userRepository.getOne(teacherId);
+        User teacher = userRepository.getOne(teacherId);
         List<Subject> list = repository.findByTeacher(teacher);
 
         return list.stream().map(e -> new SubjectDTO(e)).collect(Collectors.toList());
     }
 
-    public List<SubjectDTO> findSubjectsByTeacher(){
+    public List<SubjectDTO> findSubjectsByTeacher() {
         User user = authservice.authenticated();
-        if (user.hasRole("ROLE_STUDENT")){
+        if (user.hasRole("ROLE_STUDENT")) {
             throw new JWTAuthenticationException("Access Denied");
-        }else{
+        } else {
 
             List<Subject> list = repository.findByTeacher(user);
 

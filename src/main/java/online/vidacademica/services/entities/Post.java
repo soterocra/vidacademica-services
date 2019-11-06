@@ -1,138 +1,132 @@
 package online.vidacademica.services.entities;
 
+import online.vidacademica.services.entities.enums.PostType;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import online.vidacademica.services.entities.enums.PostType;
-
 @Entity
 @Table(name = "tb_post")
-public class Post implements Serializable{
+public class Post implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
+    private static final long serialVersionUID = 1L;
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	private String body;
-	private Long postFather;
-	private Instant date;
-	private Integer postType;
-	
-	@ManyToOne
-	@JoinColumn(name = "author_id")
-	private User author;
-	
-	public Post() {}
+    private String body;
+    private Long postFather;
+    private Instant date;
+    private Integer postType;
 
-	private Post(Long id, String body, Long postFather, Instant date, PostType postType, User author) {
-		super();
-		this.id = id;
-		this.body = body;
-		this.postFather = postFather;
-		this.date = date;
-		setPostType(postType);
-		this.author = author;
-	}
-	
-	public Post(String body, Instant date, User author) {
-		this.id = null;
-		this.body = body;
-		this.postFather = null;
-		this.date = date;
-		setPostType(PostType.POST);
-		this.author = author;	
-	}
-	
-	public Post(String body, Long postFather, Instant date, User author) {
-		this.id = null;
-		this.body = body;
-		this.postFather = postFather;
-		this.date = date;
-		setPostType(PostType.COMMENT);
-		this.author = author;	
-	}
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
 
-	public Long getId() {
-		return id;
-	}
+    public Post() {
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    private Post(Long id, String body, Long postFather, Instant date, PostType postType, User author) {
+        super();
+        this.id = id;
+        this.body = body;
+        this.postFather = postFather;
+        this.date = date;
+        setPostType(postType);
+        this.author = author;
+    }
 
-	public String getBody() {
-		return body;
-	}
+    public Post(String body, Instant date, User author) {
+        this.id = null;
+        this.body = body;
+        this.postFather = null;
+        this.date = date;
+        setPostType(PostType.POST);
+        this.author = author;
+    }
 
-	public void setBody(String body) {
-		this.body = body;
-	}
+    public Post(String body, Long postFather, Instant date, User author) {
+        this.id = null;
+        this.body = body;
+        this.postFather = postFather;
+        this.date = date;
+        setPostType(PostType.COMMENT);
+        this.author = author;
+    }
 
-	public Long getPostFather() {
-		return postFather;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setPostFather(Long postFather) {
-		this.postFather = postFather;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public PostType getPostType() {
-		return PostType.valueOf(postType);
-	}
+    public String getBody() {
+        return body;
+    }
 
-	public void setPostType(PostType postType) {
-		this.postType = postType.getCode();
-	}
+    public void setBody(String body) {
+        this.body = body;
+    }
 
-	public Instant getDate() {
-		return date;
-	}
+    public Long getPostFather() {
+        return postFather;
+    }
 
-	public void setDate(Instant date) {
-		this.date = date;
-	}
+    public void setPostFather(Long postFather) {
+        this.postFather = postFather;
+    }
 
-	public User getAuthor() {
-		return author;
-	}
+    public PostType getPostType() {
+        return PostType.valueOf(postType);
+    }
 
-	public void setAuthor(User author) {
-		this.author = author;
-	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
+    public void setPostType(PostType postType) {
+        this.postType = postType.getCode();
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Post other = (Post) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-	
-	
-	
+    public Instant getDate() {
+        return date;
+    }
+
+    public void setDate(Instant date) {
+        this.date = date;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Post other = (Post) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
+
+
 }

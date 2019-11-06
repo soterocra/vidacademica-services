@@ -1,20 +1,13 @@
 package online.vidacademica.services.entities;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.*;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import java.time.Instant;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_user")
@@ -219,7 +212,7 @@ public class User implements UserDetails {
 
     public boolean hasRole(String roleName) {
         for (Role role : roles) {
-            if(role.getAuthority().equals(roleName)) {
+            if (role.getAuthority().equals(roleName)) {
                 return true;
             }
         }

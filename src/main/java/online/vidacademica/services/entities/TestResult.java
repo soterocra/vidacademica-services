@@ -1,13 +1,12 @@
 package online.vidacademica.services.entities;
 
-import java.io.Serializable;
-import java.time.Instant;
+import online.vidacademica.services.entities.pk.TestResultPK;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import online.vidacademica.services.entities.pk.TestResultPK;
+import java.io.Serializable;
+import java.time.Instant;
 
 @Entity
 @Table(name = "tb_test_result")

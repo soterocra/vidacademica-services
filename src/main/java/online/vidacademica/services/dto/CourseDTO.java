@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.time.Instant;
 
 @CourseInsertAndUpdateValid
-public class CourseDTO implements Serializable{
+public class CourseDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,8 @@ public class CourseDTO implements Serializable{
 
     private Instant creationDate;
 
-    public CourseDTO(){}
+    public CourseDTO() {
+    }
 
     public CourseDTO(Long id, String name, String description, Double workload, boolean active, Instant creationDate) {
         this.id = id;
@@ -100,7 +101,7 @@ public class CourseDTO implements Serializable{
         this.creationDate = creationDate;
     }
 
-    public Course toEntity(){
+    public Course toEntity() {
         return new Course(id, name, description, workload, active, creationDate);
     }
 }

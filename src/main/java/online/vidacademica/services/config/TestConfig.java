@@ -1,46 +1,15 @@
 package online.vidacademica.services.config;
 
-import java.time.DayOfWeek;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Arrays;
-
+import online.vidacademica.services.entities.*;
+import online.vidacademica.services.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import online.vidacademica.services.entities.Address;
-import online.vidacademica.services.entities.City;
-import online.vidacademica.services.entities.Classe;
-import online.vidacademica.services.entities.Country;
-import online.vidacademica.services.entities.Course;
-import online.vidacademica.services.entities.Phone;
-import online.vidacademica.services.entities.Post;
-import online.vidacademica.services.entities.Role;
-import online.vidacademica.services.entities.State;
-import online.vidacademica.services.entities.Subject;
-import online.vidacademica.services.entities.Test;
-import online.vidacademica.services.entities.TestResult;
-import online.vidacademica.services.entities.WeekEntry;
-import online.vidacademica.services.entities.User;
-import online.vidacademica.services.repositories.AddressRepository;
-import online.vidacademica.services.repositories.CityRepository;
-import online.vidacademica.services.repositories.ClassRepository;
-import online.vidacademica.services.repositories.CountryRepository;
-import online.vidacademica.services.repositories.CourseRepository;
-import online.vidacademica.services.repositories.PhoneRepository;
-import online.vidacademica.services.repositories.PostRepository;
-import online.vidacademica.services.repositories.RoleRepository;
-import online.vidacademica.services.repositories.StateRepository;
-import online.vidacademica.services.repositories.SubjectRepository;
-import online.vidacademica.services.repositories.TestRepository;
-import online.vidacademica.services.repositories.TestResultRepository;
-import online.vidacademica.services.repositories.WeekEntryRepository;
-import online.vidacademica.services.repositories.UserRepository;
+import java.time.*;
+import java.util.Arrays;
 
 @Configuration
 @Profile({"test", "testmariadb"})

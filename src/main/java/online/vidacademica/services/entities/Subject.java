@@ -1,15 +1,13 @@
 package online.vidacademica.services.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_subject")
@@ -34,14 +32,12 @@ public class Subject implements Serializable {
     private Set<Classe> classes = new HashSet<>();
 
 
-
     @ManyToMany(mappedBy = "subject")
     private Set<Course> course = new HashSet<>();
 
 
-
-	@ManyToOne
-	private User teacher;
+    @ManyToOne
+    private User teacher;
 
 
     public Subject() {

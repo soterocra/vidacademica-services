@@ -1,130 +1,121 @@
 package online.vidacademica.services.entities;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 @Entity
 @Table(name = "tb_test")
-public class Test implements Serializable{
+public class Test implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String name;
-	private Double fullScore;
-	private Instant date;
-	private Instant creationDate;
-	
-	@ManyToMany
-	@JoinTable(name = "tb_test_user", joinColumns = @JoinColumn(name = "test_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private Set<User> user = new HashSet<>();
-	
-	@ManyToOne
-	private Classe classe;
-	
-	
-	public Test() {}
+    private static final long serialVersionUID = 1L;
 
-	public Test(Long id, String name, Double fullScore, Instant date, Instant creationDate) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.fullScore = fullScore;
-		this.date = date;
-		this.creationDate = creationDate;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private Double fullScore;
+    private Instant date;
+    private Instant creationDate;
 
-	public Long getId() {
-		return id;
-	}
+    @ManyToMany
+    @JoinTable(name = "tb_test_user", joinColumns = @JoinColumn(name = "test_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> user = new HashSet<>();
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @ManyToOne
+    private Classe classe;
 
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Test() {
+    }
 
-	public Double getFullScore() {
-		return fullScore;
-	}
+    public Test(Long id, String name, Double fullScore, Instant date, Instant creationDate) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.fullScore = fullScore;
+        this.date = date;
+        this.creationDate = creationDate;
+    }
 
-	public void setFullScore(Double fullScore) {
-		this.fullScore = fullScore;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Instant getDate() {
-		return date;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setDate(Instant date) {
-		this.date = date;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Instant getCreationDate() {
-		return creationDate;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setCreationDate(Instant creationDate) {
-		this.creationDate = creationDate;
-	}
+    public Double getFullScore() {
+        return fullScore;
+    }
 
-	public Classe getClasse() {
-		return classe;
-	}
+    public void setFullScore(Double fullScore) {
+        this.fullScore = fullScore;
+    }
 
-	public void setClasse(Classe classe) {
-		this.classe = classe;
-	}
+    public Instant getDate() {
+        return date;
+    }
 
-	public Set<User> getUser() {
-		return user;
-	}
+    public void setDate(Instant date) {
+        this.date = date;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
+    public Instant getCreationDate() {
+        return creationDate;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Test other = (Test) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-	
-	
-	
+    public void setCreationDate(Instant creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Classe getClasse() {
+        return classe;
+    }
+
+    public void setClasse(Classe classe) {
+        this.classe = classe;
+    }
+
+    public Set<User> getUser() {
+        return user;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Test other = (Test) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
+
+
 }

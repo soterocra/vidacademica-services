@@ -4,49 +4,49 @@ import java.io.Serializable;
 
 public class TokenDTO implements Serializable {
 
-	
-	private static final long serialVersionUID = 1L;
-	
-	
-	private String email;
-	private String token;
-	private String role;
-	public TokenDTO() {}
+    private static final long serialVersionUID = 1L;
 
-	public TokenDTO(String email, String token) {
-		super();
-		this.email = email;
-		this.token = token;
-	}
+    private String email;
+    private String token;
+    private String role;
 
-	public TokenDTO(String email, String token,String role) {
-		super();
-		this.email = email;
-		this.token = token;
-		this.role = role;
-	}
+    public TokenDTO() {
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public TokenDTO(String email, String token) {
+        super();
+        this.email = email;
+        this.token = token;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public TokenDTO(String email, String token, String role) {
+        super();
+        this.email = email;
+        this.token = token;
+        this.role = role;
+    }
 
-	public String getToken() {
-		return token;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getRole() {
-		return role;
-	}
+    public String getToken() {
+        return token;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

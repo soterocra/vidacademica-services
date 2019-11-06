@@ -7,7 +7,8 @@ public class EmailDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private String email;
 
-    public EmailDTO() {}
+    public EmailDTO() {
+    }
 
     public EmailDTO(String email) {
         super();
