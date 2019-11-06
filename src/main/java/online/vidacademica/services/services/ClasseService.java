@@ -1,13 +1,12 @@
 package online.vidacademica.services.services;
 
-import online.vidacademica.services.dto.ClasseDTO;
-import online.vidacademica.services.dto.SubjectDTO;
-import online.vidacademica.services.dto.TimeBoxDTO;
-import online.vidacademica.services.dto.TimesDTO;
+import online.vidacademica.services.dto.*;
 import online.vidacademica.services.entities.Classe;
+import online.vidacademica.services.entities.Registration;
 import online.vidacademica.services.entities.Subject;
 import online.vidacademica.services.entities.WeekEntry;
 import online.vidacademica.services.repositories.ClassRepository;
+import online.vidacademica.services.repositories.RegistrationRepository;
 import online.vidacademica.services.repositories.SubjectRepository;
 import online.vidacademica.services.resources.exceptions.DatabaseException;
 import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
@@ -35,6 +34,9 @@ public class ClasseService {
 
     @Autowired
     private SubjectRepository subjectRepository;
+
+    @Autowired
+    private RegistrationRepository registrationRepository;
 
     public List<Classe> findAll() {
         return repository.findAll();
@@ -94,6 +96,27 @@ public class ClasseService {
     public List<ClasseDTO> findBySubjectId(Long subjectId) {
         Subject subject = subjectRepository.getOne(subjectId);
         List<Classe> list = repository.findBySubject(subject);
+
+        return list.stream().map(e -> new ClasseDTO(e)).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void setRegistration(Long id, RegistrationDTO dto) {
+        Registration registration = registrationRepository.getOne(dto.getId());
+        if (registration == null){
+            throw new IllegalArgumentException("Registration was null");
+
+        }else {
+            Classe classe = repository.getOne(id);
+            classe.setRegistration(registration);
+            repository.save(classe);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<ClasseDTO> findByRegistrationId(Long registrationId) {
+        Registration registration = registrationRepository.getOne(registrationId);
+        List<Classe> list = repository.findByRegistration(registration);
 
         return list.stream().map(e -> new ClasseDTO(e)).collect(Collectors.toList());
     }

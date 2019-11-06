@@ -59,6 +59,9 @@ public class DevConfig implements CommandLineRunner {
     private RoleRepository roleRepository;
 
     @Autowired
+    private  RegistrationRepository registrationRepository;
+
+    @Autowired
     private BCryptPasswordEncoder passwordEncode;
 
     @Override
@@ -276,5 +279,10 @@ public class DevConfig implements CommandLineRunner {
 
         LocalDate d1 = dt1.toLocalDate();
         System.out.println(d1.getDayOfWeek());
+
+        Registration r1 = new Registration(null,Instant.parse("2019-10-11T00:21:22Z"),true );
+        Registration r2 = new Registration(null,Instant.parse("2019-11-11T00:21:22Z"),true );
+
+        registrationRepository.saveAll(Arrays.asList(r1,r2));
     }
 }

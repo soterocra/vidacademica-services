@@ -1,6 +1,7 @@
 package online.vidacademica.services.resources;
 
 import online.vidacademica.services.dto.ClasseDTO;
+import online.vidacademica.services.dto.RegistrationDTO;
 import online.vidacademica.services.dto.SubjectDTO;
 import online.vidacademica.services.dto.TimesDTO;
 import online.vidacademica.services.entities.Classe;
@@ -78,6 +79,19 @@ public class ClassResource {
         LocalDate d1 = LocalDate.parse(startDate);
         LocalDate d2 = LocalDate.parse(endDate);
         List<TimesDTO> list = service.times(timeTableId, d1, d2);
+        return ResponseEntity.ok().body(list);
+    }
+
+    @PutMapping(value = "/{id}/setregistration")
+    public ResponseEntity<Void> setRegistration(@PathVariable Long id, @RequestBody RegistrationDTO dto) {
+        service.setRegistration(id, dto);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize("hasAnyRole('TEACHER')")
+    @GetMapping(value = "/subject/{registrationId}")
+    public ResponseEntity<List<ClasseDTO>> findByRegistrationId(@PathVariable Long registrationId) {
+        List<ClasseDTO> list = service.findByRegistrationId(registrationId);
         return ResponseEntity.ok().body(list);
     }
 
