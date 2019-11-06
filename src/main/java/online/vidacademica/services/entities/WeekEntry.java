@@ -1,5 +1,7 @@
 package online.vidacademica.services.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.DayOfWeek;
@@ -16,6 +18,7 @@ public class WeekEntry implements Serializable, Comparable<WeekEntry> {
     private Long startMillisecond;
     private Long endMillisecond;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "classe")
     private Classe classe;
