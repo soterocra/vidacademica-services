@@ -1,6 +1,8 @@
 package online.vidacademica.services.dto;
 
+import online.vidacademica.services.entities.Test;
 import online.vidacademica.services.entities.TestResult;
+import online.vidacademica.services.entities.User;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -9,27 +11,26 @@ public class TestResultDTO implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    private double score;
+    private Double score;
     private Instant date;
-    private String name;
-    private Double fullScore;
     private Long userId;
+    private Long testId;
+
 
     public TestResultDTO(){}
 
-    public TestResultDTO(double score, Instant date, String name, Double fullScore,Long userId) {
+    public TestResultDTO(Double score, Instant date, Long userId, Long testId) {
         this.score = score;
         this.date = date;
-        this.name = name;
-        this.fullScore = fullScore;
         this.userId = userId;
+        this.testId = testId;
     }
 
-    public double getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(double score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 
@@ -41,22 +42,6 @@ public class TestResultDTO implements Serializable{
         this.date = date;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Double getFullScore() {
-        return fullScore;
-    }
-
-    public void setFullScore(Double fullScore) {
-        this.fullScore = fullScore;
-    }
-
     public Long getUserId() {
         return userId;
     }
@@ -64,4 +49,14 @@ public class TestResultDTO implements Serializable{
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+    public Long getTestId() {
+        return testId;
+    }
+
+    public void setTestId(Long testId) {
+        this.testId = testId;
+    }
+
+
 }
