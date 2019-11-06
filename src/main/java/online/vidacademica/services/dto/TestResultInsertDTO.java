@@ -1,28 +1,37 @@
 package online.vidacademica.services.dto;
 
+import online.vidacademica.services.entities.Course;
 import online.vidacademica.services.entities.TestResult;
 
 import java.io.Serializable;
 import java.time.Instant;
 
-public class TestResultDTO implements Serializable{
+public class TestResultInsertDTO implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
     private double score;
     private Instant date;
-    private String name;
-    private Double fullScore;
+    private Long testId;
     private Long userId;
 
-    public TestResultDTO(){}
+    public TestResultInsertDTO(){}
 
-    public TestResultDTO(double score, Instant date, String name, Double fullScore,Long userId) {
+    public TestResultInsertDTO(double score, Instant date, Long testId, Long userId) {
         this.score = score;
         this.date = date;
-        this.name = name;
-        this.fullScore = fullScore;
+        this.testId = testId;
         this.userId = userId;
+    }
+
+    public TestResultInsertDTO(TestResult entity){
+        if(entity.getTest() == null){
+            throw new IllegalArgumentException("Test was null");
+        }
+        this.score = entity.getScore();
+        this.date = entity.getDate();
+        this.testId = entity.getTest().getId();
+        this.userId = entity.getUser().getId();
     }
 
     public double getScore() {
@@ -41,20 +50,12 @@ public class TestResultDTO implements Serializable{
         this.date = date;
     }
 
-    public String getName() {
-        return name;
+    public Long getTestId() {
+        return testId;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Double getFullScore() {
-        return fullScore;
-    }
-
-    public void setFullScore(Double fullScore) {
-        this.fullScore = fullScore;
+    public void setTestId(Long testId) {
+        this.testId = testId;
     }
 
     public Long getUserId() {

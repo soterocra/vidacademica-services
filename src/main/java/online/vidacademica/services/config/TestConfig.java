@@ -233,25 +233,25 @@ public class TestConfig implements CommandLineRunner {
         TestResult testResult15 = new TestResult(u3, test5, 17.00, Instant.parse("2019-10-11T00:21:22Z"));
         TestResult testResult16 = new TestResult(u4, test5, 20.00, Instant.parse("2019-10-11T00:21:22Z"));
 
-        testResultRepository.saveAll(Arrays.asList(testResult1));
-        testResultRepository.saveAll(Arrays.asList(testResult2));
-        testResultRepository.saveAll(Arrays.asList(testResult3));
-        testResultRepository.saveAll(Arrays.asList(testResult4));
-
-        testResultRepository.saveAll(Arrays.asList(testResult5));
-        testResultRepository.saveAll(Arrays.asList(testResult6));
-        testResultRepository.saveAll(Arrays.asList(testResult7));
-        testResultRepository.saveAll(Arrays.asList(testResult8));
-
-        testResultRepository.saveAll(Arrays.asList(testResult9));
-        testResultRepository.saveAll(Arrays.asList(testResult10));
-        testResultRepository.saveAll(Arrays.asList(testResult11));
-        testResultRepository.saveAll(Arrays.asList(testResult12));
-
-        testResultRepository.saveAll(Arrays.asList(testResult13));
-        testResultRepository.saveAll(Arrays.asList(testResult14));
-        testResultRepository.saveAll(Arrays.asList(testResult15));
-        testResultRepository.saveAll(Arrays.asList(testResult16));
+//        testResultRepository.saveAll(Arrays.asList(testResult1));
+//        testResultRepository.saveAll(Arrays.asList(testResult2));
+//        testResultRepository.saveAll(Arrays.asList(testResult3));
+//        testResultRepository.saveAll(Arrays.asList(testResult4));
+//
+//        testResultRepository.saveAll(Arrays.asList(testResult5));
+//        testResultRepository.saveAll(Arrays.asList(testResult6));
+//        testResultRepository.saveAll(Arrays.asList(testResult7));
+//        testResultRepository.saveAll(Arrays.asList(testResult8));
+//
+//        testResultRepository.saveAll(Arrays.asList(testResult9));
+//        testResultRepository.saveAll(Arrays.asList(testResult10));
+//        testResultRepository.saveAll(Arrays.asList(testResult11));
+//        testResultRepository.saveAll(Arrays.asList(testResult12));
+//
+//        testResultRepository.saveAll(Arrays.asList(testResult13));
+//        testResultRepository.saveAll(Arrays.asList(testResult14));
+//        testResultRepository.saveAll(Arrays.asList(testResult15));
+//        testResultRepository.saveAll(Arrays.asList(testResult16));
 
         test1.setClasse(class1);
         test2.setClasse(class1);

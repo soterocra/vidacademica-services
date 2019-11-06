@@ -1,15 +1,9 @@
 package online.vidacademica.services.services;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import online.vidacademica.services.dto.ClasseDTO;
-import online.vidacademica.services.dto.SubjectDTO;
 import online.vidacademica.services.dto.TestDTO;
-import online.vidacademica.services.dto.TestResultDTO;
 import online.vidacademica.services.entities.*;
-import online.vidacademica.services.repositories.ClassRepository;
-import online.vidacademica.services.repositories.CourseRepository;
-import online.vidacademica.services.repositories.SubjectRepository;
-import online.vidacademica.services.repositories.TestRepository;
+import online.vidacademica.services.repositories.*;
 import online.vidacademica.services.resources.exceptions.DatabaseException;
 import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
 import online.vidacademica.services.services.exceptions.UpdateDateTestException;
@@ -20,11 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +27,9 @@ public class TestService {
 
     @Autowired
     private ClassRepository classRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private AuthService authService;
@@ -96,19 +91,28 @@ public class TestService {
     @Transactional
     public void setClass(Long id, ClasseDTO dto) {
         Classe classe = classRepository.getOne(dto.getId());
-            Test test = repository.getOne(id);
-            test.setClasse(classe);
-            repository.save(test);
+        Test test = repository.getOne(id);
+        test.setClasse(classe);
+        repository.save(test);
 
     }
 
     @Transactional(readOnly = true)
     public List<TestDTO> findByClassId(Long classId) {
-        Classe classe =  classRepository.getOne(classId);
+        Classe classe = classRepository.getOne(classId);
         List<Test> list = repository.findByClasse(classe);
 
         return list.stream().map(e -> new TestDTO(e)).collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
+    public List<TestDTO> findTestsUserLogged() {
+        User user = authService.authenticated();
+        List<Test> list = repository.findByUser(user);
+
+        return list.stream().map(e -> new TestDTO(e)).collect(Collectors.toList());
+    }
+
 
 }
 

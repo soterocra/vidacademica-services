@@ -1,9 +1,6 @@
 package online.vidacademica.services.resources.exceptions;
 
-import online.vidacademica.services.services.exceptions.AddUserToSubjectException;
-import online.vidacademica.services.services.exceptions.JWTAuthenticationException;
-import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
-import online.vidacademica.services.services.exceptions.UpdateDateTestException;
+import online.vidacademica.services.services.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -49,6 +46,14 @@ public class ResourceExceptionHandler {
 
     @ExceptionHandler(AddUserToSubjectException.class)
     public ResponseEntity<StandardError> addUserToSubject(AddUserToSubjectException e, HttpServletRequest request) {
+        String error = "Insert error";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(PostScoreException.class)
+    public ResponseEntity<StandardError> postCore(PostScoreException e, HttpServletRequest request) {
         String error = "Insert error";
         HttpStatus status = HttpStatus.BAD_REQUEST;
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());

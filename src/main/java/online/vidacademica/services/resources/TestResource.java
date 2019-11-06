@@ -5,6 +5,8 @@ import online.vidacademica.services.dto.SubjectDTO;
 import online.vidacademica.services.dto.TestDTO;
 import online.vidacademica.services.entities.Post;
 import online.vidacademica.services.entities.Test;
+import online.vidacademica.services.entities.User;
+import online.vidacademica.services.services.AuthService;
 import online.vidacademica.services.services.PostService;
 import online.vidacademica.services.services.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class TestResource {
 
     @Autowired
     private TestService service;
+
+    @Autowired
+    private AuthService authService;
 
     @PreAuthorize("hasAnyRole('STUDENT','TEACHER')")
     @GetMapping
@@ -61,7 +66,7 @@ public class TestResource {
 
     @PreAuthorize("hasAnyRole('TEACHER')")
     @PutMapping(value = "/{id}/setclass")
-    public ResponseEntity<Void> setclass(@PathVariable Long id,@RequestBody ClasseDTO dto){
+    public ResponseEntity<Void> setclass(@PathVariable Long id, @RequestBody ClasseDTO dto) {
         service.setClass(id, dto);
         return ResponseEntity.noContent().build();
     }
@@ -70,6 +75,12 @@ public class TestResource {
     @GetMapping(value = "/class/{classid}")
     public ResponseEntity<List<TestDTO>> findByTeacherId(@PathVariable Long classid) {
         List<TestDTO> list = service.findByClassId(classid);
+        return ResponseEntity.ok().body(list);
+    }
+
+    @GetMapping(value = "/mytests")
+    public ResponseEntity<List<TestDTO>> findTestsUserLogged() {
+        List<TestDTO> list = service.findTestsUserLogged();
         return ResponseEntity.ok().body(list);
     }
 
