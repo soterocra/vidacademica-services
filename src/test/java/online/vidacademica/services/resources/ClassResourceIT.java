@@ -1,5 +1,6 @@
 package online.vidacademica.services.resources;
 
+import online.vidacademica.services.dto.ClasseDTO;
 import online.vidacademica.services.entities.Classe;
 import online.vidacademica.services.entities.Role;
 import online.vidacademica.services.entities.User;
@@ -8,15 +9,14 @@ import online.vidacademica.services.repositories.RoleRepository;
 import online.vidacademica.services.repositories.UserRepository;
 import online.vidacademica.services.security.JWTUtil;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -29,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 //@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClassResourceIT {
 
     private static final String URI_PATH = "/class";
@@ -72,7 +73,7 @@ public class ClassResourceIT {
     }
 
     @Test
-    public void findAll_sucess() {
+    public void stage1_findAll_success() {
         HttpEntity<Classe[]> entity = new HttpEntity<>(null, headers);
         ResponseEntity<Classe[]> response = restTemplate.exchange(URI_PATH, HttpMethod.GET, entity, Classe[].class);
 
@@ -80,11 +81,42 @@ public class ClassResourceIT {
     }
 
     @Test
-    public void findById_sucess() {
+    public void stage1_findById_success() {
         HttpEntity<Classe[]> entity = new HttpEntity<>(null, headers);
         ResponseEntity<Classe> response = restTemplate.exchange(URI_PATH + "/" + classe1.getId(), HttpMethod.GET, entity, Classe.class);
 
         assertThat(response.getBody()).isEqualTo(classe1);
+    }
+
+    @Test
+    public void stage2_insertClasse_success() {
+        ClasseDTO classeDto = new ClasseDTO(null, "COMP - 2018/01", LocalDate.of(2018, 1, 1),
+                LocalDate.of(2019, 7, 22), true, Instant.parse("2018-01-01T00:21:22Z"));
+
+        HttpEntity<ClasseDTO> entity = new HttpEntity<>(classeDto, headers);
+        ResponseEntity<ClasseDTO> response = restTemplate.exchange(URI_PATH, HttpMethod.POST, entity, ClasseDTO.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+    }
+
+    @Test
+    public void stage3_updateClasse_success() {
+        classe1.setName("UPDATED");
+        ClasseDTO classeDto = new ClasseDTO(classe1);
+
+        HttpEntity<ClasseDTO> entity = new HttpEntity<>(classeDto, headers);
+        ResponseEntity<ClasseDTO> response = restTemplate.exchange(URI_PATH + "/" + classeDto.getId(), HttpMethod.PUT, entity, ClasseDTO.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody().getName()).isEqualTo(classeDto.getName());
+    }
+
+    @Test
+    public void stage3_deleteClasse_success() {
+        HttpEntity<Void> entity = new HttpEntity<>(null, headers);
+        ResponseEntity<Void> response = restTemplate.exchange(URI_PATH + "/" + classe2.getId(), HttpMethod.DELETE, entity, Void.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     }
 
     public void createUsers() {
