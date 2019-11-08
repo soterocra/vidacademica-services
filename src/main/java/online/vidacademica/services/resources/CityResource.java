@@ -16,18 +16,18 @@ import online.vidacademica.services.services.CityService;
 @RequestMapping(value = "/cities")
 public class CityResource {
 
-	@Autowired
-	private CityService service;
-	
-	@GetMapping
-	public ResponseEntity<List<City>> findAll(){
-		List<City> list = service.findAll();
-		return ResponseEntity.ok().body(list);
-	}
-	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<City> findById(@PathVariable Long id){
-		City obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
-	}
+    @Autowired
+    private CityService service;
+
+    @GetMapping
+    public ResponseEntity<List<City>> findAll() {
+        List<City> list = service.findAll();
+        return ResponseEntity.ok().body(list);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<City> findById(@PathVariable Long id) {
+        City obj = service.findById(id);
+        return ResponseEntity.ok().body(obj);
+    }
 }

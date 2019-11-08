@@ -1,30 +1,13 @@
 package online.vidacademica.services.entities;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import java.time.Instant;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_user")
@@ -38,49 +21,56 @@ public class User implements UserDetails {
     private String email;
     private Instant dateOfBirth;
     private String socialId;
-    private String registration;
     private String password;
-    
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant creationDate;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "author")
     private List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private Set<Phone> phones = new HashSet<>();
-    
+
     @OneToMany(mappedBy = "user")
     private Set<Address> addresses = new HashSet<>();
-    
+
     @ManyToMany(mappedBy = "user")
-	private Set<Test> test = new HashSet<>();
-    
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "tb_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
-    
+    private Set<Test> test = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "tb_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "teacher")
+    private Set<Subject> subject = new HashSet<>();
+
+    @OneToMany(mappedBy = "commander")
+    private Set<Course> course = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<Registration> registration = new HashSet<>();
+
     public User() {
     }
 
-    public User(Long id, String name, String email, Instant dateOfBirth, String socialId, String registration, String password,
-			Instant creationDate) {
-		super();
-		this.id = id;
-		this.name = name;
-		
-		this.email = email;
-		
-		this.dateOfBirth = dateOfBirth;
-		this.socialId = socialId;
-		this.registration = registration;
-		this.password = password;
-		this.creationDate = creationDate;
-	}
+    public User(Long id, String name, String email, Instant dateOfBirth, String socialId, String password,
+                Instant creationDate) {
+        super();
+        this.id = id;
+        this.name = name;
+
+        this.email = email;
+
+        this.dateOfBirth = dateOfBirth;
+        this.socialId = socialId;
+        this.password = password;
+        this.creationDate = creationDate;
+    }
 
 
-	public Long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -95,14 +85,14 @@ public class User implements UserDetails {
     public void setName(String name) {
         this.name = name;
     }
-    
-    public String getEmail() {
-		return email;
-	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public Instant getDateOfBirth() {
         return dateOfBirth;
@@ -120,14 +110,6 @@ public class User implements UserDetails {
         this.socialId = socialId;
     }
 
-    public String getRegistration() {
-        return registration;
-    }
-
-    public void setRegistration(String registration) {
-        this.registration = registration;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -143,30 +125,40 @@ public class User implements UserDetails {
     public void setCreationDate(Instant creationDate) {
         this.creationDate = creationDate;
     }
-    
+
     public Set<Phone> getPhones() {
-    		return phones;
-    	}
-    
+        return phones;
+    }
+
     public List<Post> getPosts() {
- 		return posts;
- 	}
-    
+        return posts;
+    }
+
     public Set<Address> getAddresses() {
-		return addresses;
-	}
-    
-    
+        return addresses;
+    }
 
-	public Set<Test> getTest() {
-		return test;
-	}
+    public Set<Subject> getSubject() {
+        return subject;
+    }
 
-	public Set<Role> getRoles(){
-		return roles;
-	}
-	
-	@Override
+    public Set<Course> getCourse() {
+        return course;
+    }
+
+    public void setCourse(Set<Course> course) {
+        this.course = course;
+    }
+
+    public Set<Test> getTest() {
+        return test;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -174,40 +166,49 @@ public class User implements UserDetails {
         return id.equals(user.id);
     }
 
-	@Override
+    @Override
     public int hashCode() {
         return Objects.hash(id);
     }
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return roles; 
-	}
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
 
-	@Override
-	public String getUsername() {
-		return email;
-	}
+    @Override
+    public String getUsername() {
+        return email;
+    }
 
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
 
-	}
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return true;
+    @Override
+    public boolean isEnabled() {
+        return true;
 
-	}
+    }
+
+    public boolean hasRole(String roleName) {
+        for (Role role : roles) {
+            if (role.getAuthority().equals(roleName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

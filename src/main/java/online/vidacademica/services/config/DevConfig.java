@@ -1,52 +1,21 @@
 package online.vidacademica.services.config;
 
-import java.time.DayOfWeek;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Arrays;
-
+import online.vidacademica.services.entities.*;
+import online.vidacademica.services.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import online.vidacademica.services.entities.Address;
-import online.vidacademica.services.entities.City;
-import online.vidacademica.services.entities.Classe;
-import online.vidacademica.services.entities.Country;
-import online.vidacademica.services.entities.Course;
-import online.vidacademica.services.entities.Phone;
-import online.vidacademica.services.entities.Post;
-import online.vidacademica.services.entities.Role;
-import online.vidacademica.services.entities.State;
-import online.vidacademica.services.entities.Subject;
-import online.vidacademica.services.entities.Test;
-import online.vidacademica.services.entities.TestResult;
-import online.vidacademica.services.entities.TimeTable;
-import online.vidacademica.services.entities.TimeTableEntry;
-import online.vidacademica.services.entities.User;
-import online.vidacademica.services.repositories.AddressRepository;
-import online.vidacademica.services.repositories.CityRepository;
-import online.vidacademica.services.repositories.ClassRepository;
-import online.vidacademica.services.repositories.CountryRepository;
-import online.vidacademica.services.repositories.CourseRepository;
-import online.vidacademica.services.repositories.PhoneRepository;
-import online.vidacademica.services.repositories.PostRepository;
-import online.vidacademica.services.repositories.RoleRepository;
-import online.vidacademica.services.repositories.StateRepository;
-import online.vidacademica.services.repositories.SubjectRepository;
-import online.vidacademica.services.repositories.TestRepository;
-import online.vidacademica.services.repositories.TestResultRepository;
-import online.vidacademica.services.repositories.TimeTableEntryRepository;
-import online.vidacademica.services.repositories.TimeTableRepository;
-import online.vidacademica.services.repositories.UserRepository;
+import java.time.*;
+import java.util.Arrays;
 
 @Configuration
-@Profile({"test", "testmariadb", "production"})
-public class TestConfig implements CommandLineRunner {
+@DependsOn("securityConfig")
+@Profile({"dev", "testmariadb"})
+public class DevConfig implements CommandLineRunner {
 
     // ADICIONAR REPOSITORIOS
     @Autowired
@@ -80,51 +49,51 @@ public class TestConfig implements CommandLineRunner {
     private SubjectRepository subjectRepository;
 
     @Autowired
-    private TimeTableEntryRepository timeTableEntryRepository;
-
-    @Autowired
-    private TimeTableRepository timeTableRepository;
+    private WeekEntryRepository timeTableEntryRepository;
 
     @Autowired
     private TestResultRepository testResultRepository;
 
     @Autowired
     private TestRepository testRepository;
-    
+
     @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
+    private  RegistrationRepository registrationRepository;
+
+    @Autowired
     private BCryptPasswordEncoder passwordEncode;
-    
+
     @Override
     public void run(String... args) throws Exception {
 
         // ADICIONA OS ELEMENTOS DO BANCO TESTE
 
-        User u1 = new User(null, "Carlos Gustavo", "cgletras@gmail.com", null, "A2", "ASD",passwordEncode.encode("123"), Instant.now());
-        User u2 = new User(null, "Eduardo Augusto", "dudu@gmail.com", null, "A3", "ABD", passwordEncode.encode("123"), Instant.now());
-        User u3 = new User(null, "Rafael Sotero", "soso@gmail.com", null, "B5", "CSD", passwordEncode.encode("123"), Instant.now());
-        User u4 = new User(null, "Tiago Marques", "titi@gmail.com", null, "C3", "JSD", passwordEncode.encode("123"), Instant.now());
-        User u5 = new User(null, "Nelio Alves", "nelio@gmail.com", null, "d4", "JSD", passwordEncode.encode("123"), Instant.now());
+        User u1 = new User(null, "Carlos Gustavo", "cgletras@gmail.com", null, "A2", passwordEncode.encode("123"), Instant.now());
+        User u2 = new User(null, "Eduardo Augusto", "dudu@gmail.com", null, "A3", passwordEncode.encode("123"), Instant.now());
+        User u3 = new User(null, "Rafael Sotero", "soso@gmail.com", null, "B5", passwordEncode.encode("123"), Instant.now());
+        User u4 = new User(null, "Tiago Marques", "titi@gmail.com", null, "C3", passwordEncode.encode("123"), Instant.now());
+        User u5 = new User(null, "Nelio Alves", "nelio@gmail.com", null, "d4", passwordEncode.encode("123"), Instant.now());
+        User u6 = new User(null, "Cricia", "cricia@gmail.com", null, "d4", passwordEncode.encode("123"), Instant.now());
 
-        
-        userRepository.saveAll(Arrays.asList(u1, u2, u3, u4,u5));
-        
+        userRepository.saveAll(Arrays.asList(u1, u2, u3, u4, u5, u6));
+
         Role role_Teacher = new Role(null, "ROLE_TEACHER");
         Role role_Student = new Role(null, "ROLE_STUDENT");
-        
-        roleRepository.saveAll(Arrays.asList(role_Teacher,role_Student));
-        
+
+        roleRepository.saveAll(Arrays.asList(role_Teacher, role_Student));
+
         u1.getRoles().add(role_Student);
-        u1.getRoles().add(role_Teacher );
         u2.getRoles().add(role_Student);
         u3.getRoles().add(role_Student);
         u4.getRoles().add(role_Student);
         u5.getRoles().add(role_Teacher);
-        
-        userRepository.saveAll(Arrays.asList(u1, u2, u3, u4,u5));
- 
+        u6.getRoles().add(role_Teacher);
+
+        userRepository.saveAll(Arrays.asList(u1, u2, u3, u4, u5, u6));
+
 
         Country ct1 = new Country(null, "Brasil");
         countryRepository.saveAll(Arrays.asList(ct1));
@@ -169,10 +138,11 @@ public class TestConfig implements CommandLineRunner {
                 "" + "Conhecer fundamentos e boas práticas dos aspectos essenciais de projeto e\n"
                         + "desenvolvimento de um sistema para Internet com orientação a objetos e acesso a banco de\n"
                         + "dados. Utilizar técnicas e ferramentas para implementação dos tópicos estudados.",
-                105.0, true, Instant.now(), 60.0);
+                105.0, true, Instant.now(), 60.0, LocalDate.of(2019, 02, 01), LocalDate.of(2019, 07, 12));
 
         Subject sub2 = new Subject(null, "Banco de Dados",
-                "Conhecer fundamentos e boas práticas usando a linguagem Mysql", 75.0, true, Instant.now(), 60.0);
+                "Conhecer fundamentos e boas práticas usando a linguagem Mysql", 75.0, true, Instant.now(), 60.0,
+                LocalDate.of(2019, 02, 01), LocalDate.of(2019, 07, 12));
 
         subjectRepository.saveAll(Arrays.asList(sub1));
         subjectRepository.saveAll(Arrays.asList(sub2));
@@ -187,29 +157,26 @@ public class TestConfig implements CommandLineRunner {
 
         courseRepository.saveAll(Arrays.asList(course1));
 
-        Classe class1 = new Classe(null, "SI -2018/01", Instant.parse("2018-01-01T00:21:22Z"),
-                Instant.parse("2018-01-01T00:21:22Z"), true, Instant.parse("2019-07-22T15:21:22Z"), sub1);
+        Classe class1 = new Classe(null, "SI -2018/01", LocalDate.of(2018, 1, 1),
+                LocalDate.of(2019, 7, 22), true, Instant.parse("2018-01-01T00:21:22Z"));
 
-        Classe class2 = new Classe(null, "LCI - 2018/01", Instant.parse("2018-01-01T00:21:22Z"),
-                Instant.parse("2018-01-01T00:21:22Z"), true, Instant.parse("2019-07-22T15:21:22Z"), sub1);
-
-        sub2.getClasses().add(class1);
-        sub2.getClasses().add(class2);
+        Classe class2 = new Classe(null, "LCI - 2018/01", LocalDate.of(2018, 1, 1),
+                LocalDate.of(2019, 7, 22), true, Instant.parse("2018-01-01T00:21:22Z"));
 
         postRepository.saveAll(Arrays.asList(p1, p2, p3, p4));
         phoneRepository.saveAll(Arrays.asList(ph1, ph2, ph3));
         classRepository.saveAll(Arrays.asList(class1));
         classRepository.saveAll(Arrays.asList(class2));
 
-        TimeTable t1 = new TimeTable(null, "Horários 2019-2");
+//        TimeTable t1 = new TimeTable(null, "Horários 2019-2", LocalDate.now(), LocalDate.now().plusDays(180));
 
-        TimeTableEntry e1 = new TimeTableEntry(null, DayOfWeek.MONDAY, 18L, 45L, 19L, 30L, t1);
-        TimeTableEntry e2 = new TimeTableEntry(null, DayOfWeek.MONDAY, 19L, 30L, 20L, 15L, t1);
-        TimeTableEntry e3 = new TimeTableEntry(null, DayOfWeek.TUESDAY, 18L, 45L, 19L, 30L, t1);
-        TimeTableEntry e4 = new TimeTableEntry(null, DayOfWeek.TUESDAY, 19L, 30L, 20L, 15L, t1);
-        TimeTableEntry e5 = new TimeTableEntry(null, DayOfWeek.TUESDAY, 20L, 15L, 21L, 00L, t1);
+        WeekEntry e1 = new WeekEntry(null, DayOfWeek.MONDAY, 18L, 45L, 19L, 30L, class1);
+        WeekEntry e2 = new WeekEntry(null, DayOfWeek.MONDAY, 19L, 30L, 20L, 15L, class1);
+        WeekEntry e3 = new WeekEntry(null, DayOfWeek.TUESDAY, 18L, 45L, 19L, 30L, class2);
+        WeekEntry e4 = new WeekEntry(null, DayOfWeek.TUESDAY, 19L, 30L, 20L, 15L, class2);
+        WeekEntry e5 = new WeekEntry(null, DayOfWeek.TUESDAY, 20L, 15L, 21L, 00L, class2);
 
-        timeTableRepository.save(t1);
+//        timeTableRepository.save(t1);
         timeTableEntryRepository.saveAll(Arrays.asList(e1, e2, e3, e4, e5));
 
         Test test1 = new Test(null, "Exercicio Avaliativo Banco de Dados", 10.00, Instant.parse("2019-08-15T00:21:22Z"),
@@ -266,11 +233,8 @@ public class TestConfig implements CommandLineRunner {
         TestResult testResult11 = new TestResult(u3, test3, 12.00, Instant.parse("2019-10-11T00:21:22Z"));
         TestResult testResult12 = new TestResult(u4, test3, 14.00, Instant.parse("2019-10-11T00:21:22Z"));
 
-        TestResult testResult13 = new TestResult(u1, test5, 18.00, Instant.parse("2019-10-11T00:21:22Z"));
-        TestResult testResult14 = new TestResult(u2, test5, 17.00, Instant.parse("2019-10-11T00:21:22Z"));
-        TestResult testResult15 = new TestResult(u3, test5, 17.00, Instant.parse("2019-10-11T00:21:22Z"));
-        TestResult testResult16 = new TestResult(u4, test5, 20.00, Instant.parse("2019-10-11T00:21:22Z"));
-        
+
+
         testResultRepository.saveAll(Arrays.asList(testResult1));
         testResultRepository.saveAll(Arrays.asList(testResult2));
         testResultRepository.saveAll(Arrays.asList(testResult3));
@@ -286,10 +250,6 @@ public class TestConfig implements CommandLineRunner {
         testResultRepository.saveAll(Arrays.asList(testResult11));
         testResultRepository.saveAll(Arrays.asList(testResult12));
 
-        testResultRepository.saveAll(Arrays.asList(testResult13));
-        testResultRepository.saveAll(Arrays.asList(testResult14));
-        testResultRepository.saveAll(Arrays.asList(testResult15));
-        testResultRepository.saveAll(Arrays.asList(testResult16));
 
         test1.setClasse(class1);
         test2.setClasse(class1);
@@ -314,5 +274,10 @@ public class TestConfig implements CommandLineRunner {
 
         LocalDate d1 = dt1.toLocalDate();
         System.out.println(d1.getDayOfWeek());
+
+        Registration r1 = new Registration(null,Instant.parse("2019-10-11T00:21:22Z"), u2, class1);
+        Registration r2 = new Registration(null,Instant.parse("2019-11-11T00:21:22Z"), u2, class2);
+
+        registrationRepository.saveAll(Arrays.asList(r1,r2));
     }
 }

@@ -1,10 +1,9 @@
 package online.vidacademica.services.repositories;
 
+import online.vidacademica.services.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import online.vidacademica.services.entities.User;
-
 public interface UserRepository extends JpaRepository<User, Long> {
-	
-	User findByEmail(String email);
+
+    User findByEmail(String email);
 }

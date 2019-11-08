@@ -2,10 +2,9 @@ package online.vidacademica.services.services.exceptions;
 
 public class JWTAuthenticationException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public JWTAuthenticationException(Object id) {
-		super("Resource not found. id "+ id);
-	}
-
+    public JWTAuthenticationException(Object id) {
+        super("Access Denied");
+    }
 }

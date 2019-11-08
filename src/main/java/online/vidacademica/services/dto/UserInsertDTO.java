@@ -1,105 +1,121 @@
 package online.vidacademica.services.dto;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import online.vidacademica.services.entities.Phone;
-import online.vidacademica.services.entities.Post;
+import online.vidacademica.services.entities.Registration;
 import online.vidacademica.services.entities.User;
+import online.vidacademica.services.services.validations.UserInsertValid;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.time.Instant;
+
+@UserInsertValid
 public class UserInsertDTO {
 
-	private Long id;
-    private String name;
-    private String email;
-    private Instant dateOfBirth;
-    private String socialId;
-    private String registration;
-    private String password;
-    
-    public UserInsertDTO () {}
+    private Long id;
 
-	public UserInsertDTO(Long id, String name, String email, Instant dateOfBirth, String socialId, String registration, String password) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.dateOfBirth = dateOfBirth;
-		this.socialId = socialId;
-		this.registration = registration;
-		this.password = password;
-	}
-    
-    public UserInsertDTO(User entity) {
-    	this.id = entity.getId();
-		this.name = entity.getName();
-		this.email = entity.getEmail();
-		this.dateOfBirth = entity.getDateOfBirth();
-		this.socialId = entity.getSocialId();
-		this.registration = entity.getRegistration();
-		this.password = entity.getPassword();
+    @NotEmpty(message = "Parameter name cannot be null")
+    @Length(min = 5, max = 80, message = "Name parameter length must be between 5 and 80 characters")
+    private String name;
+
+    @NotEmpty(message = "Parameter email cannot be null")
+    @Email(message = "Parameter email invalid")
+    private String email;
+
+    @NotNull(message = "Parameter dateOfBirth cannot be null")
+    private Instant dateOfBirth;
+
+    @NotEmpty(message = "Parameter socialId cannot be null")
+    private String socialId;
+
+    @NotEmpty(message = "Parameter registration cannot be null")
+    private Registration registration;
+
+    @NotEmpty(message = "Parameter dateOfBirth cannot be null")
+    @Length(min = 8, message = "Password length must be at least 8 characters")
+    private String password;
+
+    public UserInsertDTO() {
     }
 
-	public Long getId() {
-		return id;
-	}
+    public UserInsertDTO(Long id, String name, String email, Instant dateOfBirth, String socialId, Registration registration, String password) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.dateOfBirth = dateOfBirth;
+        this.socialId = socialId;
+        this.registration = registration;
+        this.password = password;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public UserInsertDTO(User entity) {
+        this.id = entity.getId();
+        this.name = entity.getName();
+        this.email = entity.getEmail();
+        this.dateOfBirth = entity.getDateOfBirth();
+        this.socialId = entity.getSocialId();
+        this.password = entity.getPassword();
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Instant getDateOfBirth() {
-		return dateOfBirth;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setDateOfBirth(Instant dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getSocialId() {
-		return socialId;
-	}
+    public Instant getDateOfBirth() {
+        return dateOfBirth;
+    }
 
-	public void setSocialId(String socialId) {
-		this.socialId = socialId;
-	}
+    public void setDateOfBirth(Instant dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
-	public String getRegistration() {
-		return registration;
-	}
+    public String getSocialId() {
+        return socialId;
+    }
 
-	public void setRegistration(String registration) {
-		this.registration = registration;
-	}
-    
-	public String getPassword() {
-		return password;
-	}
+    public void setSocialId(String socialId) {
+        this.socialId = socialId;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	public User toEntity(){
-		return new User(id, name, email, dateOfBirth, socialId, registration, password, null);
-	}
+    public Registration getRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(Registration registration) {
+        this.registration = registration;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public User toEntity() {
+        return new User(id, name, email, dateOfBirth, socialId, password, null);
+    }
 }
