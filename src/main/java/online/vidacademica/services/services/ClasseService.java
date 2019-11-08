@@ -21,6 +21,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static online.vidacademica.services.util.Json.toJson;
+
 @Service
 public class ClasseService {
 
@@ -158,6 +160,13 @@ public class ClasseService {
     public WeekEntryDTO addWeekEntry(WeekEntryDTO dto) {
         WeekEntry entity = dto.toEntity();
         entity.setClasse(classRepository.findById(dto.getClasseId()).orElseThrow(() -> new ResourceNotFoundException(dto.getClasseId())));
+
+        Long conflicts = timeTableEntryRepository.findByClasse(entity.getClasse()).stream().filter(weekEntry -> weekEntry.conflicts(entity)).count();
+
+        if (conflicts > 0) {
+            throw new DatabaseException("Já existe programação para esse horário da semana.");
+        }
+
         return new WeekEntryDTO(timeTableEntryRepository.save(entity));
     }
 }
