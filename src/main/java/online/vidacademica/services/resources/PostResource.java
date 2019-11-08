@@ -48,7 +48,7 @@ public class PostResource {
         return ResponseEntity.created(uri).body(newDto);
     }
 
-    @PreAuthorize("hasAnyRole('TEACHER')")
+    @PreAuthorize("hasAnyRole('STUDENT','TEACHER')")
     @PostMapping("/{idPostFather}/postComment")
     public ResponseEntity<PostDTO> insertComment(@PathVariable Long idPostFather, @RequestBody InsertPostDTO dto) {
         PostDTO newDto = service.insertPostComment(idPostFather,dto);
