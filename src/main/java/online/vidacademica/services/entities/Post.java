@@ -55,6 +55,9 @@ public class Post implements Serializable {
         this.author = author;
     }
 
+    public Post(Long id, String body, Instant date) {
+    }
+
     public Long getId() {
         return id;
     }

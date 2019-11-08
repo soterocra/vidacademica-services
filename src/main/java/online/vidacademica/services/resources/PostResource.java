@@ -1,8 +1,10 @@
 package online.vidacademica.services.resources;
 
+import online.vidacademica.services.dto.InsertPostDTO;
 import online.vidacademica.services.dto.PostDTO;
-import online.vidacademica.services.dto.SubjectDTO;
 import online.vidacademica.services.entities.Post;
+import online.vidacademica.services.repositories.PostRepository;
+import online.vidacademica.services.services.AuthService;
 import online.vidacademica.services.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,11 @@ public class PostResource {
     @Autowired
     private PostService service;
 
+    @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
+    private AuthService authService;
     @GetMapping
     public ResponseEntity<List<Post>> findAll() {
         List<Post> list = service.findAll();
@@ -32,13 +39,23 @@ public class PostResource {
         return ResponseEntity.ok().body(obj);
     }
 
+
     @PreAuthorize("hasAnyRole('TEACHER')")
     @PostMapping
-    public ResponseEntity<PostDTO> insert(@RequestBody PostDTO dto) {
-        PostDTO newDto = service.insertPost(dto);
+    public ResponseEntity<InsertPostDTO> insertPost(@RequestBody InsertPostDTO dto) {
+        InsertPostDTO newDto = service.insertPost(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
         return ResponseEntity.created(uri).body(newDto);
     }
+
+    @PreAuthorize("hasAnyRole('TEACHER')")
+    @PostMapping("/{idPostFather}/postComment")
+    public ResponseEntity<PostDTO> insertComment(@PathVariable Long idPostFather, @RequestBody InsertPostDTO dto) {
+        PostDTO newDto = service.insertPostComment(idPostFather,dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
+        return ResponseEntity.created(uri).body(newDto);
+    }
+
 
 
 
