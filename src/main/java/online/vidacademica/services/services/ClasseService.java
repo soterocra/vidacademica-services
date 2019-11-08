@@ -2,10 +2,7 @@ package online.vidacademica.services.services;
 
 import online.vidacademica.services.dto.*;
 import online.vidacademica.services.entities.*;
-import online.vidacademica.services.repositories.ClassRepository;
-import online.vidacademica.services.repositories.RegistrationRepository;
-import online.vidacademica.services.repositories.SubjectRepository;
-import online.vidacademica.services.repositories.UserRepository;
+import online.vidacademica.services.repositories.*;
 import online.vidacademica.services.resources.exceptions.DatabaseException;
 import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +38,9 @@ public class ClasseService {
 
     @Autowired
     private ClassRepository classRepository;
+
+    @Autowired
+    private WeekEntryRepository timeTableEntryRepository;
 
     public List<Classe> findAll() {
         return repository.findAll();
@@ -152,5 +152,12 @@ public class ClasseService {
         Instant start = localDate.atStartOfDay().toInstant(ZoneOffset.UTC).plusMillis(entry.getStartMillisecond());
         Instant end = localDate.atStartOfDay().toInstant(ZoneOffset.UTC).plusMillis(entry.getEndMillisecond());
         return new TimeBoxDTO(start, end);
+    }
+
+    @Transactional
+    public WeekEntryDTO addWeekEntry(WeekEntryDTO dto) {
+        WeekEntry entity = dto.toEntity();
+        entity.setClasse(classRepository.findById(dto.getClasseId()).orElseThrow(() -> new ResourceNotFoundException(dto.getClasseId())));
+        return new WeekEntryDTO(timeTableEntryRepository.save(entity));
     }
 }

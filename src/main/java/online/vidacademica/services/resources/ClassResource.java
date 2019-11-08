@@ -1,9 +1,6 @@
 package online.vidacademica.services.resources;
 
-import online.vidacademica.services.dto.ClasseDTO;
-import online.vidacademica.services.dto.RegistrationDTO;
-import online.vidacademica.services.dto.SubjectDTO;
-import online.vidacademica.services.dto.TimesDTO;
+import online.vidacademica.services.dto.*;
 import online.vidacademica.services.entities.Classe;
 import online.vidacademica.services.services.ClasseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +77,13 @@ public class ClassResource {
         LocalDate d2 = LocalDate.parse(endDate);
         List<TimesDTO> list = service.times(timeTableId, d1, d2);
         return ResponseEntity.ok().body(list);
+    }
+
+    @PreAuthorize("hasAnyRole('TEACHER')")
+    @PostMapping(value = "/weekentry")
+    public ResponseEntity<WeekEntryDTO> timeboxes(@RequestBody WeekEntryDTO dto) {
+        WeekEntryDTO newDto = service.addWeekEntry(dto);
+        return ResponseEntity.ok().body(newDto);
     }
 
     @PreAuthorize("hasAnyRole('TEACHER')")
