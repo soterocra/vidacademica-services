@@ -29,6 +29,8 @@ public class Test implements Serializable {
     @ManyToOne
     private Classe classe;
 
+    public Test() {
+    }
 
     public Test(Long id, String body, Long postFather, Instant date, PostType postType, User author) {
     }
