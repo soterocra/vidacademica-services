@@ -103,12 +103,12 @@ public class ClasseService {
     @Transactional
     public void setRegistration(Long id, RegistrationDTO dto) {
         Registration registration = registrationRepository.getOne(dto.getId());
-        if (registration == null){
+        if (registration == null) {
             throw new IllegalArgumentException("Registration was null");
 
-        }else {
+        } else {
             Classe classe = repository.getOne(id);
-            classe.setRegistration(registration);
+//            classe.setRegistration(registration);
             repository.save(classe);
         }
     }

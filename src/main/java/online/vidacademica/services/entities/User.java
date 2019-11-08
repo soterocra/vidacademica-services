@@ -21,7 +21,6 @@ public class User implements UserDetails {
     private String email;
     private Instant dateOfBirth;
     private String socialId;
-    private String registration;
     private String password;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
@@ -50,13 +49,13 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "commander")
     private Set<Course> course = new HashSet<>();
 
-    @ManyToOne
-    private Registration UserRegistration;
+    @OneToMany(mappedBy = "user")
+    private Set<Registration> registration = new HashSet<>();
 
     public User() {
     }
 
-    public User(Long id, String name, String email, Instant dateOfBirth, String socialId, String registration, String password,
+    public User(Long id, String name, String email, Instant dateOfBirth, String socialId, String password,
                 Instant creationDate) {
         super();
         this.id = id;
@@ -66,7 +65,6 @@ public class User implements UserDetails {
 
         this.dateOfBirth = dateOfBirth;
         this.socialId = socialId;
-        this.registration = registration;
         this.password = password;
         this.creationDate = creationDate;
     }
@@ -110,14 +108,6 @@ public class User implements UserDetails {
 
     public void setSocialId(String socialId) {
         this.socialId = socialId;
-    }
-
-    public String getRegistration() {
-        return registration;
-    }
-
-    public void setRegistration(String registration) {
-        this.registration = registration;
     }
 
     public String getPassword() {
@@ -166,10 +156,6 @@ public class User implements UserDetails {
 
     public Set<Role> getRoles() {
         return roles;
-    }
-
-    public void setRegistration(Registration UserRegistration) {
-        this.UserRegistration = UserRegistration;
     }
 
     @Override

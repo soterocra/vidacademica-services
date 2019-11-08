@@ -1,5 +1,6 @@
 package online.vidacademica.services.dto;
 
+import online.vidacademica.services.entities.Registration;
 import online.vidacademica.services.entities.User;
 import online.vidacademica.services.services.validations.UserUpdateValid;
 import org.hibernate.validator.constraints.Length;
@@ -29,12 +30,12 @@ public class UserDTO {
     private String socialId;
 
     @NotEmpty(message = "Parameter registration cannot be null")
-    private String registration;
+    private Registration registration;
 
     public UserDTO() {
     }
 
-    public UserDTO(Long id, String name, String email, Instant dateOfBirth, String socialId, String registration) {
+    public UserDTO(Long id, String name, String email, Instant dateOfBirth, String socialId, Registration registration) {
         super();
         this.id = id;
         this.name = name;
@@ -50,7 +51,6 @@ public class UserDTO {
         this.email = entity.getEmail();
         this.dateOfBirth = entity.getDateOfBirth();
         this.socialId = entity.getSocialId();
-        this.registration = entity.getRegistration();
     }
 
     public Long getId() {
@@ -93,16 +93,16 @@ public class UserDTO {
         this.socialId = socialId;
     }
 
-    public String getRegistration() {
+    public Registration getRegistration() {
         return registration;
     }
 
-    public void setRegistration(String registration) {
+    public void setRegistration(Registration registration) {
         this.registration = registration;
     }
 
     public User toEntity() {
-        return new User(null, name, email, dateOfBirth, socialId, registration, null, null);
+        return new User(null, name, email, dateOfBirth, socialId, null, null);
     }
 
 }

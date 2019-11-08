@@ -1,5 +1,6 @@
 package online.vidacademica.services.dto;
 
+import online.vidacademica.services.entities.Registration;
 import online.vidacademica.services.entities.User;
 import online.vidacademica.services.services.validations.UserInsertValid;
 import org.hibernate.validator.constraints.Length;
@@ -29,7 +30,7 @@ public class UserInsertDTO {
     private String socialId;
 
     @NotEmpty(message = "Parameter registration cannot be null")
-    private String registration;
+    private Registration registration;
 
     @NotEmpty(message = "Parameter dateOfBirth cannot be null")
     @Length(min = 8, message = "Password length must be at least 8 characters")
@@ -38,7 +39,7 @@ public class UserInsertDTO {
     public UserInsertDTO() {
     }
 
-    public UserInsertDTO(Long id, String name, String email, Instant dateOfBirth, String socialId, String registration, String password) {
+    public UserInsertDTO(Long id, String name, String email, Instant dateOfBirth, String socialId, Registration registration, String password) {
         super();
         this.id = id;
         this.name = name;
@@ -55,7 +56,6 @@ public class UserInsertDTO {
         this.email = entity.getEmail();
         this.dateOfBirth = entity.getDateOfBirth();
         this.socialId = entity.getSocialId();
-        this.registration = entity.getRegistration();
         this.password = entity.getPassword();
     }
 
@@ -99,11 +99,11 @@ public class UserInsertDTO {
         this.socialId = socialId;
     }
 
-    public String getRegistration() {
+    public Registration getRegistration() {
         return registration;
     }
 
-    public void setRegistration(String registration) {
+    public void setRegistration(Registration registration) {
         this.registration = registration;
     }
 
@@ -116,6 +116,6 @@ public class UserInsertDTO {
     }
 
     public User toEntity() {
-        return new User(id, name, email, dateOfBirth, socialId, registration, password, null);
+        return new User(id, name, email, dateOfBirth, socialId, password, null);
     }
 }

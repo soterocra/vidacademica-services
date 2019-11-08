@@ -88,7 +88,6 @@ public class UserService implements UserDetailsService {
         entity.setEmail(dto.getEmail());
         entity.setDateOfBirth(dto.getDateOfBirth());
         entity.setSocialId(dto.getSocialId());
-        entity.setRegistration(dto.getRegistration());
     }
 
 

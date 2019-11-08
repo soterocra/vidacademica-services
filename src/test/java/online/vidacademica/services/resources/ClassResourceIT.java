@@ -122,9 +122,9 @@ public class ClassResourceIT {
 
     public void createUsers() {
         teacher = new User(null, "Teacher 1", "teacher@example.com", Instant.now(),
-                "21234444", "ABD", passwordEncode.encode("123456"), Instant.now());
+                "21234444", passwordEncode.encode("123456"), Instant.now());
         student = new User(null, "Student 1", "student@example.com", Instant.now(),
-                "15309232", "ASD", passwordEncode.encode("123456"), Instant.now());
+                "15309232", passwordEncode.encode("123456"), Instant.now());
 
         userRepository.saveAll(Arrays.asList(teacher, student));
 

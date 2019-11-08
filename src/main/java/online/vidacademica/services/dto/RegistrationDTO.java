@@ -1,6 +1,8 @@
 package online.vidacademica.services.dto;
 
+import online.vidacademica.services.entities.Classe;
 import online.vidacademica.services.entities.Registration;
+import online.vidacademica.services.entities.User;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -11,20 +13,20 @@ public class RegistrationDTO implements Serializable {
 
     private Long id;
     private Instant date;
-    private boolean approved;
+    private Long userId;
+    private Long classId;
 
-    public RegistrationDTO(){}
-
-    public RegistrationDTO(Long id, Instant date, boolean approved) {
-        this.id = id;
-        this.date = date;
-        this.approved = approved;
+    public RegistrationDTO() {
     }
 
-    public RegistrationDTO(Registration entity){
+    public RegistrationDTO(Long id, Instant date) {
+        this.id = id;
+        this.date = date;
+    }
+
+    public RegistrationDTO(Registration entity) {
         this.id = entity.getId();
         this.date = entity.getDate();
-        this.approved = entity.isApproved();
     }
 
     public Long getId() {
@@ -43,15 +45,28 @@ public class RegistrationDTO implements Serializable {
         this.date = date;
     }
 
-    public boolean isApproved() {
-        return approved;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setApproved(boolean approved) {
-        this.approved = approved;
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getClassId() {
+        return classId;
+    }
+
+    public void setClassId(Long classId) {
+        this.classId = classId;
     }
 
     public Registration toEntity() {
-        return new Registration(id, date, approved);
+        return new Registration(
+                id,
+                date,
+                new User(userId, null, null, null, null, null, null),
+                new Classe(classId, null, null, null, false, null)
+        );
     }
 }

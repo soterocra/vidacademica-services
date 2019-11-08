@@ -7,7 +7,9 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_classe")
@@ -33,8 +35,8 @@ public class Classe implements Serializable {
     @OneToMany(mappedBy = "classe")
     private List<WeekEntry> weekEntries = new ArrayList<>();
 
-    @ManyToOne
-    private Registration registration;
+    @OneToMany(mappedBy = "classe")
+    private Set<Registration> registration = new HashSet<>();
 
     public Classe() {
     }
@@ -155,11 +157,11 @@ public class Classe implements Serializable {
         return true;
     }
 
-    public Registration getRegistration() {
-        return registration;
-    }
-
-    public void setRegistration(Registration registration) {
-        this.registration = registration;
-    }
+//    public Registration getRegistration() {
+//        return registration;
+//    }
+//
+//    public void setRegistration(Registration registration) {
+//        this.registration = registration;
+//    }
 }
