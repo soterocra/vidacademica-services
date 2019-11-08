@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.Instant;
@@ -26,7 +27,7 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//@ActiveProfiles("test")
+@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -89,7 +90,7 @@ public class ClassResourceIT {
     }
 
     @Test
-    public void stage2_insertClasse_success() {
+    public void stage2_insert_success() {
         ClasseDTO classeDto = new ClasseDTO(null, "COMP - 2018/01", LocalDate.of(2018, 1, 1),
                 LocalDate.of(2019, 7, 22), true, Instant.parse("2018-01-01T00:21:22Z"));
 

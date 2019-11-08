@@ -5,6 +5,7 @@ import online.vidacademica.services.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -12,6 +13,7 @@ import java.time.*;
 import java.util.Arrays;
 
 @Configuration
+@DependsOn("securityConfig")
 @Profile({"dev", "testmariadb"})
 public class DevConfig implements CommandLineRunner {
 
