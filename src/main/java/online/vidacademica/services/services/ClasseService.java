@@ -1,13 +1,11 @@
 package online.vidacademica.services.services;
 
 import online.vidacademica.services.dto.*;
-import online.vidacademica.services.entities.Classe;
-import online.vidacademica.services.entities.Registration;
-import online.vidacademica.services.entities.Subject;
-import online.vidacademica.services.entities.WeekEntry;
+import online.vidacademica.services.entities.*;
 import online.vidacademica.services.repositories.ClassRepository;
 import online.vidacademica.services.repositories.RegistrationRepository;
 import online.vidacademica.services.repositories.SubjectRepository;
+import online.vidacademica.services.repositories.UserRepository;
 import online.vidacademica.services.resources.exceptions.DatabaseException;
 import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +35,12 @@ public class ClasseService {
 
     @Autowired
     private RegistrationRepository registrationRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ClassRepository classRepository;
 
     public List<Classe> findAll() {
         return repository.findAll();
@@ -101,16 +105,12 @@ public class ClasseService {
     }
 
     @Transactional
-    public void setRegistration(Long id, RegistrationDTO dto) {
-        Registration registration = registrationRepository.getOne(dto.getId());
-        if (registration == null) {
-            throw new IllegalArgumentException("Registration was null");
+    public void atachStudent(RegistrationDTO dto) {
+        User user = userRepository.findById(dto.getUserId()).orElseThrow(() -> new ResourceNotFoundException(dto.getUserId()));
+        Classe classe = classRepository.findById(dto.getClassId()).orElseThrow(() -> new ResourceNotFoundException(dto.getUserId()));
 
-        } else {
-            Classe classe = repository.getOne(id);
-//            classe.setRegistration(registration);
-            repository.save(classe);
-        }
+        Registration entity = new Registration(null, Instant.now(), user, classe);
+        registrationRepository.save(entity);
     }
 
     @Transactional(readOnly = true)

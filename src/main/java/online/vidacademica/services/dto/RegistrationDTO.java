@@ -19,14 +19,18 @@ public class RegistrationDTO implements Serializable {
     public RegistrationDTO() {
     }
 
-    public RegistrationDTO(Long id, Instant date) {
+    public RegistrationDTO(Long id, Instant date, Long classId, Long userId) {
         this.id = id;
-        this.date = date;
+        this.classId = classId;
+        this.userId = userId;
+        setDate(date);
     }
 
     public RegistrationDTO(Registration entity) {
         this.id = entity.getId();
         this.date = entity.getDate();
+        this.classId = entity.getClasse().getId();
+        this.userId = entity.getUser().getId();
     }
 
     public Long getId() {
@@ -42,6 +46,9 @@ public class RegistrationDTO implements Serializable {
     }
 
     public void setDate(Instant date) {
+        if (date == null) {
+            date = Instant.now();
+        }
         this.date = date;
     }
 

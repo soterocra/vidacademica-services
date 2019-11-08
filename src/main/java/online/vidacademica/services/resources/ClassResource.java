@@ -82,9 +82,10 @@ public class ClassResource {
         return ResponseEntity.ok().body(list);
     }
 
-    @PutMapping(value = "/{id}/setregistration")
-    public ResponseEntity<Void> setRegistration(@PathVariable Long id, @RequestBody RegistrationDTO dto) {
-        service.setRegistration(id, dto);
+    @PreAuthorize("hasAnyRole('TEACHER')")
+    @PostMapping(value = "/attach-student")
+    public ResponseEntity<Void> attachStudent(@RequestBody RegistrationDTO dto) {
+        service.atachStudent(dto);
         return ResponseEntity.noContent().build();
     }
 
