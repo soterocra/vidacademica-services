@@ -27,7 +27,7 @@ public class Post implements Serializable {
     public Post() {
     }
 
-    private Post(Long id, String body, Long postFather, Instant date, PostType postType, User author) {
+    public Post(Long id, String body, Long postFather, Instant date, PostType postType, User author) {
         super();
         this.id = id;
         this.body = body;

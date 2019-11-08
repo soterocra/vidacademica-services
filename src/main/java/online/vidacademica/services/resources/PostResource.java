@@ -1,14 +1,16 @@
 package online.vidacademica.services.resources;
 
+import online.vidacademica.services.dto.PostDTO;
+import online.vidacademica.services.dto.SubjectDTO;
 import online.vidacademica.services.entities.Post;
 import online.vidacademica.services.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -29,5 +31,15 @@ public class PostResource {
         Post obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
+
+    @PreAuthorize("hasAnyRole('TEACHER')")
+    @PostMapping
+    public ResponseEntity<PostDTO> insert(@RequestBody PostDTO dto) {
+        PostDTO newDto = service.insertPost(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
+        return ResponseEntity.created(uri).body(newDto);
+    }
+
+
 
 }

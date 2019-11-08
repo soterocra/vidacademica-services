@@ -1,5 +1,7 @@
 package online.vidacademica.services.entities;
 
+import online.vidacademica.services.entities.enums.PostType;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
@@ -28,7 +30,7 @@ public class Test implements Serializable {
     private Classe classe;
 
 
-    public Test() {
+    public Test(Long id, String body, Long postFather, Instant date, PostType postType, User author) {
     }
 
     public Test(Long id, String name, Double fullScore, Instant date, Instant creationDate) {
