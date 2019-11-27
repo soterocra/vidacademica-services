@@ -29,7 +29,7 @@ public class UserInsertDTO {
     @NotEmpty(message = "Parameter socialId cannot be null")
     private String socialId;
 
-    @NotEmpty(message = "Parameter registration cannot be null")
+//    @NotEmpty(message = "Parameter registration cannot be null")
     private Registration registration;
 
     @NotEmpty(message = "Parameter dateOfBirth cannot be null")
