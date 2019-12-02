@@ -3,6 +3,7 @@ package online.vidacademica.services.resources;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -24,8 +25,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import online.vidacademica.services.dto.UserDTO;
 import online.vidacademica.services.dto.UserInsertDTO;
+import online.vidacademica.services.entities.Classe;
+import online.vidacademica.services.entities.Registration;
 import online.vidacademica.services.entities.Role;
 import online.vidacademica.services.entities.User;
+import online.vidacademica.services.repositories.ClassRepository;
 import online.vidacademica.services.repositories.RoleRepository;
 import online.vidacademica.services.repositories.UserRepository;
 import online.vidacademica.services.security.JWTUtil;
@@ -36,7 +40,7 @@ import online.vidacademica.services.security.JWTUtil;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserResourceIT {
 
-    private static final String URI_PATH = "/user";
+    private static final String URI_PATH = "/users";
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -44,6 +48,8 @@ public class UserResourceIT {
     private JWTUtil jwtUtil;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ClassRepository classRepository;
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
@@ -53,6 +59,7 @@ public class UserResourceIT {
     private static User teacher;
     private static User student1;
     private static User student2;
+    private static Classe classe1;
 
     private static boolean setUpIsDone = false;
 
@@ -64,6 +71,7 @@ public class UserResourceIT {
         }
 
         createUsers();
+        createClasses();
 
         String token = jwtUtil.generateToken(teacher.getUsername());
         headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
@@ -88,29 +96,29 @@ public class UserResourceIT {
     }
 
     @Test
-    public void stage2_insert_success() {
-        UserInsertDTO userInsertDto = new UserInsertDTO(null, "TeacherTest", "TeacherT@mail.com", Instant.now(), "21234444",null, passwordEncode.encode("123456") );
+    public void stage2_insertUser_error() {
+        UserInsertDTO userInsertDto = new UserInsertDTO(null, "TeacherTest", "TeacherT@mail.com", Instant.now(), "21234444", new Registration(null, Instant.now(), student1, classe1), passwordEncode.encode("123456") );
 
         HttpEntity<UserInsertDTO> entity = new HttpEntity<>(userInsertDto, headers);
         ResponseEntity<UserInsertDTO> response = restTemplate.exchange(URI_PATH, HttpMethod.POST, entity, UserInsertDTO.class);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Test
-    public void stage3_updateClasse_success() {
+    public void stage3_updateUser_error() {
         teacher.setName("UPDATED");
         UserDTO userDto = new UserDTO(teacher);
 
         HttpEntity<UserDTO> entity = new HttpEntity<>(userDto, headers);
         ResponseEntity<UserDTO> response = restTemplate.exchange(URI_PATH + "/" + userDto.getId(), HttpMethod.PUT, entity, UserDTO.class);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
         assertThat(response.getBody().getName()).isEqualTo(userDto.getName());
     }
 
     @Test
-    public void stage3_deleteClasse_success() {
+    public void stage3_deleteUser_success() {
         HttpEntity<Void> entity = new HttpEntity<>(null, headers);
         ResponseEntity<Void> response = restTemplate.exchange(URI_PATH + "/" + student2.getId(), HttpMethod.DELETE, entity, Void.class);
 
@@ -139,6 +147,13 @@ public class UserResourceIT {
         userRepository.saveAll(Arrays.asList(teacher, student1));
     }
 
+    public void createClasses() {
+        classe1 = new Classe(null, "SI -2018/01", LocalDate.of(2018, 1, 1),
+                LocalDate.of(2019, 7, 22), true, Instant.parse("2018-01-01T00:21:22Z"));
+
+        classRepository.saveAll(Arrays.asList(classe1));
+
+    }
     
 
 }
