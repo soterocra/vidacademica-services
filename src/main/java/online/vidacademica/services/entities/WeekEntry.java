@@ -109,7 +109,7 @@ public class WeekEntry implements Serializable, Comparable<WeekEntry> {
     }
 
     public Long getStartMinute() {
-        return getStartMillisecond() % 3600000L;
+        return (getStartMillisecond() % 3600000L) / 60000;
     }
 
     public Long getEndHour() {
@@ -117,7 +117,7 @@ public class WeekEntry implements Serializable, Comparable<WeekEntry> {
     }
 
     public Long getEndMinute() {
-        return getEndMillisecond() % 3600000L;
+        return (getEndMillisecond() % 3600000L) / 60000;
     }
 
     public void setStart(Long startHour, Long startMinute) {
