@@ -107,7 +107,7 @@ public class UserResourceIT {
 
     @Test
     public void stage3_updateUser_error() {
-        teacher.setName("UPDATED");
+        teacher.setName(null);
         UserDTO userDto = new UserDTO(teacher);
 
         HttpEntity<UserDTO> entity = new HttpEntity<>(userDto, headers);
