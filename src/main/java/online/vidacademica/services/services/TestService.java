@@ -2,11 +2,14 @@ package online.vidacademica.services.services;
 
 import online.vidacademica.services.dto.ClasseDTO;
 import online.vidacademica.services.dto.TestDTO;
-import online.vidacademica.services.entities.*;
-import online.vidacademica.services.repositories.*;
+import online.vidacademica.services.entities.Classe;
+import online.vidacademica.services.entities.Test;
+import online.vidacademica.services.entities.User;
+import online.vidacademica.services.repositories.ClassRepository;
+import online.vidacademica.services.repositories.TestRepository;
+import online.vidacademica.services.repositories.UserRepository;
 import online.vidacademica.services.resources.exceptions.DatabaseException;
 import online.vidacademica.services.services.exceptions.ResourceNotFoundException;
-import online.vidacademica.services.services.exceptions.UpdateDateTestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -77,15 +80,17 @@ public class TestService {
     private void updateData(Test entity, TestDTO dto) {
         Date now = new Date();
         Date newDateTest = Date.from(dto.getDate());
-        if (newDateTest.before(now)) {
-            throw new UpdateDateTestException(entity.getId());
 
-        } else {
+
+//        if (newDateTest.before(now)) {
+//            throw new UpdateDateTestException(entity.getId());
+//
+//        } else {
             entity.setName(dto.getName());
             entity.setFullScore(dto.getFullScore());
             entity.setDate(dto.getDate());
             entity.setCreationDate(dto.getCreationDate());
-        }
+//        }
     }
 
     @Transactional
