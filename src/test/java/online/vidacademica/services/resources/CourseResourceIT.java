@@ -91,13 +91,8 @@ public class CourseResourceIT {
     @Test
     public void stage2_insert_success() {
         CourseDTO courseDTO = new CourseDTO(null, "Licenciatura em Computação",
-                "O curso de licenciatura " + "em computação estão implícitas: " +
-                        "a colaboração com profissionais de diversas áreas, a qualificação " +
-                        "e o comprometimento com a gestão do processo de ensino-aprendizagem, " +
-                        "a visão da complementaridade do processo educativo, da tecnologia " +
-                        "e da ciência da computação, o estímulo à pesquisa, à criação, " +
-                        "e ao investimento na própria formação.. ",
-                3025.00, true, Instant.parse("2020-02-20T00:21:22Z"));
+                "O curso de licenciatura em computação possibilita o ensino-aprendizagem de TI.",
+                3025.00, true, Instant.parse("2020-12-02T00:21:22Z"));
 
         HttpEntity<CourseDTO> entity = new HttpEntity<>(courseDTO, headers);
         ResponseEntity<CourseDTO> response = restTemplate.exchange(URI_PATH, HttpMethod.POST, entity, CourseDTO.class);
@@ -126,9 +121,9 @@ public class CourseResourceIT {
     }
 
     public void createUsers() {
-        teacher = new User(null, "Carlos Eduardo", "teacher@example.com", Instant.now(),
+        teacher = new User(null, "Teacher 1", "teacher@example.com", Instant.now(),
                 "21234444", passwordEncode.encode("123456"), Instant.now());
-        student = new User(null, "Crícia", "student@example.com", Instant.now(),
+        student = new User(null, "Student 1", "student@example.com", Instant.now(),
                 "15309232", passwordEncode.encode("123456"), Instant.now());
 
         userRepository.saveAll(Arrays.asList(teacher, student));
@@ -146,14 +141,11 @@ public class CourseResourceIT {
 
     public void createCourses() {
         course1 = new Course(null, "Sistemas para Internet",
-                "O curso de Tecnologia " + "em Sistemas para Internet possui como objetivo geral formar "
-                        + "tecnólogos em Sistemas para Internet propiciando conhecimentos. ",
+                "O curso de Tecnologia tem o objetivo de ensinar Sistemas para Internet.",
                 2260.00, true, Instant.parse("2020-02-01T00:21:22Z"));
 
         course2 = new Course(null, "Logística",
-                "O curso de Tecnologia " + "com formação sólida e atualizada, capazes de atender, com excelência, " +
-                        "as demandas referentes à movimentação, com eficiência e eficácia, de bens e informações " +
-                        "em uma cadeia de suprimentos. ",
+                "O curso de Tecnologia tem o objetivo de ensinar Logística.",
                 1820.00, true, Instant.parse("2020-01-01T00:21:22Z"));
 
         courseRepository.saveAll(Arrays.asList(course1, course2));
