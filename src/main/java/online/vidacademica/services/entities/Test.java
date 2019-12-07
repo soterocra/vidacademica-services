@@ -1,5 +1,6 @@
 package online.vidacademica.services.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import online.vidacademica.services.entities.enums.PostType;
 
 import javax.persistence.*;
@@ -19,6 +20,8 @@ public class Test implements Serializable {
     private Long id;
     private String name;
     private Double fullScore;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant date;
     private Instant creationDate;
 
