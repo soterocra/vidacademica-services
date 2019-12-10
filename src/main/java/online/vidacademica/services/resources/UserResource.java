@@ -2,6 +2,7 @@ package online.vidacademica.services.resources;
 
 import online.vidacademica.services.dto.UserDTO;
 import online.vidacademica.services.dto.UserInsertDTO;
+import online.vidacademica.services.security.JWTUtil;
 import online.vidacademica.services.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -17,8 +19,14 @@ import java.util.List;
 @RequestMapping(value = "/users")
 public class UserResource {
 
+    private static final String HEADER_AUTH_KEY = "Authorization";
+    private static final String TOKEN_PREFIX = "Bearer ";
+
     @Autowired
     private UserService service;
+
+    @Autowired
+    private JWTUtil jwtUtil;
 
     @PreAuthorize("hasAnyRole('TEACHER')")
     @GetMapping
@@ -31,6 +39,12 @@ public class UserResource {
     public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
         UserDTO dto = service.findById(id);
         return ResponseEntity.ok().body(dto);
+    }
+
+    @GetMapping(value = "self")
+    public ResponseEntity<UserDTO> self(HttpServletRequest request) {
+        String token = request.getHeader(HEADER_AUTH_KEY).replace(TOKEN_PREFIX,"");
+        return ResponseEntity.ok().body(service.findByEmail(service.loadUserByUsername(jwtUtil.getUsername(token)).getUsername()));
     }
 
     @PostMapping

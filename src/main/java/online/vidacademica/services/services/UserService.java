@@ -51,6 +51,12 @@ public class UserService implements UserDetailsService {
         return new UserDTO(entity);
     }
 
+    public UserDTO findByEmail(String email) {
+        Optional<User> obj = Optional.ofNullable(repository.findByEmail(email));
+        User entity = obj.orElseThrow(() -> new ResourceNotFoundException(email));
+        return new UserDTO(entity);
+    }
+
     public UserDTO insert(UserInsertDTO dto) {
         User entity = dto.toEntity();
         entity.setPassword(passwordEncode.encode(dto.getPassword()));
