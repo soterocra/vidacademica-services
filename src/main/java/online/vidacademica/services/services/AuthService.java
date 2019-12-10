@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -37,11 +38,19 @@ public class AuthService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    private UserService userService;
+
     @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public TokenDTO authenticate(CredentialsDTO dto) {
         try {
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword());
-            User user = userRepository.findByEmail(dto.getEmail());
+
+            String email = dto.getEmail();
+
+            Optional<User> obj = Optional.ofNullable(userRepository.findByEmail(email));
+            User user = obj.orElseThrow(() -> new ResourceNotFoundException(email));
+
             String roleUser;
             if (user.hasRole("ROLE_STUDENT")) {
                 roleUser = "Student";
