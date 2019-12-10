@@ -52,10 +52,10 @@ public class AuthService {
             User user = obj.orElseThrow(() -> new ResourceNotFoundException(email));
 
             String roleUser;
-            if (user.hasRole("ROLE_STUDENT")) {
-                roleUser = "Student";
-            } else {
+            if (user.hasRole("ROLE_TEACHER")) {
                 roleUser = "Teacher";
+            } else {
+                roleUser = "Student";
             }
             authenticationManager.authenticate(authToken);
             String token = jwtUtil.generateToken(dto.getEmail());
