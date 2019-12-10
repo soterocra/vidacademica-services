@@ -2,6 +2,7 @@ package online.vidacademica.services.services;
 
 import online.vidacademica.services.dto.UserDTO;
 import online.vidacademica.services.dto.UserInsertDTO;
+import online.vidacademica.services.entities.Role;
 import online.vidacademica.services.entities.User;
 import online.vidacademica.services.repositories.SubjectRepository;
 import online.vidacademica.services.repositories.UserRepository;
@@ -62,6 +63,7 @@ public class UserService implements UserDetailsService {
         entity.setPassword(passwordEncode.encode(dto.getPassword()));
         entity.setCreationDate(Instant.now());
         entity = repository.save(entity);
+        entity.getRoles().add(new Role(1L, "ROLE_TEACHER"));
         return new UserDTO(entity);
     }
 
