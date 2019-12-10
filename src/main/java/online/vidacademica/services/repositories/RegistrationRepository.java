@@ -1,5 +1,6 @@
 package online.vidacademica.services.repositories;
 
+import online.vidacademica.services.entities.Classe;
 import online.vidacademica.services.entities.Registration;
 import online.vidacademica.services.entities.Subject;
 import online.vidacademica.services.entities.User;
@@ -9,5 +10,5 @@ import java.util.List;
 
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
 
-
+    List<Registration> findRegistrationByClasse(Classe classe);
 }

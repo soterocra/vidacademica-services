@@ -2,6 +2,7 @@ package online.vidacademica.services.resources;
 
 import online.vidacademica.services.dto.*;
 import online.vidacademica.services.entities.Classe;
+import online.vidacademica.services.entities.Registration;
 import online.vidacademica.services.services.ClasseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -92,6 +93,14 @@ public class ClassResource {
         service.atachStudent(dto);
         return ResponseEntity.noContent().build();
     }
+
+    @PreAuthorize("hasAnyRole('TEACHER')")
+    @GetMapping(value = "/students/{classId}")
+    public ResponseEntity<List<UserDTO>> findUsersByClassId(@PathVariable Long classId) {
+        List<UserDTO> list = service.findUsersByClassId(classId);
+        return ResponseEntity.ok().body(list);
+    }
+
 
     @PreAuthorize("hasAnyRole('TEACHER')")
     @GetMapping(value = "/subject/{registrationId}")

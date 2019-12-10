@@ -116,6 +116,28 @@ public class ClasseService {
     }
 
     @Transactional(readOnly = true)
+    public List<UserDTO> findUsersByClassId(Long classeId) {
+        Classe classe = repository.getOne(classeId);
+        List<Registration> list = registrationRepository.findRegistrationByClasse(classe);
+        List<User> users = new ArrayList<>();
+
+        Long [] arrayIds = new Long[list.size()];
+        int x = 0;
+        for (Registration registration: list) {
+            arrayIds[x++] = registration.getUser().getId();
+        }
+        Long []students = arrayIds;
+
+        for (int i = 0; i <arrayIds.length ; i++) {
+            User user = userRepository.getOne(arrayIds[i]);
+            users.add(user);
+        }
+        
+        
+        return users.stream().map(e -> new UserDTO(e)).collect(Collectors.toList());
+
+    }
+    @Transactional(readOnly = true)
     public List<ClasseDTO> findByRegistrationId(Long registrationId) {
         Registration registration = registrationRepository.getOne(registrationId);
         List<Classe> list = repository.findByRegistration(registration);
