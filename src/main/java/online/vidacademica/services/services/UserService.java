@@ -91,9 +91,9 @@ public class UserService implements UserDetailsService {
 
     private void updateData(User entity, UserDTO dto) {
         entity.setName(dto.getName());
-        entity.setEmail(dto.getEmail());
-        entity.setDateOfBirth(dto.getDateOfBirth());
-        entity.setSocialId(dto.getSocialId());
+//        entity.setEmail(dto.getEmail());
+//        entity.setDateOfBirth(dto.getDateOfBirth());
+//        entity.setSocialId(dto.getSocialId());
     }
 
 

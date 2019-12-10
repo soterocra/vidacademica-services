@@ -19,14 +19,14 @@ public class UserDTO {
     @Length(min = 5, max = 80, message = "Name parameter length must be between 5 and 80 characters")
     private String name;
 
-    @NotEmpty(message = "Parameter email cannot be null")
-    @Email(message = "Parameter email invalid")
+//    @NotEmpty(message = "Parameter email cannot be null")
+//    @Email(message = "Parameter email invalid")
     private String email;
 
-    @NotNull(message = "Parameter dateOfBirth cannot be null")
+//    @NotNull(message = "Parameter dateOfBirth cannot be null")
     private Instant dateOfBirth;
 
-    @NotEmpty(message = "Parameter socialId cannot be null")
+//    @NotEmpty(message = "Parameter socialId cannot be null")
     private String socialId;
 
 //    @NotEmpty(message = "Parameter registration cannot be null")
