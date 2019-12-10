@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 @Configuration
 @DependsOn("securityConfig")
-@Profile({"dev", "testmariadb"})
+@Profile({"dev", "testmariadb", "production"})
 public class DevConfig implements CommandLineRunner {
 
     // ADICIONAR REPOSITORIOS
