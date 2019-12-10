@@ -4,6 +4,7 @@ import online.vidacademica.services.dto.UserDTO;
 import online.vidacademica.services.dto.UserInsertDTO;
 import online.vidacademica.services.entities.Role;
 import online.vidacademica.services.entities.User;
+import online.vidacademica.services.repositories.RoleRepository;
 import online.vidacademica.services.repositories.SubjectRepository;
 import online.vidacademica.services.repositories.UserRepository;
 import online.vidacademica.services.resources.exceptions.DatabaseException;
@@ -32,6 +33,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private SubjectRepository subjectRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncode;
@@ -63,7 +67,10 @@ public class UserService implements UserDetailsService {
         entity.setPassword(passwordEncode.encode(dto.getPassword()));
         entity.setCreationDate(Instant.now());
         entity = repository.save(entity);
-        entity.getRoles().add(new Role(1L, "ROLE_TEACHER"));
+
+        Optional<Role> studentRole = roleRepository.findById(1L);
+        entity.getRoles().add(studentRole.orElse(roleRepository.save(new Role(null, "ROLE_STUDENT"))));
+
         return new UserDTO(entity);
     }
 

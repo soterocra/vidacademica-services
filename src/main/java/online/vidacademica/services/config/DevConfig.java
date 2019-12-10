@@ -80,8 +80,8 @@ public class DevConfig implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(u1, u2, u3, u4, u5, u6));
 
-        Role role_Teacher = new Role(null, "ROLE_TEACHER");
         Role role_Student = new Role(null, "ROLE_STUDENT");
+        Role role_Teacher = new Role(null, "ROLE_TEACHER");
 
         roleRepository.saveAll(Arrays.asList(role_Teacher, role_Student));
 
