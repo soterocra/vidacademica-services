@@ -13,24 +13,24 @@ public class RegistrationDTO implements Serializable {
 
     private Long id;
     private Instant date;
-    private Long userId;
-    private Long classId;
+    private String user;
+    private String classe;
 
     public RegistrationDTO() {
     }
 
-    public RegistrationDTO(Long id, Instant date, Long classId, Long userId) {
+    public RegistrationDTO(Long id, Instant date, String classe, String user) {
         this.id = id;
-        this.classId = classId;
-        this.userId = userId;
+        this.classe = classe;
+        this.user = user;
         setDate(date);
     }
 
     public RegistrationDTO(Registration entity) {
         this.id = entity.getId();
         this.date = entity.getDate();
-        this.classId = entity.getClasse().getId();
-        this.userId = entity.getUser().getId();
+        this.classe = entity.getClasse().getName();
+        this.user = entity.getUser().getName();
     }
 
     public Long getId() {
@@ -52,28 +52,28 @@ public class RegistrationDTO implements Serializable {
         this.date = date;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(String userId) {
+        this.user= userId;
     }
 
-    public Long getClassId() {
-        return classId;
+    public String getClasse() {
+        return classe;
     }
 
-    public void setClassId(Long classId) {
-        this.classId = classId;
+    public void setClass(String classe) {
+        this.classe = classe;
     }
 
     public Registration toEntity() {
         return new Registration(
                 id,
                 date,
-                new User(userId, null, null, null, null, null, null),
-                new Classe(classId, null, null, null, false, null)
+                new User(null, user, null, null, null, null, null),
+                new Classe(null, classe, null, null, false, null)
         );
     }
 }

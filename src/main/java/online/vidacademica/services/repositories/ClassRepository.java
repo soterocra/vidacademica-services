@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface ClassRepository extends JpaRepository<Classe, Long> {
     List<Classe> findBySubject(Subject subject);
-
+    Classe findByName(String name);
     List<Classe> findByRegistration(Registration registration);
 }

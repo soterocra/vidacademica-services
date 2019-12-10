@@ -108,8 +108,8 @@ public class ClasseService {
 
     @Transactional
     public void atachStudent(RegistrationDTO dto) {
-        User user = userRepository.findById(dto.getUserId()).orElseThrow(() -> new ResourceNotFoundException(dto.getUserId()));
-        Classe classe = classRepository.findById(dto.getClassId()).orElseThrow(() -> new ResourceNotFoundException(dto.getUserId()));
+        User user = userRepository.findByName(dto.getUser());
+        Classe classe = classRepository.findByName(dto.getClasse());
 
         Registration entity = new Registration(null, Instant.now(), user, classe);
         registrationRepository.save(entity);
